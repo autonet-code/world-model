@@ -1,0 +1,282 @@
+[
+  {
+    "step": 1,
+    "name": "allocations/survival",
+    "value": 0.17054049445865302
+  },
+  {
+    "step": 1,
+    "name": "allocations/status",
+    "value": 0.11291219096334186
+  },
+  {
+    "step": 1,
+    "name": "allocations/meaning",
+    "value": 0.117075873827792
+  },
+  {
+    "step": 1,
+    "name": "allocations/connection",
+    "value": 0.1798678601875533
+  },
+  {
+    "step": 1,
+    "name": "allocations/autonomy",
+    "value": 0.12135208866155157
+  },
+  {
+    "step": 1,
+    "name": "allocations/comfort",
+    "value": 0.18804901960784312
+  },
+  {
+    "step": 1,
+    "name": "allocations/curiosity",
+    "value": 0.11020247229326513
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/survival",
+    "value": 1.6459999999999997
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/status",
+    "value": 1.024
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/meaning",
+    "value": 3.0100000000000002
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/connection",
+    "value": 0.9260000000000002
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/autonomy",
+    "value": 1.816
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/comfort",
+    "value": 3.2889999999999997
+  },
+  {
+    "step": 1,
+    "name": "tree_scores/curiosity",
+    "value": 2.365
+  },
+  {
+    "step": 1,
+    "name": "learning_rate",
+    "value": 0.15
+  },
+  {
+    "step": 1,
+    "name": "winner_score",
+    "value": 3.2889999999999997
+  },
+  {
+    "step": 1,
+    "name": "validation/accuracy",
+    "value": 0.2727272727272727
+  },
+  {
+    "step": 1,
+    "name": "validation/p_value",
+    "value": 0.001
+  },
+  {
+    "step": 2,
+    "name": "allocations/survival",
+    "value": 0.15952865848708303
+  },
+  {
+    "step": 2,
+    "name": "allocations/status",
+    "value": 0.11309182014414318
+  },
+  {
+    "step": 2,
+    "name": "allocations/meaning",
+    "value": 0.13901718557759682
+  },
+  {
+    "step": 2,
+    "name": "allocations/connection",
+    "value": 0.1782705653321776
+  },
+  {
+    "step": 2,
+    "name": "allocations/autonomy",
+    "value": 0.11858049906233598
+  },
+  {
+    "step": 2,
+    "name": "allocations/comfort",
+    "value": 0.17931993924168602
+  },
+  {
+    "step": 2,
+    "name": "allocations/curiosity",
+    "value": 0.11219133215497736
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/survival",
+    "value": 1.5705767263427108
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/status",
+    "value": 2.133102642796249
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/meaning",
+    "value": 5.395487297527707
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/connection",
+    "value": 3.1223779624893435
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/autonomy",
+    "value": 1.8586880647911337
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/comfort",
+    "value": 2.231334121909633
+  },
+  {
+    "step": 2,
+    "name": "tree_scores/curiosity",
+    "value": 2.3473126598465472
+  },
+  {
+    "step": 2,
+    "name": "learning_rate",
+    "value": 0.1275
+  },
+  {
+    "step": 2,
+    "name": "winner_score",
+    "value": 5.395487297527707
+  },
+  {
+    "step": 2,
+    "name": "validation/accuracy",
+    "value": 0.09090909090909091
+  },
+  {
+    "step": 2,
+    "name": "validation/p_value",
+    "value": 0.5
+  },
+  {
+    "step": 2,
+    "name": "max_allocation_change",
+    "value": 0.02194131174980483
+  },
+  {
+    "step": 3,
+    "name": "allocations/survival",
+    "value": 0.14733601056256493
+  },
+  {
+    "step": 3,
+    "name": "allocations/status",
+    "value": 0.10532378758080967
+  },
+  {
+    "step": 3,
+    "name": "allocations/meaning",
+    "value": 0.15731583255069553
+  },
+  {
+    "step": 3,
+    "name": "allocations/connection",
+    "value": 0.1785711226416681
+  },
+  {
+    "step": 3,
+    "name": "allocations/autonomy",
+    "value": 0.11838728507949615
+  },
+  {
+    "step": 3,
+    "name": "allocations/comfort",
+    "value": 0.17712870480622253
+  },
+  {
+    "step": 3,
+    "name": "allocations/curiosity",
+    "value": 0.11593725677854308
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/survival",
+    "value": 0.8771567328057586
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/status",
+    "value": 0.772513323421898
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/meaning",
+    "value": 5.742633579681973
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/connection",
+    "value": 3.3770514655564523
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/autonomy",
+    "value": 2.1786528200112363
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/comfort",
+    "value": 2.9677449944499035
+  },
+  {
+    "step": 3,
+    "name": "tree_scores/curiosity",
+    "value": 2.7374685045814475
+  },
+  {
+    "step": 3,
+    "name": "learning_rate",
+    "value": 0.108375
+  },
+  {
+    "step": 3,
+    "name": "winner_score",
+    "value": 5.742633579681973
+  },
+  {
+    "step": 3,
+    "name": "validation/accuracy",
+    "value": 0.15151515151515152
+  },
+  {
+    "step": 3,
+    "name": "validation/p_value",
+    "value": 0.1
+  },
+  {
+    "step": 3,
+    "name": "max_allocation_change",
+    "value": 0.018298646973098718
+  }
+]

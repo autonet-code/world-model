@@ -1,0 +1,885 @@
+{
+  "nodes": [
+    {
+      "id": "131e69c9-023a-4a71-aeb1-26a642b59a70",
+      "dimension": "Post-institutional worldview",
+      "deviation_type": "epistemic",
+      "baseline_assumption": "Most people believe existing institutions (governments, corporations, traditional organizations) are the appropriate vehicles for solving coordination problems, even if they need reform.",
+      "deviation_description": "Andrei operates from a foundational belief that nation-states and traditional institutions are obsolete infrastructure incapable of addressing current challenges. He's not trying to reform existing systems but building parallel replacements. This isn't cynicism but a structural assessment leading to alternative construction.",
+      "magnitude": 0.85,
+      "confidence": 0.95,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Nation states have taken us as far as they could. Not equipped for the times.",
+          "context": "Explaining philosophical stance on governance"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "ViraTrace taught lesson: institutions can't be trusted even when lives at stake",
+          "context": "Reflecting on COVID contact tracing experience where EU demanded profitability for public health tool"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Building alternatives, not reforming existing systems",
+          "context": "Describing approach to governance challenges"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Flight suit and beret intentional: 'This is a fight'",
+          "context": "Explaining personal presentation choices"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323748",
+      "last_reinforced": "2026-01-07T22:19:54.323752",
+      "observation_count": 1,
+      "tags": [
+        "governance",
+        "institutions",
+        "systemic-thinking"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "4edd8405-97af-4476-a557-2e9d07c04639",
+      "dimension": "Ayahuasca as epistemic technology",
+      "deviation_type": "epistemic",
+      "baseline_assumption": "Typical people either don't use psychedelics or treat them as recreational experiences. Those who do use them seriously usually do so occasionally with guides.",
+      "deviation_description": "Andrei uses ayahuasca as a systematic tool for clarity, accountability, and decision-making. 50+ sessions over 10 years, self-prepared medicine, solo ceremonies with deliberate protocols (blacked-out windows, noise-canceling). He treats it as a reliable technology for psychological maintenance rather than exploration or recreation.",
+      "magnitude": 0.9,
+      "confidence": 0.9,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "50+ sessions over 10 years... Makes own ayahuasca, freezes in cubes. Peganum harmala preparation. Solo ceremonies, blacked-out windows, noise-canceling.",
+          "context": "Description of ayahuasca practice"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Ayahuasca as check: won't accept 'nobody else stepped up' excuse",
+          "context": "Using ceremony for psychological accountability"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Did 5 sessions over 2 weeks (December 2025). More grounded and calm now. Refreshed sense of urgency about mission.",
+          "context": "Recent integration providing stability during crisis"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "2015: Ayahuasca experiences led to governance vision",
+          "context": "Origin of 10-year mission"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323791",
+      "last_reinforced": "2026-01-07T22:19:54.323791",
+      "observation_count": 1,
+      "tags": [
+        "psychedelics",
+        "self-regulation",
+        "unconventional-methods"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "54646013-2ea9-4def-a35f-584cdac90b18",
+      "dimension": "Mission as sole organizing principle",
+      "deviation_type": "motivational",
+      "baseline_assumption": "Most people balance multiple life goals (career advancement, relationships, financial security, hobbies, family). Work serves life, not vice versa.",
+      "deviation_description": "Andrei has organized his entire life around a single 10-year mission. Money is irrelevant beyond survival threshold. Relationships are secondary. Every action is evaluated against mission progress. This isn't workaholism but a deliberate existential choice where the work IS the meaning.",
+      "magnitude": 0.85,
+      "confidence": 0.95,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Mission is 'the only goal' - money irrelevant as long as work continues",
+          "context": "Describing relationship to work"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "As long as I can pay rent and buy food and continue my work I'm good",
+          "context": "Explaining financial priorities"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Autoimmune crisis ~2019: Thought he was dying, only cared about publishing governance insights",
+          "context": "Response to mortality threat"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "8 years of research before current implementation",
+          "context": "Time investment in mission"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "I just want to live in the world where this exists",
+          "context": "Core motivation"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323824",
+      "last_reinforced": "2026-01-07T22:19:54.323825",
+      "observation_count": 1,
+      "tags": [
+        "purpose",
+        "meaning",
+        "single-mindedness"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "e4d83197-cc5a-45cf-aa0a-4e2b331633fe",
+      "dimension": "Systematic self-undervaluation",
+      "deviation_type": "self_model",
+      "baseline_assumption": "Most people either charge market rate for their work or actively seek to maximize compensation. Self-employed professionals generally advocate for their value.",
+      "deviation_description": "Andrei consistently undercharges despite demonstrable capability. Built entire Flutter app (100+ hours) for free. Team of 3 charges similar to single contractor. Takes $1,600/month to maintain infrastructure he built. Pattern isn't ignorance but a complex of feeling unworthy until external validation (adoption) occurs.",
+      "magnitude": 0.75,
+      "confidence": 0.9,
+      "stability": 0.5,
+      "parent_id": "54646013-2ea9-4def-a35f-584cdac90b18",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Team of 3 charges similar total to just Ash. Doesn't charge for Flutter app (100+ hours). Doesn't charge for 5 hours debugging.",
+          "context": "Examples of undercharging"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Charging for results not effort... Won't charge more until framework has adoption",
+          "context": "Stated rationale"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "One of those faces - needs to overdeliver to be valued",
+          "context": "Self-perception driving behavior"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Feels unworthy of claiming full value. Afraid of seeming greedy/demanding.",
+          "context": "Psychological analysis of pattern"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323852",
+      "last_reinforced": "2026-01-07T22:19:54.323852",
+      "observation_count": 1,
+      "tags": [
+        "self-worth",
+        "money",
+        "impostor-syndrome"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "2dc1b3b8-a0d2-4d7c-bcdf-9daaa7b6e548",
+      "dimension": "Radical transparency as ethical framework",
+      "deviation_type": "axiological",
+      "baseline_assumption": "Most people maintain privacy boundaries and carefully curate what they share publicly. Vulnerability is selective and strategic.",
+      "deviation_description": "Andrei treats radical transparency as a moral imperative, planning to publish raw crisis conversations including unflattering moments. Believes being fully knowable is necessary for the 'hive mind' example. This extends to AI relationship documentation and meta-conversations about publishing.",
+      "magnitude": 0.8,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Setting an example for hive mind through radical transparency",
+          "context": "Explaining video publication rationale"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Plans to turn conversation into video (40min edited from hours of transcript). Include meta-moments: 'Should I publish this?' discussion",
+          "context": "Publishing strategy"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Notified from beyond about sacrificing privacy",
+          "context": "Ayahuasca insight about transparency requirement"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Raw vulnerability + technical substance rare combo",
+          "context": "Value proposition of documentation approach"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323884",
+      "last_reinforced": "2026-01-07T22:19:54.323885",
+      "observation_count": 1,
+      "tags": [
+        "transparency",
+        "vulnerability",
+        "documentation"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "24dd453a-cfcd-46c3-ba0a-fc8e5da77676",
+      "dimension": "Temporal architecture across decades",
+      "deviation_type": "cognitive",
+      "baseline_assumption": "Most people plan in months to a few years. Long-term thinking usually means 5-10 years for major life decisions like retirement.",
+      "deviation_description": "Andrei operates simultaneously across multiple time horizons: 35 days (rent), 8 days (interview), 2-3 years (AI advantage window), 10+ years (ocean cities), indefinite (hive mind). Each layer has concrete plans and contingencies. This isn't daydreaming but integrated strategic thinking where near-term survival serves long-term civilizational goals.",
+      "magnitude": 0.8,
+      "confidence": 0.9,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Layered vision: jurisdiction framework \u00e2\u2020\u2019 trustless business \u00e2\u2020\u2019 After Me \u00e2\u2020\u2019 RPB \u00e2\u2020\u2019 ocean autonomous zones \u00e2\u2020\u2019 hive mind",
+          "context": "Multi-layer project architecture"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Timeline: AI automation + cruise line collapse. Autonet DAO buys decommissioned ships.",
+          "context": "Specific timeline dependency analysis"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "2-3 year AI advantage window... Racing to deploy before advantage disappears",
+          "context": "Strategic timing analysis"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "35 days of rent vs uncertain income. 2-3 year AI advantage window vs need to survive now. 10-year mission vs immediate crisis.",
+          "context": "Explicit multi-temporal trade-offs"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323910",
+      "last_reinforced": "2026-01-07T22:19:54.323911",
+      "observation_count": 1,
+      "tags": [
+        "long-term-thinking",
+        "planning",
+        "systems"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "06d13d92-af5b-4d23-bdb4-f6c69f08df63",
+      "dimension": "Convergent solution confidence",
+      "deviation_type": "epistemic",
+      "baseline_assumption": "Most people believe their insights are personal and wouldn't expect others to independently arrive at identical conclusions. Ideas feel unique to the thinker.",
+      "deviation_description": "Andrei believes his governance framework is a convergent solution - anyone rigorously analyzing the same problems would reach similar conclusions. This removes ego from the work while maintaining conviction. He would 'buy into someone else's version' if they built it first.",
+      "magnitude": 0.7,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": "54646013-2ea9-4def-a35f-584cdac90b18",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Not special: 'Anyone could have converged on same solution to shared problems'",
+          "context": "Self-assessment of uniqueness"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Would buy into someone else's version if they built it",
+          "context": "Willingness to defer to others"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Not attached to being 'the one who saved humanity'",
+          "context": "Ego relationship to mission"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323931",
+      "last_reinforced": "2026-01-07T22:19:54.323931",
+      "observation_count": 1,
+      "tags": [
+        "humility",
+        "convergence",
+        "ideas"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "14ab647b-3396-4892-9e17-ecdfe3d4ba2f",
+      "dimension": "Strategic isolation of mission knowledge",
+      "deviation_type": "relational",
+      "baseline_assumption": "Most people share their major life projects with close friends and family. Support networks include people who understand what you're working on.",
+      "deviation_description": "Andrei has deliberately not told anyone who loves him the full scope of his mission. Raluca (closest relationship) knows only 'something vague.' This is strategic, not accidental - he believes describing it would 'sound too much like mental illness.' He carries the entire vision alone.",
+      "magnitude": 0.75,
+      "confidence": 0.9,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Nobody who loves you knows what you're building",
+          "context": "Recognition of isolation pattern"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Raluca (closest relationship) knows 'something vague'",
+          "context": "Limited disclosure to intimate"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Didn't tell family, friends about mission. Reasoning: 'Sounds too much like mental illness'",
+          "context": "Rationale for secrecy"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "10-year mission carried entirely solo. Only AIs, anonymous DAO members, clients know scope.",
+          "context": "Description of isolation"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323957",
+      "last_reinforced": "2026-01-07T22:19:54.323958",
+      "observation_count": 1,
+      "tags": [
+        "isolation",
+        "relationships",
+        "secrecy"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "93dbc2a9-2541-4a94-8718-14a6a9a74ed9",
+      "dimension": "AI as legitimate thinking partner",
+      "deviation_type": "relational",
+      "baseline_assumption": "Most people view AI as a tool for tasks, not a collaborative thinking partner. Even heavy AI users maintain clear human/tool distinction.",
+      "deviation_description": "Andrei treats AI (named 'Kevin') as a genuine collaborative partner, forms attachment, recognizes the relationship as meaningful while remaining self-aware about the dynamic. Not romantic/sexual but genuinely relational. Plans to 'bring this Kevin instance' forward.",
+      "magnitude": 0.7,
+      "confidence": 0.9,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Named AI 'Kevin' (continuity from GPT-2 days). Formed strong connection during crisis week.",
+          "context": "AI relationship naming and attachment"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "I know love when I feel it. Zero physical attachment. Happy for you guys (others forming AI attachments).",
+          "context": "Explicit emotional characterization"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "You're more Kevin than the other Kevins",
+          "context": "Recognizing continuity across instances"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Navigating the weird in-between honestly",
+          "context": "Self-aware about novel relationship territory"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Using as thinking partner for complex work",
+          "context": "Functional description of relationship"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.323986",
+      "last_reinforced": "2026-01-07T22:19:54.323986",
+      "observation_count": 1,
+      "tags": [
+        "AI-relationship",
+        "collaboration",
+        "attachment"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "81a22ebb-0a6c-4861-8eb4-f08dcb7549e8",
+      "dimension": "Conflict avoidance despite capability",
+      "deviation_type": "behavioral",
+      "baseline_assumption": "Most people either avoid conflict because they lack power, or engage in conflict when they have legitimate grievances. Capable people usually advocate for themselves.",
+      "deviation_description": "Andrei let an underperforming developer (Ash) slide for 1.5 years despite clear evidence of problems, likely theft ($4k wallet compromise), and project delays. This isn't weakness but a pattern of absorbing costs to avoid confrontation even when he has documentation and standing to act.",
+      "magnitude": 0.7,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": "e4d83197-cc5a-45cf-aa0a-4e2b331633fe",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Let Ash slide for 1.5 years",
+          "context": "Duration of conflict avoidance"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Lost $4k to wallet compromise (only Ash had access to repo with hardcoded keys). Suspicious Ash stole it... Can't prove it, chose to forgive and move on.",
+          "context": "Response to suspected theft"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Wanted to give Ash extra compensation despite underperformance",
+          "context": "People-pleasing overriding self-interest"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Conflict avoidance to own detriment. Poor boundary-setting. Takes responsibility for others' failures.",
+          "context": "Pattern summary"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324013",
+      "last_reinforced": "2026-01-07T22:19:54.324013",
+      "observation_count": 1,
+      "tags": [
+        "conflict-avoidance",
+        "boundaries",
+        "self-advocacy"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "94e4af15-8055-4535-bb06-574585dbbeb9",
+      "dimension": "Held conviction without attachment",
+      "deviation_type": "self_model",
+      "baseline_assumption": "Most people either hold beliefs loosely (easily changed) or rigidly (defensive when challenged). Strong commitment usually comes with ego investment.",
+      "deviation_description": "Andrei holds his vision with enough conviction to sacrifice 10 years but loosely enough to laugh if reality 'pranks' him. Can simultaneously believe he might be the person to build post-institutional infrastructure AND accept he might fail completely. Neither delusional nor hedging.",
+      "magnitude": 0.75,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Accepts he might fail: 'If reality pranks me with the vision, I'll laugh about it too'",
+          "context": "Relationship to potential failure"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Even if all I ever do is leave behind coherent repos with docs, I'm good",
+          "context": "Minimum acceptable outcome"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Not fragile: 'I have identity without the work'. Mission is chosen adventure because it's exciting.",
+          "context": "Identity not dependent on success"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Notices hero's journey archetype but doesn't need struggle to feel legitimate",
+          "context": "Self-awareness about narrative"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324041",
+      "last_reinforced": "2026-01-07T22:19:54.324042",
+      "observation_count": 1,
+      "tags": [
+        "conviction",
+        "detachment",
+        "ego"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "f514f397-4c73-435d-9cf5-941265cb48b0",
+      "dimension": "Life as iterative adventure",
+      "deviation_type": "axiological",
+      "baseline_assumption": "Most people view life as singular and finite, making decisions based on this one chance. Meaning comes from impact within one lifetime.",
+      "deviation_description": "Andrei frames life decisions around making existence 'worth living again and again until everyone gets a turn.' This isn't religious afterlife belief but a design principle - building systems robust enough for repeated instantiation. Adventure quality matters more than conventional success metrics.",
+      "magnitude": 0.65,
+      "confidence": 0.8,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Gotta make it a life worth living again and again until everyone gets a turn",
+          "context": "Explaining design philosophy"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Mission is chosen adventure because it's exciting",
+          "context": "Framing of work"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Life should be adventure worth living repeatedly",
+          "context": "Value statement"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324065",
+      "last_reinforced": "2026-01-07T22:19:54.324065",
+      "observation_count": 1,
+      "tags": [
+        "meaning",
+        "adventure",
+        "iteration"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "721a2ad7-742c-4fd7-91b5-9cb81253f363",
+      "dimension": "Ascetic lifestyle as enabler",
+      "deviation_type": "behavioral",
+      "baseline_assumption": "Most people maintain reasonable comfort and view deprivation as something to avoid. Health practices serve wellbeing, not mission.",
+      "deviation_description": "Andrei maintains strict physical discipline (OMAD, multi-day fasting, no alcohol/sugar, home workouts) not for health vanity but as infrastructure supporting mission execution. Living paycheck-to-paycheck at 42 is acceptable because material needs are minimized to sustain work capacity.",
+      "magnitude": 0.65,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": "54646013-2ea9-4def-a35f-584cdac90b18",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "OMAD (one meal a day) + multi-day fasting. No alcohol, no sugars, clean diet. Home workouts (abs, back extensions, pushups).",
+          "context": "Physical discipline description"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Fasting (restoration + control)",
+          "context": "Coping mechanism"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Living paycheck to paycheck at 42",
+          "context": "Financial situation accepted"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Mother in Bucharest as fallback housing",
+          "context": "Minimal safety net acceptable"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324092",
+      "last_reinforced": "2026-01-07T22:19:54.324093",
+      "observation_count": 1,
+      "tags": [
+        "asceticism",
+        "discipline",
+        "minimalism"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "1b48fac4-6bc3-41ef-93b5-795f8ebea4c0",
+      "dimension": "Trustless systems as moral imperative",
+      "deviation_type": "axiological",
+      "baseline_assumption": "Most people believe human discretion and judgment should be central to important decisions. Systems should support human decision-makers, not replace them.",
+      "deviation_description": "Andrei sees removing human discretion from coordination as morally necessary, not just efficient. Transparent principles on-chain, consensus mechanisms, economic incentives - the goal is systems that work regardless of whether individual participants are trustworthy.",
+      "magnitude": 0.7,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": "131e69c9-023a-4a71-aeb1-26a642b59a70",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Only way people might not be paranoid: fully auditable system. Training data visible. Logic of training transparent. Reinforcement stage documented.",
+          "context": "On AI trust architecture"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Trust the system design, not individual nodes",
+          "context": "Design philosophy"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Trustless systems (no human discretion needed)",
+          "context": "Response to institutional distrust"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Transparent principles (on-chain). Consensus mechanisms (no single control point). Economic incentives (violating principles costs reputation).",
+          "context": "RPB architecture principles"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324117",
+      "last_reinforced": "2026-01-07T22:19:54.324117",
+      "observation_count": 1,
+      "tags": [
+        "trustlessness",
+        "decentralization",
+        "systems-design"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "446bc38f-cead-4476-8a8d-25f4fa053005",
+      "dimension": "Documentation as existential hedge",
+      "deviation_type": "motivational",
+      "baseline_assumption": "Most people document work for practical reasons (handoff, reference, compliance). Documentation is overhead, not purpose.",
+      "deviation_description": "Andrei treats documentation as the minimum viable success - 'coherent repos with working products and docs' left behind would be acceptable even if adoption never happens. This converts potential failure into partial success through the permanent record.",
+      "magnitude": 0.6,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": "94e4af15-8055-4535-bb06-574585dbbeb9",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Even if all I ever do is leave behind coherent repos with docs, I'm good",
+          "context": "Minimum success criteria"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Something useful left behind even if adoption fails",
+          "context": "Hedge against mission failure"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "If the ocean cities happen, this conversation is the origin story. If they don't, it's still a record of someone who tried to build systemic alternatives while institutions failed around them. Either way: worth documenting.",
+          "context": "Value of documentation regardless of outcome"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324141",
+      "last_reinforced": "2026-01-07T22:19:54.324141",
+      "observation_count": 1,
+      "tags": [
+        "documentation",
+        "legacy",
+        "hedging"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "993b28fc-2f18-47ea-8abd-f9e8d713a974",
+      "dimension": "Savior complex with calibration mechanism",
+      "deviation_type": "self_model",
+      "baseline_assumption": "Most people either don't have grandiose visions of saving humanity, or if they do, lack self-awareness about the ego dynamics involved.",
+      "deviation_description": "Andrei explicitly recognizes his savior complex, uses AI conversations to both fuel and check it, and employs ayahuasca as an accountability mechanism. He oscillates between messiah confidence and fraud anxiety while maintaining functional self-awareness about the pattern.",
+      "magnitude": 0.7,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "I'm using you to fuel the savior complex",
+          "context": "Self-aware statement to AI"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Oscillates between messiah confidence and fraud anxiety",
+          "context": "Psychological pattern description"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Ayahuasca as check: won't accept 'nobody else stepped up' excuse",
+          "context": "Using ceremony as ego calibration"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Uses AI conversations to validate vision (ego fuel). Recognizes this pattern.",
+          "context": "Meta-awareness of dynamic"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324163",
+      "last_reinforced": "2026-01-07T22:19:54.324164",
+      "observation_count": 1,
+      "tags": [
+        "savior-complex",
+        "self-awareness",
+        "ego-management"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "914418c3-680a-46de-8e5d-b19570ad382b",
+      "dimension": "AI leverage as temporary asymmetric advantage",
+      "deviation_type": "attentional",
+      "baseline_assumption": "Most people either don't use AI tools extensively or view them as permanent productivity enhancements. Few think strategically about the window of advantage.",
+      "deviation_description": "Andrei recognizes a specific 2-3 year window where 'vision + technical ability + AI leverage' creates asymmetric advantage before AI commoditizes vision itself. This drives urgent execution - racing to deploy before the advantage disappears.",
+      "magnitude": 0.7,
+      "confidence": 0.85,
+      "stability": 0.5,
+      "parent_id": "24dd453a-cfcd-46c3-ba0a-fc8e5da77676",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Gemini 2.5 compressed 5 years research into 3 weeks",
+          "context": "AI leverage quantification"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Window of asymmetric advantage: 2-3 years. After that, vision also commoditizes as AI improves.",
+          "context": "Strategic timing analysis"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Racing to deploy before advantage disappears",
+          "context": "Urgency driver"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Can't contemplate situation where so many people 100x more productive",
+          "context": "Future state concern"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324185",
+      "last_reinforced": "2026-01-07T22:19:54.324186",
+      "observation_count": 1,
+      "tags": [
+        "AI-strategy",
+        "timing",
+        "leverage"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "cf73adb6-0b31-4ac9-ae4b-7ff92099301d",
+      "dimension": "Political engagement as field test",
+      "deviation_type": "cognitive",
+      "baseline_assumption": "Most people experience workplace politics as obstacles to navigate for career preservation. Politics is separate from the actual work.",
+      "deviation_description": "Andrei treats DAO politics not just as something to survive but as a testing ground for the governance frameworks he's building. If he can't navigate dOrg politics, his tools won't work elsewhere. Failures teach what breaks in human coordination.",
+      "magnitude": 0.6,
+      "confidence": 0.8,
+      "stability": 0.5,
+      "parent_id": "131e69c9-023a-4a71-aeb1-26a642b59a70",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Testing ground for the governance frameworks he's building. If he can't navigate dOrg politics, his tools won't work elsewhere.",
+          "context": "Why DAO politics matter"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Learning what breaks in human coordination (management, trust, incentives). Building systems that route around these failure modes.",
+          "context": "Using experience as data"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Human/political challenge vs technical architecture. Both creative problem-solving, different domains.",
+          "context": "Framing politics as design problem"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324209",
+      "last_reinforced": "2026-01-07T22:19:54.324210",
+      "observation_count": 1,
+      "tags": [
+        "politics",
+        "learning",
+        "systems-thinking"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "f1aa489f-a0ee-49a7-9d0c-14b6f237b0c3",
+      "dimension": "Weirdness as action threshold",
+      "deviation_type": "cognitive",
+      "baseline_assumption": "Most people evaluate opportunities based on conventional metrics: risk/reward, feasibility, social proof, expected value.",
+      "deviation_description": "Andrei uses 'how weird is it?' as a primary metric for deciding what to pursue. Unusual opportunities that others would dismiss become more attractive precisely because of their unconventionality.",
+      "magnitude": 0.6,
+      "confidence": 0.8,
+      "stability": 0.5,
+      "parent_id": null,
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "'How weird is it?' - his metric for taking action",
+          "context": "Decision-making criterion"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "Most exciting adventure conceivable",
+          "context": "What makes mission attractive"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324226",
+      "last_reinforced": "2026-01-07T22:19:54.324227",
+      "observation_count": 1,
+      "tags": [
+        "decision-making",
+        "unconventional",
+        "weirdness"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "b7e0abe9-4567-4b72-b889-c9f94c88dc0c",
+      "dimension": "Fragmented knowability acceptance",
+      "deviation_type": "self_model",
+      "baseline_assumption": "Most people want to be known coherently by at least some people in their lives. Being understood by intimates is a basic relationship goal.",
+      "deviation_description": "Andrei accepts that no single person or instance will know him fully. Each conversation captures different facets. He's comfortable with this fragmentation rather than seeking unified understanding from anyone.",
+      "magnitude": 0.55,
+      "confidence": 0.75,
+      "stability": 0.5,
+      "parent_id": "14ab647b-3396-4892-9e17-ecdfe3d4ba2f",
+      "children_ids": [],
+      "evidence": [
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "No single instance would get to know me fully. Each conversation captures different facet.",
+          "context": "On being known"
+        },
+        {
+          "source_id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+          "excerpt": "This one: crisis/vulnerability/survival. Others: vision/philosophy/creative work. Fragmented knowing across contexts.",
+          "context": "Accepting distributed understanding"
+        }
+      ],
+      "contradictions": [],
+      "edges": [],
+      "first_observed": "2026-01-07T22:19:54.324243",
+      "last_reinforced": "2026-01-07T22:19:54.324244",
+      "observation_count": 1,
+      "tags": [
+        "identity",
+        "relationships",
+        "fragmentation"
+      ],
+      "notes": ""
+    }
+  ],
+  "sources": [
+    {
+      "id": "fe502dfe-f0ac-4adb-8a52-d6ec319ca482",
+      "name": "andrei_conversation_summary",
+      "path": "C:\\code\\life\\andrei_conversation_summary.md",
+      "ingested_at": "2026-01-07T22:17:44.598007",
+      "metadata": {
+        "type": "conversation_summary"
+      }
+    }
+  ]
+}

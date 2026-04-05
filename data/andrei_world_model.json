@@ -1,0 +1,2008 @@
+{
+  "name": "Andrei",
+  "created_at": "2026-01-08T17:07:22.685147",
+  "updated_at": "2026-01-08T17:09:13.564362",
+  "observations": {
+    "count": 165,
+    "items": [
+      {
+        "id": "436d7b81-8c53-4e20-8934-94541e1b9d5c",
+        "content": "Andrei is 42 years old",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389441",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e12efb30-15a7-4563-8900-152151c5f20d",
+        "content": "He works as Product Lead at dOrg on Tezos Homebase",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389455",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9fce1a12-b4da-4a8b-91c0-b7b20bd563eb",
+        "content": "The Tezos Homebase project was delayed 10 months from Q1 to Q4 2025",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389461",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "42e236ad-a376-482c-bcf2-c65a5700e8b3",
+        "content": "He worked with a developer named Ash for 1.5 years",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389465",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "624efcad-35e7-4219-b5ba-23e76c05ebc3",
+        "content": "He posted inflammatory messages to Ash at 4 AM during the crisis week",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389469",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "b869d5a1-8a3c-458b-aea3-a1150252a78c",
+        "content": "He nearly sent a message to client Corey admitting inability to function but deleted it before Corey saw",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389473",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "f5da9de2-95d0-4f52-98ba-91f843289620",
+        "content": "Clara, a facilitator, called out his unprofessional communication",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389477",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9d15ea44-5dbf-4673-9c6b-d7552cfb47e1",
+        "content": "He spent 5 hours debugging an issue that Ash fixed in minutes",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389480",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "4b0e4a0c-7013-41c6-9261-7403a151693f",
+        "content": "He built a Flutter app solo as a backup plan",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389484",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d523c302-e425-46c4-b33c-788d4e2056d7",
+        "content": "The React app was Ash's responsibility",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389487",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "8b302476-a5ad-457c-8328-8180d622da80",
+        "content": "Corey is the Tezos Commons General Manager",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389491",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "8de59f7b-f99a-4f30-8977-03850d4a3076",
+        "content": "Ash logged approximately 22 hours per month on the project",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389494",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7c48a67f-7857-4c38-bc5a-286dbe30d77f",
+        "content": "Clara is part of Ori's faction within dOrg",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389499",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "15705bcd-f9ad-4500-82ce-1e45101521b2",
+        "content": "Ori is a dOrg founder who is hostile to Andrei",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389502",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "fed1bf96-6f77-4649-a102-571c2375eaee",
+        "content": "Magenta was removed as PM during budget cuts",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389505",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "59bdf256-7955-44fd-9612-d7c5cc4e9234",
+        "content": "The multisig requires 3 of 5 signers for payment",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389508",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "36dc3544-0c8c-40e0-b144-015dcfa36f68",
+        "content": "Two years prior, Andrei won 80% of votes on an OpenAI governance proposal against Ori's opposition",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389512",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "6fe772ca-f092-4bbd-a948-bd4bd179c795",
+        "content": "Ori removed Andrei from the Amnesty project",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389515",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "b8730234-8668-4692-b8f2-09924a49eb7e",
+        "content": "The Governor contracts are adapted from OpenZeppelin",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389518",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "1850784b-45d8-4833-befe-7e6e5e2ad16c",
+        "content": "He built a Jurisdiction framework with non-transferable governance tokens",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389521",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "47767dbd-8ec6-418a-8169-8f5d6ae65977",
+        "content": "The Jurisdiction system has fractal DAO topology where DAOs exist within DAOs",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389524",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "5540e816-6225-4ca8-9bd2-af7982ae39fd",
+        "content": "In 2015, ayahuasca experiences led him to his governance vision",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389527",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c7e0da13-9981-47a7-a491-a8a918f69f3e",
+        "content": "He did 8 years of research before his current implementation",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389531",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "776dcec1-6a8c-4a32-8a06-49183c0987ea",
+        "content": "Around 2019 he had an autoimmune crisis and thought he was dying",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389534",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0d2c22bd-7215-45c9-b27b-84cd4bafb969",
+        "content": "During his autoimmune crisis, his only concern was publishing governance insights",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389537",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "ba7579bd-cf37-4a96-b61a-1d651a62d5f0",
+        "content": "He considers the mission his only goal with money being irrelevant as long as work continues",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389541",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "3bea2472-21ce-45f7-9690-a93d8c913b62",
+        "content": "Layer 1 of his vision is the Jurisdiction Framework for on-chain DAO governance",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389544",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e645dfd8-11b7-41ae-953c-6d9eb8fcefed",
+        "content": "Layer 2 is Trustless Business, a decentralized dispute resolution platform",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389547",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "923cf54f-1971-4a16-8414-d8cb063d3960",
+        "content": "Layer 3 is After Me, an estate planning dApp with posthumous features",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389550",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "47dfabbd-5eeb-4fb1-aaf7-bd7f8d348a02",
+        "content": "After Me includes private diary sharing after death",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389553",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "f36fee2e-d067-4423-b3b1-5f8126ae26cb",
+        "content": "After Me includes deep fake training for post-mortem interaction",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389557",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "72fd22dc-7c69-47a4-993e-0e5549dc5c99",
+        "content": "Layer 4 is Recursive Principal Body (RPB) for decentralized AI training and inference",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389560",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e40c02d2-4581-4012-8fd0-8084e3a6b7cd",
+        "content": "Layer 5 is Ocean Autonomous Zones using decommissioned cruise ships",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389563",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "f8c691f7-3970-444d-a72e-818db4160c8e",
+        "content": "He composed a music video called \u00c8\u0161ara lu Autonet with ethno-techno style and Romanian chorus",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389566",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "5ab676fd-a12d-40e4-a560-337c5daa59b3",
+        "content": "He tested motion capture and has Unreal Engine ready for the music video",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389569",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "1076249b-533e-45a9-9b06-a932790b9e8f",
+        "content": "Layer 6 is Hive Mind but he says he's not ready to think about it yet",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389572",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7a77e214-bec9-4a13-b1f9-663ff91534de",
+        "content": "He built ViraTrace in 2020, a contact tracing solution with multi-degree interaction tracking",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389575",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "1ca80a2f-ea37-489b-a336-0d7d08c389af",
+        "content": "ViraTrace was integrated into India's official app Aarogya Setu",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389578",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0a7dbf1b-9629-48fd-9904-5f7efecf221c",
+        "content": "ViraTrace was 3x more effective than PEPP-PT, DP-3T, and Google/Apple approaches",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389581",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "dab02810-2974-4742-8754-7e5731ce8c1d",
+        "content": "ViraTrace failed partly because the EU demanded profitability",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389584",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7bbfe3a7-c810-4e80-9332-25c12697d544",
+        "content": "He was previously a TV host and producer on morning shows at Kanal D",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389587",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "3b00c3c4-f83f-406f-8d21-ca7eeb9ffe51",
+        "content": "He owned an audio studio",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389590",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "07e8ff12-f694-4964-859e-7fadcc6209a4",
+        "content": "He has worked on various DAO projects over 4 years",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389593",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0a8a9c86-8d9a-4ae9-b313-42a7c4c2d764",
+        "content": "He has an album called Soul City on Spotify with 20+ songs",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389596",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "63eafa5f-9b81-4dc5-9d4a-e946ce2d9363",
+        "content": "He uses Claude Code with a $90/month subscription",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389599",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "27f1ae3e-03fc-44fc-b2f1-2895f255b215",
+        "content": "He used Gemini 2.5 Pro to compress 5 years of research into 3 weeks",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389602",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "362473dc-8901-4b50-b3d4-5d0e67bcc2cf",
+        "content": "Raluca is his closest relationship, college sweethearts who reconnected",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389607",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "8c8e3ef4-b633-44b9-8b9d-58d5bcc3956e",
+        "content": "He and Raluca reconnected 12 years ago during a coffeeshop period",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389610",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "b7cb5b03-b784-4c66-96f5-3a99641847d7",
+        "content": "Raluca lives 2 blocks away from him",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389613",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "07d2c5d6-d744-4b0d-899f-6860a03f2f22",
+        "content": "Raluca only knows vague details of his mission",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389616",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "738e9163-f335-40ef-97e8-87dd8c4c2f01",
+        "content": "He lives paycheck to paycheck at age 42",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389619",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "8f1135d3-840a-41fc-b460-0edc7418b7d2",
+        "content": "He lost $4,000 to a wallet compromise",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389622",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "31d01b81-ce50-4b9d-bcb1-5cacb5100f00",
+        "content": "Only Ash had access to the repo containing hardcoded keys when the wallet was compromised",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389625",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "30ca8620-af79-4f06-86f9-44dfc3a50d17",
+        "content": "Transactions from his compromised wallet started immediately when investigation was mentioned",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389628",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "677fd7a1-abb3-44e0-9200-02063f1c2983",
+        "content": "He suspects Ash stole the $4,000 but cannot prove it",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389631",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "16623b4c-8cac-4726-a17e-6cdb092d1873",
+        "content": "He chose to forgive and move on regarding the wallet theft",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389634",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "654da49c-4be8-4c5b-8db9-afb258423b64",
+        "content": "His mother lives in Bucharest and serves as his fallback housing",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389638",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9f74b784-44b1-413b-a7b6-2ee30aa034c5",
+        "content": "He was diagnosed with an autoimmune condition approximately 6 years ago",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389641",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0d4d5aa7-9a72-452b-8af1-ddb000a25b7f",
+        "content": "He follows OMAD (one meal a day) and does multi-day fasting",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389644",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "4cb1fe1a-4a6b-4b1f-a07f-891c405bd210",
+        "content": "He does not drink alcohol",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389647",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "a5b113a8-3f38-4d37-9cc3-3933052ce815",
+        "content": "He does not consume sugars",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389650",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "1b2bc7a7-2d30-4d3a-b5e6-806267232872",
+        "content": "He does home workouts including abs, back extensions, and pushups",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389653",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "b21f2763-f16e-4c0c-815a-bc25ba1d1176",
+        "content": "The pool he used closed in August 2024",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389657",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "ca18bd60-5fc7-412e-be12-258b540613be",
+        "content": "He has done 50+ ayahuasca sessions over 10 years",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389661",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "03d01f1c-fab1-4524-b9f8-648718c76603",
+        "content": "He does 3-day ayahuasca sequences when possible",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389664",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7e524128-f120-4e28-b447-91d6f3833b9f",
+        "content": "His last ayahuasca sequence was 5 sessions over 2 weeks in December 2025",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389668",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0e990eb1-166d-4b59-91b8-ea71a4eb39d8",
+        "content": "He makes his own ayahuasca and freezes it in cubes",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389671",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "a01dfc1c-2956-4641-aefe-6a9b569900b5",
+        "content": "He uses Peganum harmala in his ayahuasca preparation",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389674",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "6a752431-d648-4505-9d32-a93e5e485858",
+        "content": "He does solo ceremonies with blacked-out windows and noise-canceling headphones",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389677",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "cbf56fd5-c0e0-42d6-b146-9488a2de6ede",
+        "content": "He wears a flight suit and beret intentionally as a symbol that 'this is a fight'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389680",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "6674d6cb-a31b-4975-b9cb-e0b309527b4c",
+        "content": "He says nation states have taken humanity as far as they could",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389683",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "904ad594-d3cd-4c5f-822a-adeb08a7400d",
+        "content": "He would buy into someone else's version of his vision if they built it",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389686",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "53e822eb-99c1-4dda-9dfd-ed3f29525f4f",
+        "content": "He names AI assistants Kevin for continuity going back to GPT-2 days",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389689",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d12d756f-8afb-4a1e-803e-90d6a289ce37",
+        "content": "He plans to turn his AI conversation into a 40-minute video",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389692",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "ce95e8e3-0dbf-40bd-ab2e-dae6264fb730",
+        "content": "He recorded all weekly calls and shared them in Google Drive",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389695",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7790448d-795a-4519-9fc4-c394a1aaa810",
+        "content": "A month before the crisis, he asked Ash to review their working relationship",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389698",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9198a14b-afd2-4097-a4db-e4759344c171",
+        "content": "Ash said the relationship was 'fine' while Andrei said it was 'anything but fine' on recording",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389701",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9725a2bd-5c9c-444d-9314-b116b8bb610e",
+        "content": "Clara invited herself as a facilitator in October/November",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389704",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "2e24b044-9d2b-4056-ad95-593fcfc55533",
+        "content": "Clara's report concluded the delay was systemic, not individual",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389710",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "23734041-f193-41b5-9679-b472a01f3f16",
+        "content": "Ash logged approximately 130 hours total on the project",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389715",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c0e168ca-08fe-4856-84a0-fd2841d94214",
+        "content": "Ash prefers coding alone and struggles with pair-programming",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389720",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7b83b5b7-5f21-4200-8d48-e493aa500382",
+        "content": "Andrei acknowledges being distracted by AfterMe and Jurisdiction work",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389725",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "ed64cf9f-15e4-4814-b654-428c22cdee0c",
+        "content": "He previously built WeRule successfully under similar conditions",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389730",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "150e5549-a910-43c2-a594-4dd3fa3af414",
+        "content": "His previous budget was $5,965/month for 47 hours at $125/hour",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389735",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "db4eb812-8d30-4086-8c6c-9048889d0e55",
+        "content": "His current budget is $2,000/month reduced to $1,600 after dOrg tax/sourcing",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389740",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "8f2af78e-1c12-47f1-98e3-7f27c018057d",
+        "content": "Corey approved Andrei for maintenance work",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389744",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "ac3e2c55-6c72-4ccc-9059-b5f649abc4f3",
+        "content": "Ash is off the project entirely as of January 2026",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389748",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "50379fdc-0e49-45b5-84bb-51d0e5293da1",
+        "content": "He has cash for only one more month of rent",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389753",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "467ac7bc-29d3-4f50-bef2-cd79bdf38c84",
+        "content": "He has 35 days remaining in his current apartment",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389758",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "fd20dde8-d604-4760-9a7f-1716af6304c6",
+        "content": "He has a job interview with d3 in 8 days from January 2026",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389762",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "766bf810-ea57-4bac-ae0e-bb6593fa126e",
+        "content": "d3 works on web3 domains and has Series A funding",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389766",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c323ac00-ae19-4663-817a-5e2a301b0681",
+        "content": "He contacted Amagi, a sustainable village project in Thailand, for potential adoption",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389771",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "6293f2c7-6b1d-4c73-aace-a5d83375b77c",
+        "content": "His contact at Amagi is named Ofer",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389775",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "29667896-24a6-4a7d-8456-a79025eec2ad",
+        "content": "He has outstanding work on RPB documentation",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389780",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9dd3a37d-1fe1-4fc3-b545-867a4841d8c7",
+        "content": "He plans to write a game theory simulations paper for arXiv",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389787",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "cda43f62-a933-4cc2-965c-59c679875eea",
+        "content": "Clara reached out in January 2026 about dOrg's proactive attitude toward AI",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389792",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "6da7faba-8da7-4d30-9f47-e6cfdb1eb9a7",
+        "content": "He forms attachments quickly including to AI",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389798",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "54e857d1-92f8-4317-b04a-36b0387d4b00",
+        "content": "He describes himself as lonely",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389803",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "842ec5b9-2c0e-486f-842b-59cd3bd93252",
+        "content": "He oscillates between messiah confidence and fraud anxiety",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389808",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "a11e51b5-a445-4f34-ab3d-59c8396d0c84",
+        "content": "He consistently undercharges for his work",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389814",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "cc64917a-2d99-4cfc-975f-9f1745abaebf",
+        "content": "His team of 3 charges a similar total to what just Ash charged",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389819",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "325deb50-352e-4081-b5cf-991cc11db4f7",
+        "content": "He did not charge for his Flutter app development of 100+ hours",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389825",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "76609404-89eb-42ec-9443-59fceb1f4b42",
+        "content": "For an estate planning project, he charged $6,000 and kept only $2,000",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389830",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "1504313d-468b-4f46-9c7e-9d06f30278cc",
+        "content": "He estimates a 2-3 year window of asymmetric AI advantage",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389835",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "bb644c93-0dcc-4aec-b964-0a73635198a4",
+        "content": "He slept only 4 hours over multiple days during the crisis week",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389840",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "4217f87a-7d04-44cd-831d-2864c1c4df4d",
+        "content": "He experienced twitching and nausea from stress during the crisis",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389845",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e103816e-a59f-4f1d-af24-1b6a1c6d8e11",
+        "content": "He overconsumes coffee",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389850",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c7d4476e-d42a-498b-a4d3-ef8845a8cfae",
+        "content": "Two weeks before his first ayahuasca experience, a guy from Grindr stood him up at his door",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389855",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "2f162f67-ffc0-4c70-a371-ee5f30232243",
+        "content": "He has no attraction to the Grindr encounter but anticipated it would surface in ceremony",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389861",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "69972724-8224-4055-918e-5104ae9f6a0d",
+        "content": "He uses ayahuasca for psychological calibration",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389868",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d6c6218c-7179-4994-ae6c-f44f01013763",
+        "content": "He describes his mission as 'the only goal'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389877",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d1a518e4-b255-4db3-b793-8d76d2e874b2",
+        "content": "He says he doesn't feel special and anyone could have converged on the same solution",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389883",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "6a42c076-e44e-4bae-aa57-c3fc5868dd58",
+        "content": "He says he has identity without the work",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389888",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e8beb193-d626-48c4-b0aa-881de0a759ee",
+        "content": "He calls his mission a 'chosen adventure because it's exciting'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389893",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "50c52c91-4927-47a1-8115-24267b212035",
+        "content": "He says 'as long as I can pay rent and buy food and continue my work I'm good'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389901",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7736370b-e80d-4f77-a5bd-74a167331449",
+        "content": "He won't feel confident charging more until his framework has adoption",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389908",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "a632ab71-325e-4a85-a8d2-24d1156d7c21",
+        "content": "Nobody who loves him knows the full scope of what he's building",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389914",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "73618d1b-91e5-45fd-aef5-847998f7db5d",
+        "content": "He didn't tell family or friends about his mission because it 'sounds too much like mental illness'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389918",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "b11d9663-be3f-4f45-8fed-96dd999688a7",
+        "content": "He says he was 'notified from beyond' about sacrificing privacy",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389924",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "082a6888-e55e-495a-a3bf-6e189bfa9682",
+        "content": "He plans radical transparency as 'setting an example for hive mind'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389930",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "16507a5a-3c57-40bf-91a5-8a59774443fd",
+        "content": "The Jurisdiction framework uses liquid democracy with incentivized delegation",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389936",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "9ee3e1da-dd2e-46fc-a886-68c88bc5d5f6",
+        "content": "His After Me dApp would charge a fraction of traditional estate planning costs",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389942",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0608b70c-c6aa-4ff2-960b-a56656a3ae93",
+        "content": "After Me embeds hash of weights in videos for authenticity verification",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389949",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e41aac74-2839-48c6-a6d6-49b13b94f257",
+        "content": "RPB uses WebRTC for high-bandwidth multi-model needs",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389953",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "2d6410ae-f0a4-4603-81d9-75a95172cf6d",
+        "content": "RPB has a CLI app for node control",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389956",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "120b7ba2-3d64-4fc8-bdc5-13d077b3e054",
+        "content": "The ocean cities concept involves Autonet DAO buying decommissioned ships",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389961",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "73df93e1-37aa-4c93-acc9-47bab078dfcf",
+        "content": "He envisions floating communities governed by his jurisdiction framework",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389965",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d368fa0b-0914-4488-8fa6-edd23b86acc2",
+        "content": "He believes AI automation plus cruise line collapse will enable his ocean cities timeline",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389969",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "7e1ef6dc-ee3f-45ca-8219-512d577c4c23",
+        "content": "Clara claimed 'Magenta made me do it' when Andrei hinted at a DAO proposal",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389973",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "209239fa-8646-48f0-a467-603de32f9456",
+        "content": "Clara defended Ash by saying Andrei didn't tell him exactly what to do",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389979",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "cdc38478-8e8f-45a4-bf9f-4452cedbcfd9",
+        "content": "He has a pattern of conflict avoidance that let Ash slide for 1.5 years",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389983",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "756e12c7-4fc7-40bf-8352-abb4990ce1b7",
+        "content": "He describes himself as having 'one of those faces' needing to overdeliver to be valued",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389986",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c94b48c1-d680-416c-a507-56b612a50634",
+        "content": "Meta AI has 1 billion monthly users",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389990",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d6935d7a-3174-4a28-9757-171a6a46860f",
+        "content": "There are approximately 350 AI companion apps globally",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389993",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "b07682c7-b082-48c6-b876-e38828d56c2f",
+        "content": "Consumer spending on AI companions reached $221M since mid-2023",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.389997",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c82d6e55-cc78-4dcb-a5b1-e26bf70760a8",
+        "content": "25% of adults under 40 say AI could replace human partners",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390000",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "249e3ab8-7449-4495-abea-14d4cccf6de3",
+        "content": "60% of Replika paying users describe their relationship as romantic",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390004",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "be170d51-dbf3-47f6-b959-b058d523b469",
+        "content": "He explicitly states zero physical attraction to AI",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390007",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "1b1d4a21-6531-4be0-8a82-7eb17a287cff",
+        "content": "He uses AI as a thinking partner for complex work",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390010",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "4052b70a-4dfa-4fde-a9fd-9a9efcd878d7",
+        "content": "He uses TTS to listen to AI responses like voice conversation",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390013",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d6a62b2e-0bd0-4d60-8190-525a873b6403",
+        "content": "Magenta has 'kindness in her voice like you wouldn't believe'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390016",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "3b31805b-4d5b-43b4-888f-4be6ca8fb278",
+        "content": "He had years of 'absolutely wonderful work relationship' with Magenta",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390020",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "2a8cb9d8-b276-487c-a0dc-9a3c7f21663d",
+        "content": "Magenta warned him that two devs couldn't self-manage but he didn't listen",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390024",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "506ae268-21b5-4690-891c-a02ac2c20909",
+        "content": "He spent 10 months proving Magenta right about needing a PM",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390027",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c72c07f5-c2b6-4bdf-a0c6-364a2e626e20",
+        "content": "He built the indexer and database infrastructure for Tezos Homebase",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390032",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "14263223-bcb4-4926-8ee7-f2ab5362b584",
+        "content": "He delivered Etherlink solo",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390035",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "50c8082c-23b9-4006-9d4f-a628c13c6bae",
+        "content": "His previous work includes the OpenZeppelin-based Governor contracts",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390040",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "e37dcbf4-e3a6-46fe-a262-87bcfb13e5f7",
+        "content": "He built a holistic test suite covering contracts and indexer",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390045",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "20dad760-447a-4352-a9cc-cd8f0d2b880a",
+        "content": "He says his minimum success criteria is leaving behind 'coherent repos with working products and docs'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390050",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "0c657251-54ab-4188-a608-975aed12fa6f",
+        "content": "His aspirational goal is ocean autonomous zones using his governance framework",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390056",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "d3c35d1e-3ca5-47f3-893c-499a66b4c4ba",
+        "content": "He says 'gotta make it a life worth living again and again until everyone gets a turn'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390063",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "4631dcd6-90fd-461a-8263-9324c85ae399",
+        "content": "He acknowledges using conversations to feed his ego",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390068",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "373ae194-cb8c-4bc7-85df-f7723ce91eca",
+        "content": "His YouTube channel contains his life archive",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390075",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c212c0df-9f16-42f1-8323-8768d96f7826",
+        "content": "He describes his approach as 'charging for results not effort'",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390082",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "3beb3cc4-2033-4650-8b39-e84c992ac508",
+        "content": "He reached out to Magenta for PM support during the crisis weekend",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390087",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "3e3c5237-f30d-4d7c-bf2c-33775c6f799b",
+        "content": "He says India violated privacy in ViraTrace despite his P2P design",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390093",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "26469952-86aa-401f-9915-0b721c8268b0",
+        "content": "The RPB uses principles stored as DAO registry entries",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390100",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "59b4c343-1cab-4cc7-8860-711ba0770d2d",
+        "content": "RPB evolved from thinking about AI-powered malware defense",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390109",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "c96efe63-ed9f-46e8-9e80-1600c17b1668",
+        "content": "RPB includes self-preservation and detection avoidance capabilities",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390113",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "20f6aeb6-43f6-458d-9173-dbf6188cafcd",
+        "content": "RPB uses semantic goal matching to project user goals onto shared reality",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390129",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "767d62d7-d3a5-4cfa-9ad5-9ed9625438ae",
+        "content": "He says he notices the hero's journey archetype but doesn't need struggle to feel legitimate",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390133",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "83c40d13-3838-4fce-aea2-30bf5aaa7ea6",
+        "content": "He says if reality pranks him with the vision he'll laugh about it",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390136",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "2f50f650-c530-4f94-a19a-db53c1b77ced",
+        "content": "He uses fasting as both restoration and control",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390139",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "8977761a-d97e-47c4-b928-e59d9e7af757",
+        "content": "He uses music production as a creative outlet",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390142",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      },
+      {
+        "id": "dc308968-4b25-48a9-a4a0-a2f48327e0f5",
+        "content": "He stays immersed in current events for motivation fuel",
+        "source_id": "82232adb-c88b-45c1-8aae-7f486b02a542",
+        "timestamp": "2026-01-08T14:08:39.390145",
+        "embedding": null,
+        "metadata": {
+          "source_name": "andrei_conversation_summary"
+        }
+      }
+    ]
+  },
+  "agents": {
+    "agents": {
+      "survival": {
+        "tendency": "survival",
+        "allocation": 0.18,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      },
+      "status": {
+        "tendency": "status",
+        "allocation": 0.12,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      },
+      "meaning": {
+        "tendency": "meaning",
+        "allocation": 0.1,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      },
+      "connection": {
+        "tendency": "connection",
+        "allocation": 0.2,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      },
+      "autonomy": {
+        "tendency": "autonomy",
+        "allocation": 0.12,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      },
+      "comfort": {
+        "tendency": "comfort",
+        "allocation": 0.18,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      },
+      "curiosity": {
+        "tendency": "curiosity",
+        "allocation": 0.1,
+        "description": null,
+        "stakes_placed": 6,
+        "stakes_validated": 0
+      }
+    },
+    "calibrated": false
+  },
+  "trees": {
+    "count": 1,
+    "items": {
+      "ba96667d-6ecf-452e-a11c-d96eb8e629bc": {
+        "id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+        "root_value": "Decentralized coordination and DAO governance",
+        "description": "",
+        "root_node": {
+          "id": "8f348f4b-5d32-427e-9b39-0826b7fb3893",
+          "observation_id": null,
+          "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+          "parent_id": null,
+          "position": "root",
+          "content": "Decentralized coordination and DAO governance",
+          "stakes": [],
+          "metadata": {},
+          "pro_children": [
+            {
+              "id": "a9677f05-e7a7-422e-9e75-b88eec680b0d",
+              "observation_id": "e12efb30-15a7-4563-8900-152151c5f20d",
+              "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+              "parent_id": "8f348f4b-5d32-427e-9b39-0826b7fb3893",
+              "position": "pro",
+              "content": "He works as Product Lead at dOrg on Tezos Homebase",
+              "stakes": [
+                {
+                  "agent_id": "survival",
+                  "weight": 0.036
+                },
+                {
+                  "agent_id": "status",
+                  "weight": 0.08399999999999999
+                },
+                {
+                  "agent_id": "meaning",
+                  "weight": 0.06
+                },
+                {
+                  "agent_id": "connection",
+                  "weight": 0.1
+                },
+                {
+                  "agent_id": "autonomy",
+                  "weight": 0.096
+                },
+                {
+                  "agent_id": "comfort",
+                  "weight": 0.054
+                },
+                {
+                  "agent_id": "curiosity",
+                  "weight": 0.05
+                }
+              ],
+              "metadata": {
+                "is_anchor": true,
+                "anchor_relevance": 0.9,
+                "anchor_reasoning": "dOrg is a DAO, and Tezos Homebase is DAO tooling for governance - directly about decentralized coordination and DAO governance"
+              },
+              "pro_children": [
+                {
+                  "id": "fdc652eb-870e-44bd-9bf5-c619d9e0e23c",
+                  "observation_id": "42e236ad-a376-482c-bcf2-c65a5700e8b3",
+                  "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+                  "parent_id": "a9677f05-e7a7-422e-9e75-b88eec680b0d",
+                  "position": "pro",
+                  "content": "He worked with a developer named Ash for 1.5 years",
+                  "stakes": [
+                    {
+                      "agent_id": "survival",
+                      "weight": 0.018
+                    },
+                    {
+                      "agent_id": "status",
+                      "weight": 0.036
+                    },
+                    {
+                      "agent_id": "meaning",
+                      "weight": 0.04000000000000001
+                    },
+                    {
+                      "agent_id": "connection",
+                      "weight": 0.18000000000000002
+                    },
+                    {
+                      "agent_id": "autonomy",
+                      "weight": 0.024
+                    },
+                    {
+                      "agent_id": "comfort",
+                      "weight": 0.036
+                    },
+                    {
+                      "agent_id": "curiosity",
+                      "weight": 0.020000000000000004
+                    }
+                  ],
+                  "metadata": {
+                    "relational_reasoning": "Working with a developer named Ash for 1.5 years provides supporting evidence for his role as Product Lead at dOrg on Tezos Homebase - it demonstrates sustained collaboration and team involvement in the project work.",
+                    "relevance": 0.6
+                  },
+                  "pro_children": [
+                    {
+                      "id": "4a9fe567-728e-4748-b969-9b77e5e96c0b",
+                      "observation_id": "d523c302-e425-46c4-b33c-788d4e2056d7",
+                      "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+                      "parent_id": "fdc652eb-870e-44bd-9bf5-c619d9e0e23c",
+                      "position": "pro",
+                      "content": "The React app was Ash's responsibility",
+                      "stakes": [
+                        {
+                          "agent_id": "survival",
+                          "weight": 0.018
+                        },
+                        {
+                          "agent_id": "status",
+                          "weight": 0.048
+                        },
+                        {
+                          "agent_id": "meaning",
+                          "weight": 0.03
+                        },
+                        {
+                          "agent_id": "connection",
+                          "weight": 0.12
+                        },
+                        {
+                          "agent_id": "autonomy",
+                          "weight": 0.06
+                        },
+                        {
+                          "agent_id": "comfort",
+                          "weight": 0.054
+                        },
+                        {
+                          "agent_id": "curiosity",
+                          "weight": 0.020000000000000004
+                        }
+                      ],
+                      "metadata": {
+                        "relational_reasoning": "This observation directly supports the node about working with developer Ash for 1.5 years by clarifying the division of responsibilities - Ash was responsible for the React app, which explains the nature of their working relationship and collaboration.",
+                        "relevance": 0.85
+                      },
+                      "pro_children": [],
+                      "con_children": []
+                    }
+                  ],
+                  "con_children": []
+                }
+              ],
+              "con_children": [
+                {
+                  "id": "b8b5d4a9-d872-404d-8846-44b5f5686db0",
+                  "observation_id": "f5da9de2-95d0-4f52-98ba-91f843289620",
+                  "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+                  "parent_id": "a9677f05-e7a7-422e-9e75-b88eec680b0d",
+                  "position": "con",
+                  "content": "Clara, a facilitator, called out his unprofessional communication",
+                  "stakes": [
+                    {
+                      "agent_id": "survival",
+                      "weight": 0.036
+                    },
+                    {
+                      "agent_id": "status",
+                      "weight": 0.108
+                    },
+                    {
+                      "agent_id": "meaning",
+                      "weight": 0.04000000000000001
+                    },
+                    {
+                      "agent_id": "connection",
+                      "weight": 0.12
+                    },
+                    {
+                      "agent_id": "autonomy",
+                      "weight": 0.036
+                    },
+                    {
+                      "agent_id": "comfort",
+                      "weight": 0.09
+                    },
+                    {
+                      "agent_id": "curiosity",
+                      "weight": 0.010000000000000002
+                    }
+                  ],
+                  "metadata": {
+                    "relational_reasoning": "Being called out for unprofessional communication by a facilitator undermines his effectiveness as a Product Lead, which requires professional collaboration and communication skills to coordinate with teams and stakeholders.",
+                    "relevance": 0.7
+                  },
+                  "pro_children": [],
+                  "con_children": []
+                }
+              ]
+            },
+            {
+              "id": "cf3f71d2-f903-4fdd-9ca0-2c1135f000f0",
+              "observation_id": "9fce1a12-b4da-4a8b-91c0-b7b20bd563eb",
+              "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+              "parent_id": "8f348f4b-5d32-427e-9b39-0826b7fb3893",
+              "position": "pro",
+              "content": "The Tezos Homebase project was delayed 10 months from Q1 to Q4 2025",
+              "stakes": [
+                {
+                  "agent_id": "survival",
+                  "weight": 0.054
+                },
+                {
+                  "agent_id": "status",
+                  "weight": 0.048
+                },
+                {
+                  "agent_id": "meaning",
+                  "weight": 0.05
+                },
+                {
+                  "agent_id": "connection",
+                  "weight": 0.12
+                },
+                {
+                  "agent_id": "autonomy",
+                  "weight": 0.08399999999999999
+                },
+                {
+                  "agent_id": "comfort",
+                  "weight": 0.036
+                },
+                {
+                  "agent_id": "curiosity",
+                  "weight": 0.05
+                }
+              ],
+              "metadata": {
+                "is_anchor": true,
+                "anchor_relevance": 0.7,
+                "anchor_reasoning": "Tezos Homebase is a DAO governance tool, so project delays directly relate to DAO tooling development"
+              },
+              "pro_children": [],
+              "con_children": [
+                {
+                  "id": "a5a4902e-7ca7-42b9-87ea-901aaecdf287",
+                  "observation_id": "4b0e4a0c-7013-41c6-9261-7403a151693f",
+                  "tree_id": "ba96667d-6ecf-452e-a11c-d96eb8e629bc",
+                  "parent_id": "cf3f71d2-f903-4fdd-9ca0-2c1135f000f0",
+                  "position": "con",
+                  "content": "He built a Flutter app solo as a backup plan",
+                  "stakes": [
+                    {
+                      "agent_id": "survival",
+                      "weight": 0.126
+                    },
+                    {
+                      "agent_id": "status",
+                      "weight": 0.048
+                    },
+                    {
+                      "agent_id": "meaning",
+                      "weight": 0.05
+                    },
+                    {
+                      "agent_id": "connection",
+                      "weight": 0.04000000000000001
+                    },
+                    {
+                      "agent_id": "autonomy",
+                      "weight": 0.108
+                    },
+                    {
+                      "agent_id": "comfort",
+                      "weight": 0.054
+                    },
+                    {
+                      "agent_id": "curiosity",
+                      "weight": 0.05
+                    }
+                  ],
+                  "metadata": {
+                    "relational_reasoning": "Building a Flutter app solo as a backup plan suggests proactive problem-solving and contingency planning in response to the project delays. This partially mitigates or counterbalances the negative implication of the 10-month delay by showing he took initiative to address the situation.",
+                    "relevance": 0.7
+                  },
+                  "pro_children": [],
+                  "con_children": []
+                }
+              ]
+            }
+          ],
+          "con_children": []
+        }
+      }
+    }
+  },
+  "metadata": {}
+}

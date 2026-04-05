@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "world-model"
+version = "1.0.0"
+description = "Agent-relative computation for personal worldview representation"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+novelty = [
+    "sentence-transformers",
+    "transformers",
+    "requests",
+    "numpy",
+]
+api = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+]
+firebase = [
+    "firebase-admin",
+]
+dev = ["pytest>=7.0"]
+all = [
+    "world-model[novelty,api,firebase]",
+]
+
+[tool.setuptools.packages.find]
+include = ["world_model*"]
