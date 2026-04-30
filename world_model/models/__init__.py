@@ -1,7 +1,14 @@
 from .deviation import DeviationNode, DeviationType, Edge, EdgeType
 from .evidence import EvidencePointer, Source
 from .observation import Observation, ObservationStore
-from .agent import Agent, AgentSet, Tendency, DEFAULT_ALLOCATIONS
+from .tendency import Tendency, TendencySet
+from .factory import (
+    TendencySpec,
+    TendencyFactory,
+    DefaultTendencyFactory,
+    LEGACY_PERSONALITY_SPECS,
+    build_legacy_personality_set,
+)
 from .tree import Node, Tree, TreeStore, Position, Stake
 
 __all__ = [
@@ -13,10 +20,13 @@ __all__ = [
     "Source",
     "Observation",
     "ObservationStore",
-    "Agent",
-    "AgentSet",
     "Tendency",
-    "DEFAULT_ALLOCATIONS",
+    "TendencySet",
+    "TendencySpec",
+    "TendencyFactory",
+    "DefaultTendencyFactory",
+    "LEGACY_PERSONALITY_SPECS",
+    "build_legacy_personality_set",
     "Node",
     "Tree",
     "TreeStore",

@@ -34,45 +34,16 @@ import json
 import sys
 from pathlib import Path
 
-# Import the sparsity module directly via importlib to avoid triggering
-# the top-level world_model package __init__, which currently imports a
-# missing attention.curves module. Pre-existing breakage, unrelated.
-import importlib.util
-def _load_module(name: str, relpath: list[str]):
-    spec = importlib.util.spec_from_file_location(
-        name,
-        Path(__file__).parent.joinpath(*relpath),
-    )
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules[name] = mod  # required for @dataclass to find module
-    spec.loader.exec_module(mod)
-    return mod
-
-
-# Load sparsity first (fictional_worlds depends on it via relative import,
-# but we're sidestepping the package, so we wire that dependency by hand).
-_sparsity = _load_module(
-    "world_model.analysis.sparsity",
-    ["world_model", "analysis", "sparsity.py"],
+from world_model.analysis.sparsity import (
+    compute_sparsity_metrics,
+    extract_stake_edges_from_dict,
+    synthetic_powerlaw_edges,
+    synthetic_uniform_edges,
 )
-
-# Make the sparsity module accessible to fictional_worlds' relative import.
-# We have to register it under a name fictional_worlds will look up.
-sys.modules.setdefault("world_model", type(sys)("world_model"))
-sys.modules.setdefault("world_model.analysis", type(sys)("world_model.analysis"))
-sys.modules["world_model.analysis.sparsity"] = _sparsity
-
-_fictional = _load_module(
-    "world_model.analysis.fictional_worlds",
-    ["world_model", "analysis", "fictional_worlds.py"],
+from world_model.analysis.fictional_worlds import (
+    coherence_sweep,
+    format_sweep_table,
 )
-
-compute_sparsity_metrics = _sparsity.compute_sparsity_metrics
-extract_stake_edges_from_dict = _sparsity.extract_stake_edges_from_dict
-synthetic_powerlaw_edges = _sparsity.synthetic_powerlaw_edges
-synthetic_uniform_edges = _sparsity.synthetic_uniform_edges
-coherence_sweep = _fictional.coherence_sweep
-format_sweep_table = _fictional.format_sweep_table
 
 
 def banner(text: str) -> None:
