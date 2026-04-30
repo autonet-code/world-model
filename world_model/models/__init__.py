@@ -16,6 +16,15 @@ from .lineage import (
     StakeWeightGraph,
     LineageRecorder,
     attach_lineage_to_tendencies,
+    # Retention policies
+    RetentionPolicy,
+    UnboundedPolicy,
+    DropOldestPolicy,
+    RefuseWhenFullPolicy,
+    BoundedRingPlusCompactionPolicy,
+    CompactionTier,
+    OutboxFullError,
+    policy_from_dict,
 )
 from .tendency import Tendency, TendencySet
 from .factory import (
@@ -48,6 +57,14 @@ __all__ = [
     "StakeWeightGraph",
     "LineageRecorder",
     "attach_lineage_to_tendencies",
+    "RetentionPolicy",
+    "UnboundedPolicy",
+    "DropOldestPolicy",
+    "RefuseWhenFullPolicy",
+    "BoundedRingPlusCompactionPolicy",
+    "CompactionTier",
+    "OutboxFullError",
+    "policy_from_dict",
     "Tendency",
     "TendencySet",
     "TendencySpec",

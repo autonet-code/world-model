@@ -37,6 +37,9 @@ from .models import (
     LODLevel, LODProtocol, LODPayload, TrivialLODProtocol, to_level,
     EventType, Event, EngineClock, Lineage, StakeWeightGraph,
     LineageRecorder, attach_lineage_to_tendencies,
+    RetentionPolicy, UnboundedPolicy, DropOldestPolicy,
+    RefuseWhenFullPolicy, BoundedRingPlusCompactionPolicy,
+    CompactionTier, OutboxFullError, policy_from_dict,
     Tendency, TendencySet,
     TendencySpec, TendencyFactory, DefaultTendencyFactory,
     LEGACY_PERSONALITY_SPECS, build_legacy_personality_set,
@@ -64,6 +67,9 @@ __all__ = [
     # Lineage
     "EventType", "Event", "EngineClock", "Lineage", "StakeWeightGraph",
     "LineageRecorder", "attach_lineage_to_tendencies",
+    "RetentionPolicy", "UnboundedPolicy", "DropOldestPolicy",
+    "RefuseWhenFullPolicy", "BoundedRingPlusCompactionPolicy",
+    "CompactionTier", "OutboxFullError", "policy_from_dict",
     # Tendencies + factory
     "Tendency", "TendencySet",
     "TendencySpec", "TendencyFactory", "DefaultTendencyFactory",
