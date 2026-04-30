@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Handwritten digits classification via the shared classifier_wiring module.
+Letter recognition via the shared classifier_wiring module.
 
-10 classes, 64 features (8x8 pixels), 1797 cases. Random baseline 10%.
+26 classes, 16 features, 20000 cases. Random baseline ~3.8%.
+The hardest of our classification demos to date.
 """
 
 from __future__ import annotations
@@ -10,7 +11,7 @@ from __future__ import annotations
 import random
 from collections import Counter
 
-from sklearn.datasets import load_digits
+from sklearn.datasets import fetch_openml
 
 from world_model.analysis.classifier_wiring import (
     fit_classifier_profile,
@@ -19,17 +20,19 @@ from world_model.analysis.classifier_wiring import (
 )
 
 
-def main(test_fraction: float = 0.3, seed: int = 42, max_test_cases: int = 200) -> int:
+def main(test_fraction: float = 0.2, seed: int = 42, max_test_cases: int = 200) -> int:
     print()
     print("=" * 70)
-    print("HANDWRITTEN DIGITS CLASSIFICATION VIA RESEED-AND-EQUILIBRATE")
+    print("LETTER RECOGNITION VIA RESEED-AND-EQUILIBRATE")
     print("=" * 70)
 
-    digits = load_digits()
-    X, y = digits.data, digits.target
+    print("\n  loading letter dataset...")
+    data = fetch_openml('letter', version=1, as_frame=False, parser='auto')
+    X = data.data.astype(float)
+    y = data.target
     n_total = len(y)
-    n_classes = len(digits.target_names)
-    classes = list(range(n_classes))
+    classes = sorted(set(y))
+    n_classes = len(classes)
 
     rng = random.Random(seed)
     indices = list(range(n_total))
@@ -44,12 +47,12 @@ def main(test_fraction: float = 0.3, seed: int = 42, max_test_cases: int = 200) 
     X_test = X[test_idx]
     y_test = y[test_idx]
 
-    print(f"\n  digits: {n_total} cases, 64 pixels, 10 classes")
+    print(f"  letters: {n_total} cases, 16 features, 26 classes")
     print(f"  train/test: {len(train_idx)}/{len(test_idx)} (cap {max_test_cases}, seed={seed})")
 
     profile = fit_classifier_profile(X_train, y_train, classes)
     base_state = build_classifier_state(
-        profile, class_prefix="digit_", feature_prefix="px"
+        profile, class_prefix="letter_", feature_prefix="f"
     )
 
     n_tendencies = len(base_state.tendencies)
@@ -58,15 +61,15 @@ def main(test_fraction: float = 0.3, seed: int = 42, max_test_cases: int = 200) 
 
     print(f"\n  classifying {len(test_idx)} test cases...")
     correct = 0
-    confusion: dict[tuple[int, int], int] = Counter()
+    confusion: dict[tuple[str, str], int] = Counter()
     per_class_total: Counter = Counter()
     per_class_correct: Counter = Counter()
     for i in range(len(test_idx)):
         prediction = classify_case(
             X_test[i], profile, base_state,
-            class_prefix="digit_", feature_prefix="px",
+            class_prefix="letter_", feature_prefix="f",
         )
-        true_class = int(y_test[i])
+        true_class = y_test[i]
         per_class_total[true_class] += 1
         if prediction == true_class:
             correct += 1
@@ -77,22 +80,22 @@ def main(test_fraction: float = 0.3, seed: int = 42, max_test_cases: int = 200) 
 
     accuracy = correct / len(test_idx)
     print(f"\n  accuracy: {correct}/{len(test_idx)} = {accuracy:.1%}")
-    print(f"  baseline (random): 10.0%")
+    print(f"  baseline (random): {1/n_classes:.1%}")
 
-    print(f"\n  per-class accuracy:")
-    for c in range(n_classes):
-        if per_class_total[c]:
-            print(f"    digit {c}: {per_class_correct[c]:>3d}/{per_class_total[c]:>3d} = "
-                  f"{per_class_correct[c]/per_class_total[c]:.0%}")
+    print(f"\n  per-class accuracy (>=3 cases):")
+    for c in classes:
+        if per_class_total[c] >= 3:
+            n = per_class_total[c]
+            r = per_class_correct[c]
+            bar = "#" * int(round(r / n * 20))
+            print(f"    {c}: {r:>2d}/{n:>2d} = {r/n:>3.0%}  {bar}")
 
-    print(f"\n  confusion (row=true, col=predicted):")
-    print("        " + " ".join(f"{c:>4d}" for c in range(n_classes)))
-    for tc in range(n_classes):
-        cells = " ".join(
-            f"{confusion[(tc, pc)]:>4d}" if confusion[(tc, pc)] > 0 else "   ."
-            for pc in range(n_classes)
-        )
-        print(f"    {tc:>4d}: {cells}")
+    miscls = [(t, p, c) for (t, p), c in confusion.items() if t != p]
+    miscls.sort(key=lambda x: -x[2])
+    if miscls:
+        print(f"\n  top confusions (true -> predicted):")
+        for t, p, c in miscls[:10]:
+            print(f"    {t} -> {p}: {c}x")
 
     print()
     return 0

@@ -132,6 +132,8 @@ def reseed_and_equilibrate(
     max_iterations: int = 100,
     learning_rate: float = 0.1,
     propagate_via_graph: bool = False,
+    sharpen_among_ids: Optional[set[str]] = None,
+    sharpen_strength: float = 1.0,
     recorder: Optional[LineageRecorder] = None,
 ) -> ReseedResult:
     """Apply substitutions, calibrate to a fixpoint, return the new state.
@@ -166,6 +168,19 @@ def reseed_and_equilibrate(
         substitution-implied distribution; non-substituted tendencies
         targets equal their pre-call allocations. This is the simpler
         "just settle the math" mode.
+    sharpen_among_ids:
+        Optional set of tendency ids that should *compete* with each
+        other after each calibration step. Within this set, allocations
+        are amplified by a softmax-like sharpening: the strongest
+        candidate is boosted, weaker candidates are suppressed. This
+        adds discriminative dynamics (winner amplification) to the
+        otherwise smoothing graph-walk relaxation. Use it when you
+        want classification-like readouts where a single candidate
+        should dominate. None (default) means no sharpening.
+    sharpen_strength:
+        Temperature inverse for the softmax sharpen. 0 = no sharpening
+        (uniform), 1 = standard softmax, larger = more aggressive
+        winner amplification. Reasonable values are 1-10.
     recorder:
         If provided, emits one ALLOCATION_SHIFTED event per affected
         tendency at the end of calibration, reporting the net shift.
@@ -215,6 +230,8 @@ def reseed_and_equilibrate(
         propagate_via_graph=propagate_via_graph,
         graph=new_state.graph if propagate_via_graph else None,
         anchored_ids=anchored_ids if propagate_via_graph else None,
+        sharpen_among_ids=sharpen_among_ids,
+        sharpen_strength=sharpen_strength,
     )
 
     # 4. Compute affected ids (those whose allocation moved by > tolerance).
@@ -326,6 +343,9 @@ def _calibrate(
     propagate_via_graph: bool = False,
     graph: Optional[StakeWeightGraph] = None,
     anchored_ids: Optional[set[str]] = None,
+    novelty_modulated: bool = True,
+    sharpen_among_ids: Optional[set[str]] = None,
+    sharpen_strength: float = 1.0,
 ) -> tuple[int, bool, float]:
     """Iterate the contraction map until allocations settle.
 
@@ -336,11 +356,24 @@ def _calibrate(
 
       Graph-propagation: anchored tendencies (those the caller
       substituted) have explicit targets in ``target_allocs``.
-      Non-anchored tendencies have their target re-computed each
-      iteration as the weighted average of their graph neighbors'
-      *current* allocations (weighted by edge weight). This makes
-      evidence injected into the anchored tendencies propagate
-      through the graph and reshape the rest of the equilibrium.
+      Non-anchored tendencies recompute their target each iteration
+      based on their neighbors' allocations.
+
+    Within graph-propagation, two sub-modes:
+
+      Novelty-modulated (default): each tendency T uses its OWN edges
+      as a reference frame -- its edge weight to a neighbor N is read
+      as "the allocation T expects N to have." When N's actual
+      allocation deviates from this expectation, the deviation is the
+      novelty T experiences. Neighbors with high novelty contribute
+      more weight to T's target update; expected neighbors contribute
+      less. This is the engine's first-class attention mechanism: the
+      receiver attends to surprises from its own reference frame.
+
+      Plain weighted average: simple Laplace relaxation. Each
+      neighbor's current allocation is averaged according to edge
+      weight, ignoring whether that allocation was expected. This is
+      the smoothed-out version, kept for diagnostics and comparison.
 
     Returns (iterations_run, converged?, final_max_delta).
     """
@@ -351,28 +384,79 @@ def _calibrate(
 
     last_max_delta = 0.0
     for it in range(1, max_iterations + 1):
-        # Per-iteration: compute non-anchored targets if graph-propagating
         if propagate_via_graph:
             current = {t.id: t.allocation for t in tendencies.all()}
-            iter_targets = dict(target_allocs)  # anchored entries unchanged
+            iter_targets = dict(target_allocs)
             for t in tendencies.all():
                 if t.id in anchored_ids:
                     continue
-                # Target = weighted average of neighbors' current allocations
                 neighbors = graph.weights.get(t.id, {})
                 if not neighbors:
                     iter_targets[t.id] = t.allocation
                     continue
-                total_weight = sum(neighbors.values())
-                if total_weight <= 0:
-                    iter_targets[t.id] = t.allocation
-                    continue
-                weighted_sum = sum(
-                    current.get(n_id, 0.0) * w
-                    for n_id, w in neighbors.items()
-                )
-                iter_targets[t.id] = weighted_sum / total_weight
-            # Renormalize iter_targets to sum to 1 so calibration math stays stable
+
+                if novelty_modulated:
+                    # T's reference frame for what N "should" be is
+                    # T's edge weight to N, normalized within T's
+                    # neighborhood. Deviation = how surprising N's
+                    # actual allocation is to T.
+                    edge_total = sum(neighbors.values())
+                    if edge_total <= 0:
+                        iter_targets[t.id] = t.allocation
+                        continue
+                    expected = {
+                        n_id: w / edge_total
+                        for n_id, w in neighbors.items()
+                    }
+                    # Average neighbor expected allocation, in
+                    # *neighbor* units: scale so a typical neighbor
+                    # holds 1/n_neighbors of mass.
+                    n_neighbors = len(neighbors)
+                    typical_neighbor_mass = 1.0 / n_neighbors
+
+                    novelty_scores: dict[str, float] = {}
+                    for n_id in neighbors:
+                        exp_alloc = expected[n_id] * typical_neighbor_mass * n_neighbors
+                        # "expected" sums to 1; rescale so the typical
+                        # expectation matches the global per-tendency
+                        # average. Then deviation is allocation -
+                        # expected.
+                        actual = current.get(n_id, 0.0)
+                        # Use absolute deviation as novelty; near-zero
+                        # for as-expected, large for surprising.
+                        novelty_scores[n_id] = abs(actual - exp_alloc)
+
+                    # Combine edge weight (how much this tendency
+                    # cares about this neighbor in principle) with
+                    # novelty (how much actually-happening signal
+                    # there is to attend to this iteration).
+                    # Floor on novelty so even fully-expected
+                    # neighbors contribute something.
+                    nov_floor = 0.05
+                    effective_weights = {
+                        n_id: neighbors[n_id] * (nov_floor + novelty_scores[n_id])
+                        for n_id in neighbors
+                    }
+                    eff_total = sum(effective_weights.values())
+                    if eff_total <= 0:
+                        iter_targets[t.id] = t.allocation
+                        continue
+                    weighted_sum = sum(
+                        current.get(n_id, 0.0) * w
+                        for n_id, w in effective_weights.items()
+                    )
+                    iter_targets[t.id] = weighted_sum / eff_total
+                else:
+                    total_weight = sum(neighbors.values())
+                    if total_weight <= 0:
+                        iter_targets[t.id] = t.allocation
+                        continue
+                    weighted_sum = sum(
+                        current.get(n_id, 0.0) * w
+                        for n_id, w in neighbors.items()
+                    )
+                    iter_targets[t.id] = weighted_sum / total_weight
+
             t_total = sum(max(0.0, v) for v in iter_targets.values())
             if t_total > 0:
                 iter_targets = {k: max(0.0, v) / t_total for k, v in iter_targets.items()}
@@ -389,7 +473,51 @@ def _calibrate(
             if abs(delta) > max_delta:
                 max_delta = abs(delta)
         tendencies.normalize()
+
+        # Optional: sharpen competitive subset via softmax. This is the
+        # discriminative-dynamics primitive the graph-walk averaging lacks.
+        if sharpen_among_ids:
+            _apply_softmax_sharpen(tendencies, sharpen_among_ids, sharpen_strength)
+
         last_max_delta = max_delta
         if max_delta < tolerance:
             return it, True, max_delta
     return max_iterations, False, last_max_delta
+
+
+def _apply_softmax_sharpen(
+    tendencies: TendencySet,
+    sharpen_ids: set[str],
+    strength: float,
+) -> None:
+    """Apply a softmax-style winner amplification within a subset.
+
+    The total mass held by the sharpen subset is preserved: we just
+    redistribute it according to softmax(strength * allocation). The
+    rest of the tendencies are untouched. After redistribution, the
+    full TendencySet is renormalized to sum to 1.
+
+    strength=0 means uniform within the subset. strength=1 means
+    standard softmax. Larger means more aggressive winner amplification.
+    """
+    import math
+    members = [t for t in tendencies.all() if t.id in sharpen_ids]
+    if len(members) < 2:
+        return
+    subset_total = sum(t.allocation for t in members)
+    if subset_total <= 0:
+        return
+
+    # Scale by strength then softmax. Subtract the max for numerical stability.
+    scaled = [strength * t.allocation for t in members]
+    max_scaled = max(scaled)
+    exp_scaled = [math.exp(s - max_scaled) for s in scaled]
+    exp_sum = sum(exp_scaled)
+    if exp_sum <= 0:
+        return
+
+    # Redistribute the existing subset_total according to softmax weights
+    for t, e in zip(members, exp_scaled):
+        t.allocation = subset_total * (e / exp_sum)
+
+    tendencies.normalize()
