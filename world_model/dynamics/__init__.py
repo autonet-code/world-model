@@ -1,20 +1,25 @@
 """
-Dynamics - Adversarial competition between agents.
+Dynamics - Operations that produce or modify equilibria.
 
-The dynamics layer is where "life" happens. Agents compete to
-define the person's worldview through debate.
+The dynamics layer is the engine's active surface. As of the
+open-roster redesign, the canonical operation is reseed-and-equilibrate:
+substitute tendencies, calibrate to a fixpoint, return a new state.
+
+Legacy modules (arena.py, trainer.py) reference the pre-redesign closed
+agent roster and are not imported here. They remain on disk and will
+be revisited or removed as the engine settles.
 """
 
-from .arena import Arena, Claim, StakeDecision, DebateResult
-from .trainer import (
-    Trainer, TrainConfig, TrainHistory,
-    Validator, ValidationResult,
-    ConsoleLogger, JSONLogger, TensorBoardLogger, WandbLogger,
+from .reseed import (
+    PresentState,
+    Substitution,
+    ReseedResult,
+    reseed_and_equilibrate,
 )
 
 __all__ = [
-    "Arena", "Claim", "StakeDecision", "DebateResult",
-    "Trainer", "TrainConfig", "TrainHistory",
-    "Validator", "ValidationResult",
-    "ConsoleLogger", "JSONLogger", "TensorBoardLogger", "WandbLogger",
+    "PresentState",
+    "Substitution",
+    "ReseedResult",
+    "reseed_and_equilibrate",
 ]

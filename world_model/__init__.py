@@ -56,6 +56,14 @@ from .attention import (
     sigmoid,
 )
 
+# Dynamics (reseed-and-equilibrate is the canonical operation)
+from .dynamics import (
+    PresentState,
+    Substitution,
+    ReseedResult,
+    reseed_and_equilibrate,
+)
+
 __all__ = [
     # Legacy
     "DeviationNode", "DeviationType", "Edge", "EdgeType",
@@ -80,6 +88,8 @@ __all__ = [
     "NoveltyAttentionCurve", "AttentionState",
     "EXPLORER_CURVE", "BALANCED_CURVE", "CONSERVATIVE_CURVE",
     "sigmoid",
+    # Dynamics
+    "PresentState", "Substitution", "ReseedResult", "reseed_and_equilibrate",
 ]
 
 __version__ = "2.0.0"
