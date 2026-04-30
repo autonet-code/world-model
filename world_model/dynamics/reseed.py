@@ -131,6 +131,7 @@ def reseed_and_equilibrate(
     tolerance: float = 1e-4,
     max_iterations: int = 100,
     learning_rate: float = 0.1,
+    propagate_via_graph: bool = False,
     recorder: Optional[LineageRecorder] = None,
 ) -> ReseedResult:
     """Apply substitutions, calibrate to a fixpoint, return the new state.
@@ -152,6 +153,19 @@ def reseed_and_equilibrate(
     learning_rate:
         Per-iteration blend factor toward the substitution-implied target
         distribution. The contraction property requires 0 < lr < 1.
+    propagate_via_graph:
+        If True, calibration computes per-iteration targets for non-
+        substituted tendencies as a weighted average of their stake-graph
+        neighbors' allocations. Substituted tendencies keep the explicit
+        targets the caller supplied. This is how the engine performs
+        actual graph-mediated inference -- evidence injected via
+        substitution propagates through the topology to reshape the
+        equilibrium of the rest of the system.
+
+        If False (default), every tendency's target is fixed at the
+        substitution-implied distribution; non-substituted tendencies
+        targets equal their pre-call allocations. This is the simpler
+        "just settle the math" mode.
     recorder:
         If provided, emits one ALLOCATION_SHIFTED event per affected
         tendency at the end of calibration, reporting the net shift.
@@ -187,14 +201,20 @@ def reseed_and_equilibrate(
     # 2. Renormalize post-substitution.
     new_state.tendencies.normalize()
 
-    # 3. Calibrate: blend allocations toward the target distribution
-    #    until the iteration delta is below tolerance.
+    # 3. Calibrate. The set of "anchored" ids is the set of substituted
+    #    tendencies (excluding removals); their targets are explicit. In
+    #    graph-propagation mode, non-anchored tendencies' targets are
+    #    computed each iteration from their stake-graph neighborhood.
+    anchored_ids = {sub.id for sub in substitutions if not sub.is_removal}
     iterations, converged, final_delta = _calibrate(
         new_state.tendencies,
         target_allocs,
         tolerance=tolerance,
         max_iterations=max_iterations,
         learning_rate=learning_rate,
+        propagate_via_graph=propagate_via_graph,
+        graph=new_state.graph if propagate_via_graph else None,
+        anchored_ids=anchored_ids if propagate_via_graph else None,
     )
 
     # 4. Compute affected ids (those whose allocation moved by > tolerance).
@@ -303,20 +323,65 @@ def _calibrate(
     tolerance: float,
     max_iterations: int,
     learning_rate: float,
+    propagate_via_graph: bool = False,
+    graph: Optional[StakeWeightGraph] = None,
+    anchored_ids: Optional[set[str]] = None,
 ) -> tuple[int, bool, float]:
     """Iterate the contraction map until allocations settle.
 
-    At each step, every allocation moves a fraction ``learning_rate`` of
-    the way toward its target. After each step we renormalize (the
-    target distribution sums to 1; small numerical drift is corrected).
+    Two modes:
+
+      Direct (default): each tendency's target is taken from
+      ``target_allocs``; the loop blends current toward target.
+
+      Graph-propagation: anchored tendencies (those the caller
+      substituted) have explicit targets in ``target_allocs``.
+      Non-anchored tendencies have their target re-computed each
+      iteration as the weighted average of their graph neighbors'
+      *current* allocations (weighted by edge weight). This makes
+      evidence injected into the anchored tendencies propagate
+      through the graph and reshape the rest of the equilibrium.
 
     Returns (iterations_run, converged?, final_max_delta).
     """
+    if propagate_via_graph and (graph is None or anchored_ids is None):
+        raise ValueError(
+            "propagate_via_graph=True requires graph and anchored_ids"
+        )
+
     last_max_delta = 0.0
     for it in range(1, max_iterations + 1):
+        # Per-iteration: compute non-anchored targets if graph-propagating
+        if propagate_via_graph:
+            current = {t.id: t.allocation for t in tendencies.all()}
+            iter_targets = dict(target_allocs)  # anchored entries unchanged
+            for t in tendencies.all():
+                if t.id in anchored_ids:
+                    continue
+                # Target = weighted average of neighbors' current allocations
+                neighbors = graph.weights.get(t.id, {})
+                if not neighbors:
+                    iter_targets[t.id] = t.allocation
+                    continue
+                total_weight = sum(neighbors.values())
+                if total_weight <= 0:
+                    iter_targets[t.id] = t.allocation
+                    continue
+                weighted_sum = sum(
+                    current.get(n_id, 0.0) * w
+                    for n_id, w in neighbors.items()
+                )
+                iter_targets[t.id] = weighted_sum / total_weight
+            # Renormalize iter_targets to sum to 1 so calibration math stays stable
+            t_total = sum(max(0.0, v) for v in iter_targets.values())
+            if t_total > 0:
+                iter_targets = {k: max(0.0, v) / t_total for k, v in iter_targets.items()}
+        else:
+            iter_targets = target_allocs
+
         max_delta = 0.0
         for t in tendencies.all():
-            target = target_allocs.get(t.id, t.allocation)
+            target = iter_targets.get(t.id, t.allocation)
             delta = (target - t.allocation) * learning_rate
             t.allocation += delta
             if t.allocation < 0.0:
