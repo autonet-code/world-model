@@ -34,6 +34,7 @@ from .models import (
     EvidencePointer, Source,
     # Current (observation + tree-based)
     Observation, ObservationStore,
+    LODLevel, LODProtocol, LODPayload, TrivialLODProtocol, to_level,
     Tendency, TendencySet,
     TendencySpec, TendencyFactory, DefaultTendencyFactory,
     LEGACY_PERSONALITY_SPECS, build_legacy_personality_set,
@@ -56,6 +57,8 @@ __all__ = [
     "EvidencePointer", "Source",
     # Observations
     "Observation", "ObservationStore",
+    # LOD scaffolding
+    "LODLevel", "LODProtocol", "LODPayload", "TrivialLODProtocol", "to_level",
     # Tendencies + factory
     "Tendency", "TendencySet",
     "TendencySpec", "TendencyFactory", "DefaultTendencyFactory",

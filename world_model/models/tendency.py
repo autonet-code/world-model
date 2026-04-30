@@ -21,6 +21,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Iterable, Optional
 
+from .lod import LODPayload, LODProtocol, to_level
+
 
 @dataclass
 class Tendency:
@@ -43,11 +45,56 @@ class Tendency:
     # information (initial claim text, doctrine tags, factory provenance, ...).
     metadata: dict = field(default_factory=dict)
 
+    # Level-of-detail support. A tendency carries a protocol and a current
+    # LOD payload. When neither is set, the tendency behaves as a plain
+    # record (LOD-aware methods raise). Tendencies created via the factory
+    # may have these populated; tendencies created by hand may not.
+    protocol: Optional[LODProtocol] = None
+    payload: Optional[LODPayload] = None
+
     @property
     def validation_rate(self) -> float:
         if self.stakes_placed == 0:
             return 0.0
         return self.stakes_validated / self.stakes_placed
+
+    # ------------------------------------------------------------------
+    # Level-of-detail
+    # ------------------------------------------------------------------
+
+    @property
+    def current_lod(self) -> Optional[int]:
+        """Current LOD level number, or None if this tendency is not LOD-aware."""
+        return self.payload.level.level if self.payload is not None else None
+
+    def at_lod(self, k: int, context: object = None) -> "Tendency":
+        """Return a new Tendency with payload promoted/demoted to level k.
+
+        Raises ValueError if this tendency has no protocol attached.
+        Does not mutate self.
+        """
+        if self.protocol is None or self.payload is None:
+            raise ValueError("tendency has no LOD protocol; cannot change level")
+        new_payload = to_level(self.payload, k, self.protocol, context=context)
+        # Build a fresh tendency that reflects whatever fields the
+        # new payload exposes at the target LOD. Identity (id) is always
+        # at LOD 0 so it always survives.
+        return Tendency(
+            id=str(new_payload.fields.get("id", self.id)),
+            allocation=float(new_payload.fields.get("allocation", self.allocation)),
+            description=str(new_payload.fields.get("description", self.description)),
+            stakes_placed=self.stakes_placed,
+            stakes_validated=self.stakes_validated,
+            metadata=dict(new_payload.fields.get("metadata", self.metadata)) if isinstance(new_payload.fields.get("metadata"), dict) else self.metadata,
+            protocol=self.protocol,
+            payload=new_payload,
+        )
+
+    def to_lod_bytes(self) -> bytes:
+        """Pack the current LOD payload to its fixed-size byte form."""
+        if self.payload is None:
+            raise ValueError("tendency has no LOD payload to pack")
+        return self.payload.to_bytes()
 
     def __repr__(self) -> str:
         return f"Tendency(id={self.id!r}, allocation={self.allocation:.2%})"

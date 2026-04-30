@@ -1,6 +1,13 @@
 from .deviation import DeviationNode, DeviationType, Edge, EdgeType
 from .evidence import EvidencePointer, Source
 from .observation import Observation, ObservationStore
+from .lod import (
+    LODLevel,
+    LODProtocol,
+    LODPayload,
+    TrivialLODProtocol,
+    to_level,
+)
 from .tendency import Tendency, TendencySet
 from .factory import (
     TendencySpec,
@@ -20,6 +27,11 @@ __all__ = [
     "Source",
     "Observation",
     "ObservationStore",
+    "LODLevel",
+    "LODProtocol",
+    "LODPayload",
+    "TrivialLODProtocol",
+    "to_level",
     "Tendency",
     "TendencySet",
     "TendencySpec",
