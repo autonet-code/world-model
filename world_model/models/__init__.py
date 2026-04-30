@@ -8,6 +8,15 @@ from .lod import (
     TrivialLODProtocol,
     to_level,
 )
+from .lineage import (
+    EventType,
+    Event,
+    EngineClock,
+    Lineage,
+    StakeWeightGraph,
+    LineageRecorder,
+    attach_lineage_to_tendencies,
+)
 from .tendency import Tendency, TendencySet
 from .factory import (
     TendencySpec,
@@ -32,6 +41,13 @@ __all__ = [
     "LODPayload",
     "TrivialLODProtocol",
     "to_level",
+    "EventType",
+    "Event",
+    "EngineClock",
+    "Lineage",
+    "StakeWeightGraph",
+    "LineageRecorder",
+    "attach_lineage_to_tendencies",
     "Tendency",
     "TendencySet",
     "TendencySpec",

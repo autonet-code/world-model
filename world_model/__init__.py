@@ -35,6 +35,8 @@ from .models import (
     # Current (observation + tree-based)
     Observation, ObservationStore,
     LODLevel, LODProtocol, LODPayload, TrivialLODProtocol, to_level,
+    EventType, Event, EngineClock, Lineage, StakeWeightGraph,
+    LineageRecorder, attach_lineage_to_tendencies,
     Tendency, TendencySet,
     TendencySpec, TendencyFactory, DefaultTendencyFactory,
     LEGACY_PERSONALITY_SPECS, build_legacy_personality_set,
@@ -59,6 +61,9 @@ __all__ = [
     "Observation", "ObservationStore",
     # LOD scaffolding
     "LODLevel", "LODProtocol", "LODPayload", "TrivialLODProtocol", "to_level",
+    # Lineage
+    "EventType", "Event", "EngineClock", "Lineage", "StakeWeightGraph",
+    "LineageRecorder", "attach_lineage_to_tendencies",
     # Tendencies + factory
     "Tendency", "TendencySet",
     "TendencySpec", "TendencyFactory", "DefaultTendencyFactory",
