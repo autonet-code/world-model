@@ -84,6 +84,18 @@ class GeneralizedTendency:
     # contradicts us."
     _con_positioned: set = field(default_factory=set)
 
+    # Smooth promotion: outbound staking capacity per node, indexed by
+    # node_id. Updated each round as a windowed running average of
+    # PRO-stake received. A freshly sprouted node has 0 capacity (its
+    # voice is silent). As it accumulates PRO support, its capacity
+    # rises and it can stake on related claims at proportional
+    # magnitude. Tendency roots are initialized with full capacity
+    # (= self.budget) so they act normally from the start.
+    node_capacity: dict[str, float] = field(default_factory=dict)
+    capacity_decay: float = 0.7   # blend factor: cap_new = decay * cap_old + (1-decay) * pro_in
+    capacity_reach: float = 0.5   # outbound stake = reach * capacity per round
+    capacity_threshold: float = 0.05  # below this, node stays silent
+
     def __post_init__(self):
         # Create root claim and tree
         self._root_claim = CoordinateClaim(
@@ -104,6 +116,8 @@ class GeneralizedTendency:
             bandwidth=self.bandwidth,
         )
         self.probe = CoordinateProbe(max_iterations=8, disruption_threshold=0.6)
+        # Root node starts with full capacity -- it's the founding voice.
+        self.node_capacity[self.tree.root_node.id] = self.budget
 
     # ----- Tree growth -----
 
@@ -213,6 +227,14 @@ class GeneralizedTendency:
         """
         intents: dict[tuple[str, str], float] = {}
 
+        # ---- Capacity update ----
+        # For each node in our tree, blend last round's net PRO stake
+        # received (from any tendency) into the node's capacity. Nodes
+        # that accumulate PRO support gain a voice; nodes that don't
+        # stay silent. This is the smooth-promotion mechanism: standing
+        # is earned, not granted by category.
+        self._update_capacities()
+
         # Compute joint-satisfaction scores: for each obs, how much is
         # it already satisfied by OTHER tendencies' resolved positions?
         # Used as a discount factor on this tendency's contribution.
@@ -261,6 +283,17 @@ class GeneralizedTendency:
                 # but DO NOT absorb -- absorbed = fits our worldview.
                 self._con_positioned.add(obs.id)
 
+        # 1.5 Sub-claim staking: every node with non-trivial capacity
+        # stakes on related targets. Magnitude = capacity * reach.
+        # Targets: the node's parent's siblings (peer claims under same
+        # parent) and peer tendencies' nodes at comparable depth on the
+        # same coordinate dimensions. This is the locality rule: a
+        # sub-claim's voice carries to neighboring claims, with reach
+        # growing as standing grows.
+        sub_intents = self._sub_claim_staking(world)
+        for k, v in sub_intents.items():
+            intents[k] = intents.get(k, 0.0) + v
+
         # 2. Cross-stake on every other tendency's nodes.
         # For each foreign node, evaluate either:
         #   (a) the observation it links to (if any), or
@@ -297,6 +330,128 @@ class GeneralizedTendency:
         # the personality model.
         intents = {k: v * self.budget for k, v in intents.items()}
         self.last_stakes = intents
+
+    def _update_capacities(self) -> None:
+        """Blend each node's accumulated positive stake into its
+        capacity. Capacity is the node's outbound staking budget.
+
+        Update rule: cap_new = decay * cap_old + (1 - decay) * pro_in
+        where pro_in = sum of positive stakes currently on the node.
+
+        Root node's capacity is pinned at self.budget (it always has
+        full standing). Other nodes start at 0 and earn capacity as
+        PRO stake accumulates.
+        """
+        root_id = self.tree.root_node.id
+        for node in self.tree.all_nodes():
+            if node.id == root_id:
+                self.node_capacity[node.id] = self.budget
+                continue
+            pro_in = sum(s.weight for s in node.stakes if s.weight > 0)
+            old = self.node_capacity.get(node.id, 0.0)
+            new = self.capacity_decay * old + (1.0 - self.capacity_decay) * pro_in
+            self.node_capacity[node.id] = new
+
+    def _sub_claim_staking(self, world: "World") -> dict[tuple[str, str], float]:
+        """For each non-root node with capacity above threshold, stake
+        on local targets.
+
+        Targets and signs:
+          - PRO on this node's siblings of the SAME position (PRO
+            siblings reinforce a shared framing).
+          - CON on this node's siblings of the OPPOSITE position (a
+            PRO sub-claim wants its CON siblings demoted; a CON
+            sub-claim wants its PRO siblings demoted).
+          - Cross-tendency: PRO on nodes in OTHER tendencies' trees
+            that share this node's polarity direction on the dims
+            they both care about; CON on opposing-direction nodes.
+
+        Magnitude = capacity * reach for each target, divided across
+        the targets so a high-capacity node doesn't double-count.
+        """
+        intents: dict[tuple[str, str], float] = {}
+        root_id = self.tree.root_node.id
+        for node in self.tree.all_nodes():
+            if node.id == root_id:
+                continue
+            cap = self.node_capacity.get(node.id, 0.0)
+            if cap < self.capacity_threshold:
+                continue
+            outbound = cap * self.capacity_reach
+
+            # Local sibling targets within own tree
+            parent_id = node.parent_id
+            if parent_id is None:
+                continue
+            parent = self.tree.get_node(parent_id)
+            if parent is None:
+                continue
+            same_pos = (parent.pro_children if node.position == Position.PRO
+                        else parent.con_children)
+            opp_pos = (parent.con_children if node.position == Position.PRO
+                       else parent.pro_children)
+            siblings_same = [s for s in same_pos if s.id != node.id]
+            siblings_opp = list(opp_pos)
+            n_targets = len(siblings_same) + len(siblings_opp)
+            if n_targets > 0:
+                per = outbound / n_targets
+                for s in siblings_same:
+                    key = (self.id, s.id)
+                    intents[key] = intents.get(key, 0.0) + per
+                for s in siblings_opp:
+                    key = (self.id, s.id)
+                    intents[key] = intents.get(key, 0.0) - per
+
+            # Cross-tendency targets: peer tendencies' nodes whose
+            # polarity axis aligns or opposes this node's.
+            my_claim = self._node_to_claim.get(node.id)
+            if my_claim is None or not my_claim.polarity_axis:
+                continue
+            cross_targets: list[tuple[str, str, float]] = []
+            for other in world.tendencies.values():
+                if other.id == self.id:
+                    continue
+                for o_node in other.tree.all_nodes():
+                    o_claim = other._node_to_claim.get(o_node.id)
+                    if o_claim is None or not o_claim.polarity_axis:
+                        continue
+                    align = self._axis_alignment(
+                        my_claim.polarity_axis, o_claim.polarity_axis
+                    )
+                    if abs(align) > 0.3:
+                        cross_targets.append((other.id, o_node.id, align))
+            if cross_targets:
+                # Spread outbound proportionally to alignment magnitude
+                total_align = sum(abs(a) for _, _, a in cross_targets)
+                if total_align > 0:
+                    for tid, nid, align in cross_targets:
+                        share = outbound * (abs(align) / total_align)
+                        signed = share if align > 0 else -share
+                        intents[(tid, nid)] = intents.get((tid, nid), 0.0) + signed
+        return intents
+
+    def _axis_alignment(self, a: Tuple[float, ...], b: Tuple[float, ...]) -> float:
+        """Sign-overlap between two polarity axes. In [-1, 1].
+
+        +1 = same direction on every shared dim. -1 = opposite. 0 =
+        orthogonal or no shared nonzero dims.
+        """
+        if not a or not b:
+            return 0.0
+        n = min(len(a), len(b))
+        agree = 0
+        disagree = 0
+        for i in range(n):
+            if abs(a[i]) < 1e-6 or abs(b[i]) < 1e-6:
+                continue
+            if (a[i] > 0) == (b[i] > 0):
+                agree += 1
+            else:
+                disagree += 1
+        total = agree + disagree
+        if total == 0:
+            return 0.0
+        return (agree - disagree) / total
 
     def _joint_satisfaction(self, world: "World") -> dict[str, float]:
         """For each observation in the world, compute how much it is
