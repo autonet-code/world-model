@@ -176,6 +176,37 @@ def main():
         {"x": "T", "y": None, "z": None},
     )))
 
+    # Case 5: implication x -> y. Observe x=T. Architecture should
+    # infer y=T via cross-staking propagation.
+    # We encode "x -> y" as a vector observation that simultaneously
+    # supports x_F (anti-x) OR y_T (pro-y). In coord space, an
+    # observation at (-1, +1, 0) is on the F-side of x's axis and
+    # T-side of y's axis. It's PRO to x_F AND PRO to y_T. Combined
+    # with an observation forcing x=T, the equilibrium has to land
+    # on y=T (since x=T forces the implication's other branch).
+    results.append(("x -> y; x is T (infer y=T)", run_case(
+        "x -> y; x=T. Architecture should infer y=T from x.",
+        [
+            Observation(id="c_imp", coords=(-1.0, +1.0, 0.0),
+                        label="x->y: either x is F or y is T"),
+            Observation(id="c_xT", coords=(+1.0, 0.0, 0.0), label="x must be T"),
+        ],
+        {"x": "T", "y": "T", "z": None},   # y inferred via implication
+    )))
+
+    # Case 6: x OR y; x is F. Architecture should infer y=T.
+    # "x OR y" = an observation supporting x_T OR y_T. Encoded at
+    # (+1, +1, 0). With x=F forced, only the y=T branch remains.
+    results.append(("x OR y; x is F (infer y=T)", run_case(
+        "x OR y; x=F. Architecture should infer y=T.",
+        [
+            Observation(id="c_or", coords=(+1.0, +1.0, 0.0),
+                        label="x OR y: at least one is T"),
+            Observation(id="c_xF", coords=(-1.0, 0.0, 0.0), label="x must be F"),
+        ],
+        {"x": "F", "y": "T", "z": None},
+    )))
+
     banner("OVERALL")
     for name, ok in results:
         print(f"  {'OK' if ok else '--'}  {name}")
