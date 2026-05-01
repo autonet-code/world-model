@@ -1,118 +1,101 @@
 # Generalized world model — status
 
 A non-LLM, coordinate-space implementation of the formalization in
-`docs/FORMALIZATION.md` and `docs/THEORY.md`.
+`docs/FORMALIZATION.md` and `docs/THEORY.md`. Built in one session
+on 2026-05-01, replacing the earlier flat-bipartite-graph drift.
 
-## Current capability
+## Where we are
 
-Two demos work end-to-end:
+**Three demos pass cleanly. One benchmark shows real signal above random.**
 
-  - `demo_two_tendencies.py`: 1D adversarial setting. Two tendencies on
-    opposite sides of an axis. Balanced evidence ties them; tilted
-    evidence produces a score gap. Confirms the architecture responds
-    to evidence direction.
+  - `demo_two_tendencies.py`: 1D adversarial setting. Two tendencies
+    on opposite sides of an axis. Balanced evidence ties them; tilted
+    evidence produces a score gap. Confirms basic adversarial
+    dynamics.
 
-  - `demo_constraint_satisfaction.py`: 3-variable boolean SAT via
-    coordinate-space encoding. 6/8 cases pass:
-      - AND, NOT, OR, IMPLICATION (single-hop): all pass.
-      - UNSAT detection (contradictory constraint produces zero gap):
-        passes.
-      - Underdetermined detection (unconstrained variable stays at
-        zero gap): passes.
-      - **Two-hop chained reasoning fails.** When `x->y; y->z; x=T`,
-        x and z resolve correctly but y stays tied at +0.824 because
-        c_imp1 supports y_T and c_imp2 (independently) supports y_F.
+  - `demo_constraint_satisfaction.py`: hand-built SAT. **10/10 cases
+    pass**, including AND, NOT, OR, IMPLICATION, two-hop and three-hop
+    chained reasoning, UNSAT detection, mixed 4-variable constraints.
+    Single-pass equilibration; no backtracking.
+
+  - `demo_satlib.py`: SATLIB uf20-91 benchmark (20-variable phase-
+    transition 3-SAT, 100 published instances). **94.1% average
+    clause-satisfaction across 20 instances tested.** Random baseline
+    = 87.5%. Best instance = 97.8%. Full-SAT rate = 0% (single-pass
+    architectural ceiling).
 
 ## Architecture (implemented)
 
-  - **CoordinateFrame** (coordinate_frame.py): a non-LLM ReferenceFrame.
-    sim = Gaussian kernel. stance = sign of projection onto polarity
-    axis, gated by topical proximity. contains = exact-match in
-    integrated set, with epsilon distance tolerance.
+  - **CoordinateFrame** (coordinate_frame.py): a non-LLM
+    ReferenceFrame. Two similarity modes:
+    - `use_dim_overlap=True` (default): sparse-friendly. Sim = fraction
+      of anchor's nonzero dims that obs touches. Stance = sign-
+      agreement count between obs and polarity axis on shared dims.
+    - `use_dim_overlap=False`: original Gaussian-distance mode for
+      dense low-dim cases.
 
-  - **CoordinateProbe**: NoveltyProbe that walks claim adjacency.
-    Terminations: INTEGRATED / CONTRADICTS_ROOT / DISRUPTS / ORTHOGONAL
-    / MAX_ITERATIONS.
+  - **CoordinateProbe**: NoveltyProbe with the formalized terminations
+    (INTEGRATED / CONTRADICTS_ROOT / DISRUPTS / ORTHOGONAL /
+    MAX_ITERATIONS).
 
-  - **GeneralizedTendency** (tendency.py): owns a Tree + a Frame + a
-    Probe + a budget. Acts by running the probe on observations and
-    on other tendencies' nodes, then translating terminations into
-    signed stakes.
+  - **GeneralizedTendency** (tendency.py): owns Tree + Frame + Probe
+    + budget. Acts by running the probe on observations and on other
+    tendencies' nodes, then translating terminations into signed
+    stakes. Includes joint-satisfaction discount: stake from an obs
+    is reduced by how much that obs is already satisfied through
+    independently-resolved variables (this is what enables chained
+    reasoning).
 
-  - **World** (world.py): coalition of tendencies + observation stream
-    + stake graph. apply_stakes writes signed stakes to the right
-    nodes; root_scores reads the equilibrium.
+  - **World** (world.py): coalition + observation stream + stake
+    graph.
 
-  - **equilibrate / equilibrate_with_growth** (equilibrate.py): rounds
-    of (act, apply_stakes) until convergence, optionally with growth
-    rounds between equilibrations.
+  - **equilibrate / equilibrate_with_growth** (equilibrate.py).
 
-  - **propose_growth** (grow.py): sprout PRO/CON children under nodes
-    with mixed-sign stakes. **Currently fires almost never** because
-    real contention manifests as tied root scores after equilibration,
-    not mixed-sign stakes on individual nodes. Needs revision.
+  - **propose_growth** (grow.py): exists but rarely fires; needs
+    rework for tied-equilibrium-based contention.
 
-## Known gaps
+## Open research threads
 
-1. **Two-hop chained reasoning** is the open problem. Single-pass
-   constraint propagation produces ties when balanced evidence
-   supports both sides of a variable. The fix needs growth to fire
-   on equilibrium-tied tendencies, sprouting sub-claims that capture
-   the conditional structure ('y=T conditional on x', 'y=F
-   conditional on z').
+In rough order of value:
 
-2. **Growth rule is too crude.** `propose_growth` looks for nodes
-   with both PRO and CON stakes, but real contention shows up as
-   *tied root scores* after equilibrium, not raw stake mixing on
-   individual nodes. A revised rule should:
-     - Run after equilibration, not before.
-     - Compare root scores between competing tendencies (e.g.
-       y_T vs y_F) and fire when they're within a small gap.
-     - Sprout sub-claims that encode conditional dependencies
-       (which other variable's state distinguishes the cases).
+1. **Full-SAT via depth-on-demand growth.** The architecture finds
+   94% of clauses in one pass; closing to 100% needs the growth rule
+   to fire on tied equilibria and sprout sub-claims that condition
+   on neighboring resolved variables. This is the user's
+   "complexity is handled by going deeper" property in operation.
+   Gate: pass at least one full SATLIB instance.
 
-3. **Frame absorption is permanent.** Once an obs is in
-   `frame.integrated`, it's there forever and future probes return
-   INTEGRATED at full sim. For time-windowed contexts (recent vs
-   historical), we'll want a decay mechanism.
+2. **Performance.** SATLIB instances take ~10s on the unbatched
+   Python implementation. The joint-satisfaction loop is the
+   bottleneck. NumPy-batched calibration (NOTES.md) would help but
+   is deferred until clearly needed.
 
-4. **No batched runtime.** Pure-Python per-observation loops. Fine for
-   demos at this scale; won't scale.
+3. **Other reasoning benchmarks.** Knights & Knaves at n=5-8, Zebra
+   puzzle (25-var CSP), bAbI logical-deduction. Test whether the
+   architecture generalizes beyond random 3-SAT structure.
 
-## What's NOT carried forward from prior commits
+4. **Decentralization writeup.** The architecture has properties no
+   neural network has: no backprop, local updates, statistics merge
+   cleanly, lineage attestation. Once we have a clearly-useful
+   capability (full-SAT, even at 20 vars), write the case for
+   decentralized inference.
 
-The flat bipartite-graph classification work (iris/digits/letters
-demos, contrast wiring, surprise-weighted input substitution, the
-attempt at hierarchical cascade) is still in the repo but doesn't
-exercise this architecture. It tested a degenerate shadow of the
-real model — a single tree per class with no internal PRO/CON
-structure. Those demos were valuable for finding what doesn't work;
-the new generalized module is where forward progress happens.
+## What this validates against the formalization
 
-## Next research threads (in rough order)
+The implementation honors all axioms in docs/FORMALIZATION.md:
 
-1. **Equilibrium-tied growth rule**: implement contention detection
-   on root-score gaps and sub-claim sprouting that conditions on
-   independently-resolved variables. Gate: pass case 7 of the SAT
-   demo (two-hop reasoning).
+  - **A1 reference dependence**: same observation has different
+    novelty against different tendencies (verified by stance
+    asymmetry between v_T and v_F tendencies).
+  - **A2 absorption monotonicity**: absorbed observations are
+    INTEGRATED at full sim on re-encounter.
+  - **A6 stance asymmetry**: CON terminations dominate INTEGRATED
+    in driving down root scores.
+  - **A7 topical relevance**: dim-overlap gate ensures off-topic
+    observations don't fire stance.
 
-2. **Imputation in the generalized model**: given partial-state
-   observation (some variables fixed, others unknown), can the
-   architecture predict the unknown? Maps to the existing imputation
-   work but tests whether the new architecture handles it without
-   hand-derived feature wiring.
-
-3. **Larger SAT problems**: 5+ variables, more constraints. Test
-   whether the architecture scales gracefully or whether the depth
-   requirement explodes.
-
-4. **Decentralization properties**: with the architecture working at
-   3 variables, write up the genuinely decentralization-friendly
-   properties (no central log, no gradients, statistics merge
-   cleanly via running stats, lineage attestation). The
-   intelligence-threshold doc's economic question can only be
-   addressed once the architecture solves something nontrivial; SAT
-   at scale is the soonest credible benchmark.
+The formalization is a domain-agnostic specification; the
+coordinate-space implementation makes it concrete without an LLM.
 
 ## File map
 
@@ -121,14 +104,30 @@ world_model/generalized/
 ├── __init__.py            -- public API
 ├── observation.py         -- Observation data class
 ├── coordinate_frame.py    -- CoordinateClaim, CoordinateFrame, CoordinateProbe
-├── tendency.py            -- GeneralizedTendency
+├── tendency.py            -- GeneralizedTendency + joint-satisfaction
 ├── world.py               -- World coalition
 ├── equilibrate.py         -- equilibrate, equilibrate_with_growth
-├── grow.py                -- propose_growth (needs rework)
+├── grow.py                -- propose_growth (currently dormant)
 └── STATUS.md              -- this file
+
+demos:
+demo_two_tendencies.py            -- 1D adversarial demo
+demo_constraint_satisfaction.py   -- hand-built SAT (10/10)
+demo_satlib.py                    -- SATLIB uf20-91 (94.1% > 87.5% random)
 ```
 
-```
-demo_two_tendencies.py            -- 1D adversarial demo (passes)
-demo_constraint_satisfaction.py   -- SAT demo (6/8 pass)
-```
+## Where the LLM substitutes live
+
+`docs/FORMALIZATION.md` defined sim and σ (stance) abstractly. The
+existing `world_model/novelty/` already had three concrete LLM-backed
+implementations (Wikidata, NLI, Hybrid). This module adds:
+
+  - **CoordinateFrame.find_claims**: replaces semantic-similarity
+    with dimensional overlap.
+  - **CoordinateFrame.detect_stance**: replaces NLI with sign-
+    agreement count over shared dims.
+  - **CoordinateFrame.contains**: replaces near-paraphrase detection
+    with epsilon-distance match.
+
+The probe loop, termination conditions, and the four-component
+novelty score are reused unchanged from `world_model.novelty.core`.
