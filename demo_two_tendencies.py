@@ -64,13 +64,17 @@ def main():
     banner("TWO TENDENCIES, ONE AXIS")
 
     # 1D world
+    # Bandwidth wide enough that both tendencies see the whole axis as
+    # topical. They differ in polarity (which side is PRO), not in
+    # coverage. This mirrors the personality-model setup where multiple
+    # tendencies all look at the same observations.
     A = GeneralizedTendency(
         id="A",
         thesis="left",
         anchor=(-1.0,),
         polarity_axis=(-1.0,),       # PRO = more negative
         budget=1.0,
-        bandwidth=0.8,
+        bandwidth=2.0,
     )
     B = GeneralizedTendency(
         id="B",
@@ -78,7 +82,7 @@ def main():
         anchor=(+1.0,),
         polarity_axis=(+1.0,),       # PRO = more positive
         budget=1.0,
-        bandwidth=0.8,
+        bandwidth=2.0,
     )
 
     world = World()

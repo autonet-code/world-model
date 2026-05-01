@@ -12,12 +12,17 @@ Note: the staking policy is deterministic given world state, so the
 convergence is from the *interaction* between tendencies (each one's
 absorption of new observations changes its frame, which changes
 everyone else's staking next round).
+
+Also exposes equilibrate_with_growth which wraps equilibrate in an
+outer loop that, after each equilibrium, runs the growth rule and
+re-equilibrates. Continues until no more growth occurs.
 """
 
 from __future__ import annotations
 
 from typing import Dict, Tuple
 
+from .grow import propose_growth
 from .world import World
 
 
@@ -49,3 +54,31 @@ def equilibrate(world: World, max_rounds: int = 20, tolerance: float = 1e-3) -> 
             return round_idx
         prev_intents = {tid: dict(t.last_stakes) for tid, t in world.tendencies.items()}
     return max_rounds
+
+
+def equilibrate_with_growth(
+    world: World,
+    max_outer: int = 5,
+    max_rounds: int = 20,
+    tolerance: float = 1e-3,
+    contention_threshold: float = 0.15,
+    offset: float = 0.5,
+) -> Tuple[int, int]:
+    """Outer loop: equilibrate, grow, equilibrate, ... until no growth.
+
+    Returns (total_rounds, total_new_nodes).
+    """
+    total_rounds = 0
+    total_new = 0
+    for outer in range(max_outer):
+        rounds = equilibrate(world, max_rounds=max_rounds, tolerance=tolerance)
+        total_rounds += rounds
+        new_nodes = propose_growth(
+            world,
+            contention_threshold=contention_threshold,
+            offset=offset,
+        )
+        total_new += new_nodes
+        if new_nodes == 0:
+            break
+    return total_rounds, total_new

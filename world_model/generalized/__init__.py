@@ -39,7 +39,8 @@ from .coordinate_frame import (
 )
 from .tendency import GeneralizedTendency
 from .world import World, Observation
-from .equilibrate import equilibrate
+from .equilibrate import equilibrate, equilibrate_with_growth
+from .grow import propose_growth
 
 __all__ = [
     "CoordinateClaim",
@@ -49,4 +50,6 @@ __all__ = [
     "World",
     "Observation",
     "equilibrate",
+    "equilibrate_with_growth",
+    "propose_growth",
 ]

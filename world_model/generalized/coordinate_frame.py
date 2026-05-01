@@ -149,11 +149,19 @@ class CoordinateFrame(ReferenceFrame):
         return False, best_sim
 
     def find_claims(self, content: Any) -> List[Tuple[Claim, float]]:
+        """Return claims related to content, ordered by similarity.
+
+        Only top-level claims (depth 0) are returned. Sub-claims exist
+        for refinement of the tree under contention, but stance
+        detection happens at the thesis level. Without this filter, an
+        observation slightly off a sibling sub-claim's anchor gets
+        classified against that sub-claim instead of the thesis.
+        """
         coords = _coords_of(content)
         if coords is None:
             return []
         results: List[Tuple[Claim, float]] = []
-        for claim in self._all_claims():
+        for claim in self.claims:   # top-level only
             sim = _gaussian_sim(coords, claim.anchor, self.bandwidth)
             if sim >= self.topic_threshold:
                 results.append((claim, sim))
@@ -328,14 +336,14 @@ class CoordinateProbe(NoveltyProbe):
                 contradiction_depth=conflict_claim.depth,
             )
 
-        # No contradiction; check if any PRO -> integrate via that claim
+        # No contradiction; check if any PRO -> integrate cleanly.
+        # PRO match = obs fits a known claim's positive direction.
+        # Terminate as INTEGRATED.
         for claim, _ in related[:3]:
             stance, conf = frame.detect_stance(data, claim)
             if stance == Stance.PRO and conf >= 0.3:
-                # Absorb and continue (we keep walking to detect deeper structure)
-                return ParseResult.continue_to(
-                    focus.expand_to(claim, via=f"pro:{claim.content[:12]}"),
-                    absorbed=data if isinstance(data, Observation) else None,
+                return ParseResult.terminate(
+                    Termination.INTEGRATED,
                     similarity_to_frame=conf,
                 )
 

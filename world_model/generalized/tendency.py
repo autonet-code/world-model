@@ -78,6 +78,12 @@ class GeneralizedTendency:
     # Negative = CON, positive = PRO. Used by World to apply stakes.
     last_stakes: dict[tuple[str, str], float] = field(default_factory=dict)
 
+    # Observation ids that have already been positioned as CON children
+    # in our tree. Prevents re-sprouting deeper descendants on every
+    # round; the CON-position is the persistent record of "this
+    # contradicts us."
+    _con_positioned: set = field(default_factory=set)
+
     def __post_init__(self):
         # Create root claim and tree
         self._root_claim = CoordinateClaim(
@@ -179,50 +185,142 @@ class GeneralizedTendency:
         """Compute and record this tendency's stakes for the current
         observation set and world state.
 
+        For each observation:
+          - Evaluate stance through the probe.
+          - INTEGRATED with a PRO stance against the most-related claim
+            -> sprout a PRO child observation node under that claim
+            (or stake PRO if the node already exists), absorb the obs.
+          - CONTRADICTS / DISRUPTS -> sprout a CON child observation
+            node under the contradicted claim (drags its score down).
+          - ORTHOGONAL / MAX_ITER -> ignore.
+
+        For each foreign node, evaluate its anchor; cross-stake by sign
+        of stance.
+
         Stakes are stored in self.last_stakes; the World's apply_stakes
-        method walks them and writes Stake objects onto the actual
-        nodes (own and others'). Budget is enforced as a hard cap.
+        writes Stake objects onto the actual nodes. Budget is enforced
+        as a hard cap.
         """
         intents: dict[tuple[str, str], float] = {}
 
-        # 1. Stake on incoming observations against own tree
+        # 1. Stake on / sprout from incoming observations against own tree
         for obs in world.observations.values():
+            # If we've already CON-positioned this obs in a prior round,
+            # don't re-evaluate -- just re-stake the existing CON child
+            # at standard magnitude. Prevents runaway descendant growth.
+            if obs.id in self._con_positioned:
+                existing_id = self._find_existing_obs_child(obs.id, position=Position.CON)
+                if existing_id is not None:
+                    intents[(self.id, existing_id)] = intents.get((self.id, existing_id), 0.0) + 0.5
+                    continue
             term, novelty, claim = self.evaluate(obs)
             if claim is None:
                 continue
-            node_id = self._claim_to_node_id(claim)
-            if node_id is None:
+            parent_node_id = self._claim_to_node_id(claim)
+            if parent_node_id is None:
                 continue
-            signed = self._termination_to_signed_stake(term, novelty)
-            if signed != 0.0:
-                intents[(self.id, node_id)] = intents.get((self.id, node_id), 0.0) + signed
-            # Absorb if we PRO-staked it
-            if signed > 0:
+            mag = max(0.05, min(1.0, novelty))
+
+            if term == Termination.INTEGRATED:
+                # Find or create a PRO child observation node under the claim
+                child_id = self._ensure_obs_child(parent_node_id, obs, position=Position.PRO)
+                intents[(self.id, child_id)] = intents.get((self.id, child_id), 0.0) + mag
+                # Absorb only on PRO -- this obs *fits* our worldview.
                 self.frame = self.frame.absorb(obs)
 
-        # 2. Cross-stake on every other tendency's nodes
+            elif term in (Termination.CONTRADICTS_ROOT, Termination.DISRUPTS):
+                # Sprout a CON child under the contradicted claim
+                child_id = self._ensure_obs_child(parent_node_id, obs, position=Position.CON)
+                # Stake on the CON node positively (we are *backing* the
+                # CON observation -- it really does contradict our claim).
+                # Because CON children subtract from parent score, the
+                # net effect is to drag the parent's net_score down.
+                intents[(self.id, child_id)] = intents.get((self.id, child_id), 0.0) + mag
+                # Track that we've already positioned this obs as CON
+                # (so we don't keep sprouting deeper CON descendants),
+                # but DO NOT absorb -- absorbed = fits our worldview.
+                self._con_positioned.add(obs.id)
+
+        # 2. Cross-stake on every other tendency's nodes.
+        # For each foreign node, evaluate either:
+        #   (a) the observation it links to (if any), or
+        #   (b) a synthetic Observation at the node's claim anchor.
+        # Both routes let cross-staking land on roots and abstract nodes,
+        # not just observation-linked leaves.
         for other in world.tendencies.values():
             if other.id == self.id:
                 continue
             for node in other.tree.all_nodes():
-                if node.observation_id is None:
-                    continue
-                obs = world.observations.get(node.observation_id)
-                if obs is None:
-                    continue
-                term, novelty, _claim = self.evaluate(obs)
+                # Resolve a probe target for this node
+                if node.observation_id is not None:
+                    target = world.observations.get(node.observation_id)
+                    if target is None:
+                        continue
+                else:
+                    foreign_claim = other._node_to_claim.get(node.id)
+                    if foreign_claim is None or not foreign_claim.anchor:
+                        continue
+                    target = Observation(
+                        id=f"_anchor_{other.id}_{node.id}",
+                        coords=foreign_claim.anchor,
+                        label=f"anchor:{foreign_claim.content}",
+                    )
+                term, novelty, _claim = self.evaluate(target)
                 signed = self._cross_stake_sign(term, novelty)
                 if signed != 0.0:
                     key = (other.id, node.id)
                     intents[key] = intents.get(key, 0.0) + signed
 
-        # 3. Enforce budget: scale to total |intent| <= budget
-        total = sum(abs(v) for v in intents.values())
-        if total > self.budget and total > 0:
-            scale = self.budget / total
-            intents = {k: v * scale for k, v in intents.items()}
-
+        # 3. Apply budget as a multiplier (not a cap). Each intent
+        # already encodes magnitude per observation; budget scales the
+        # tendency's overall influence. Equivalent to "allocation" in
+        # the personality model.
+        intents = {k: v * self.budget for k, v in intents.items()}
         self.last_stakes = intents
+
+    def _find_existing_obs_child(
+        self,
+        observation_id: str,
+        position: Position,
+    ) -> Optional[str]:
+        """Search the whole tree for a node with the given observation_id
+        and position. Returns its node id or None.
+        """
+        for node in self.tree.all_nodes():
+            if node.observation_id == observation_id and node.position == position:
+                return node.id
+        return None
+
+    def _ensure_obs_child(
+        self,
+        parent_node_id: str,
+        observation: Observation,
+        position: Position,
+    ) -> str:
+        """Find an existing node in the tree linked to this observation
+        with the given position, or create one as a child of parent.
+        Returns the node id.
+
+        Tree-wide search prevents duplicate sprouts when equilibration
+        re-evaluates the same observation through different paths.
+        """
+        existing = self._find_existing_obs_child(observation.id, position)
+        if existing is not None:
+            return existing
+        parent_claim = self._node_to_claim[parent_node_id]
+        anchor = observation.coords
+        polarity = parent_claim.polarity_axis
+        if position == Position.CON:
+            polarity = tuple(-u for u in polarity)
+        new_node = self.sprout_child(
+            parent_node_id=parent_node_id,
+            position=position,
+            anchor=anchor,
+            polarity_axis=polarity,
+            observation=observation,
+            content=observation.label or f"obs:{observation.id[:6]}",
+        )
+        return new_node.id
 
     # ----- Mapping helpers -----
 
@@ -263,7 +361,7 @@ class GeneralizedTendency:
         """
         mag = max(0.05, min(1.0, novelty))
         if term == Termination.INTEGRATED:
-            return +mag * 0.5
+            return +mag
         if term in (Termination.CONTRADICTS_ROOT, Termination.DISRUPTS):
             return -mag
         return 0.0
