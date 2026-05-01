@@ -65,29 +65,25 @@ def banner(s: str) -> None:
     print("=" * 70)
 
 
-def make_var(name: str, world: World) -> tuple[GeneralizedTendency, GeneralizedTendency]:
+def make_var(name: str, world: World, n_vars: int = 3) -> tuple[GeneralizedTendency, GeneralizedTendency]:
     """Add a boolean variable to the world as a (true, false) tendency pair.
 
-    Both tendencies sit on the same 1D axis (one per variable). To
-    keep the variables on independent axes (x, y, z each their own
-    direction), the *anchor* is in a 3D space where each variable
-    occupies one of the three axes.
+    Each variable occupies its own axis in an n_vars-dimensional space.
     """
+    var_index = {chr(ord("u") + i): i for i in range(n_vars)}
+    var_index.update({"x": 0, "y": 1, "z": 2, "w": 3, "v": 4})
+    idx = var_index[name]
+    pos = tuple(1.0 if i == idx else 0.0 for i in range(n_vars))
+    neg = tuple(-1.0 if i == idx else 0.0 for i in range(n_vars))
     t = GeneralizedTendency(
-        id=f"{name}_T",
-        thesis=f"{name}=T",
-        anchor={"x": (+1.0, 0.0, 0.0), "y": (0.0, +1.0, 0.0), "z": (0.0, 0.0, +1.0)}[name],
-        polarity_axis={"x": (+1.0, 0.0, 0.0), "y": (0.0, +1.0, 0.0), "z": (0.0, 0.0, +1.0)}[name],
-        budget=1.0,
-        bandwidth=0.7,   # narrow so x's claims don't interfere with y's
+        id=f"{name}_T", thesis=f"{name}=T",
+        anchor=pos, polarity_axis=pos,
+        budget=1.0, bandwidth=0.7,
     )
     f = GeneralizedTendency(
-        id=f"{name}_F",
-        thesis=f"{name}=F",
-        anchor={"x": (-1.0, 0.0, 0.0), "y": (0.0, -1.0, 0.0), "z": (0.0, 0.0, -1.0)}[name],
-        polarity_axis={"x": (-1.0, 0.0, 0.0), "y": (0.0, -1.0, 0.0), "z": (0.0, 0.0, -1.0)}[name],
-        budget=1.0,
-        bandwidth=0.7,
+        id=f"{name}_F", thesis=f"{name}=F",
+        anchor=neg, polarity_axis=neg,
+        budget=1.0, bandwidth=0.7,
     )
     world.add_tendency(t)
     world.add_tendency(f)
@@ -95,16 +91,17 @@ def make_var(name: str, world: World) -> tuple[GeneralizedTendency, GeneralizedT
 
 
 def run_case(name: str, constraints: list[Observation],
-             expected: dict[str, str], use_growth: bool = False) -> bool:
+             expected: dict[str, str], use_growth: bool = False,
+             vars: list[str] = None) -> bool:
     """Run one SAT case. Returns True if architecture found the expected
     assignment (or, for UNSAT cases with expected=None for some vars,
     if those vars came out ambiguous).
     """
     banner(f"CASE: {name}")
+    var_list = vars if vars else ["x", "y", "z"]
     world = World()
-    make_var("x", world)
-    make_var("y", world)
-    make_var("z", world)
+    for v in var_list:
+        make_var(v, world, n_vars=len(var_list))
     for c in constraints:
         world.add_observation(c)
     if use_growth:
@@ -119,7 +116,7 @@ def run_case(name: str, constraints: list[Observation],
     scores = world.root_scores()
     print(f"\n  Tendency root scores:")
     success = True
-    for vid in ["x", "y", "z"]:
+    for vid in var_list:
         s_T = scores[f"{vid}_T"]
         s_F = scores[f"{vid}_F"]
         winner = "T" if s_T > s_F else "F"
@@ -244,6 +241,44 @@ def main():
         ],
         {"x": "T", "y": "T", "z": "T"},
         use_growth=True,
+    )))
+
+    # Case 9: 4-variable chain. x -> y; y -> z; z -> w. x=T.
+    # Three-hop chained inference. Expect T, T, T, T.
+    results.append(("4-var chain: x->y; y->z; z->w; x=T", run_case(
+        "x->y; y->z; z->w; x=T. Three-hop chain. Expect all T.",
+        [
+            Observation(id="c1", coords=(-1.0, +1.0, 0.0, 0.0), label="x->y"),
+            Observation(id="c2", coords=(0.0, -1.0, +1.0, 0.0), label="y->z"),
+            Observation(id="c3", coords=(0.0, 0.0, -1.0, +1.0), label="z->w"),
+            Observation(id="c_xT", coords=(+1.0, 0.0, 0.0, 0.0), label="x=T"),
+        ],
+        {"x": "T", "y": "T", "z": "T", "w": "T"},
+        vars=["x", "y", "z", "w"],
+    )))
+
+    # Case 10: 4-var with mixed constraints.
+    # x AND y; NOT z; w iff (x AND z). With x=T, y=T, z=F: w iff F = F.
+    # Expected: T, T, F, F.
+    results.append(("4-var mixed: x AND y; NOT z; w iff (x AND z)", run_case(
+        "x AND y; NOT z; w<->(x AND z). Expect T, T, F, F.",
+        [
+            Observation(id="c_xT", coords=(+1.0, 0.0, 0.0, 0.0), label="x=T"),
+            Observation(id="c_yT", coords=(0.0, +1.0, 0.0, 0.0), label="y=T"),
+            Observation(id="c_zF", coords=(0.0, 0.0, -1.0, 0.0), label="z=F"),
+            # w iff (x AND z): when x=T and z=T, w=T. When either is F, w=F.
+            # Encode: an obs at (-1, 0, -1, +1) says "if x=F or z=F or w=T".
+            # Combined with z=F, this is satisfied (z is F), so w stays free
+            # unless we add the other direction. For simplicity, use just
+            # one direction: "w must be F if z is F" -> obs at (0, 0, +1, -1).
+            Observation(id="c_wzF", coords=(0.0, 0.0, +1.0, -1.0),
+                        label="z=T or w=F (so if z=F, w must be F is forced when... actually no)"),
+            # Wait, the simpler one: if z=F then w=F. Obs at (0, 0, +1, -1).
+            # This says z is on T-side OR w is on F-side. Since z=F (not T),
+            # w must be F.
+        ],
+        {"x": "T", "y": "T", "z": "F", "w": "F"},
+        vars=["x", "y", "z", "w"],
     )))
 
     banner("OVERALL")
