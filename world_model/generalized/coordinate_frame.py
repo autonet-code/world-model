@@ -100,6 +100,23 @@ def _gaussian_sim(a: Tuple[float, ...], b: Tuple[float, ...], bandwidth: float) 
     return math.exp(-d_sq / (2.0 * bandwidth * bandwidth + 1e-12))
 
 
+def _dimensional_overlap_sim(obs: Tuple[float, ...], anchor: Tuple[float, ...]) -> float:
+    """Sparse-friendly similarity: fraction of anchor's nonzero dims
+    that obs also has nonzero on. In [0, 1].
+
+    For sparse high-dim observations (like SAT clauses with k literals
+    out of N variables), this captures "does this obs touch my
+    variable" without being washed out by zero-padding distance.
+    """
+    if not anchor:
+        return 0.0
+    anchor_nonzero = [i for i, a in enumerate(anchor) if abs(a) > 1e-6]
+    if not anchor_nonzero:
+        return 0.0
+    overlap = sum(1 for i in anchor_nonzero if i < len(obs) and abs(obs[i]) > 1e-6)
+    return overlap / len(anchor_nonzero)
+
+
 def _project(x: Tuple[float, ...], anchor: Tuple[float, ...],
              axis: Tuple[float, ...]) -> float:
     """Signed projection of (x - anchor) onto axis. Returns scalar in
@@ -130,6 +147,7 @@ class CoordinateFrame(ReferenceFrame):
     topic_threshold: float = 0.3   # min sim to be on-topic
     pro_threshold: float = 0.05    # min |projection| to take a stance
     contain_distance: float = 0.05 # ||x - integrated|| < this -> contained
+    use_dim_overlap: bool = True   # use dimensional-overlap gate instead of pure Gaussian
     _total_stake: float = 0.0
 
     # ----- ReferenceFrame interface -----
@@ -138,14 +156,15 @@ class CoordinateFrame(ReferenceFrame):
         coords = _coords_of(content)
         if coords is None:
             return False, 0.0
-        # Check against integrated observations
+        # Check against integrated observations - exact-coord match only
         best_sim = 0.0
         for obs in self.integrated.values():
-            sim = _gaussian_sim(coords, obs.coords, self.bandwidth)
-            if sim > best_sim:
-                best_sim = sim
             if _euclid_sq(coords, obs.coords) < self.contain_distance ** 2:
-                return True, sim
+                return True, 1.0
+            if not self.use_dim_overlap:
+                sim = _gaussian_sim(coords, obs.coords, self.bandwidth)
+                if sim > best_sim:
+                    best_sim = sim
         return False, best_sim
 
     def find_claims(self, content: Any) -> List[Tuple[Claim, float]]:
@@ -156,15 +175,25 @@ class CoordinateFrame(ReferenceFrame):
         detection happens at the thesis level. Without this filter, an
         observation slightly off a sibling sub-claim's anchor gets
         classified against that sub-claim instead of the thesis.
+
+        Sparse-friendly mode (use_dim_overlap=True): a claim is
+        on-topic if the observation touches any of the claim's anchor
+        dimensions. This handles SAT-style sparse observations where
+        zero-padding makes Euclidean similarity collapse.
         """
         coords = _coords_of(content)
         if coords is None:
             return []
         results: List[Tuple[Claim, float]] = []
         for claim in self.claims:   # top-level only
-            sim = _gaussian_sim(coords, claim.anchor, self.bandwidth)
-            if sim >= self.topic_threshold:
-                results.append((claim, sim))
+            if self.use_dim_overlap:
+                sim = _dimensional_overlap_sim(coords, claim.anchor)
+                if sim > 0:
+                    results.append((claim, sim))
+            else:
+                sim = _gaussian_sim(coords, claim.anchor, self.bandwidth)
+                if sim >= self.topic_threshold:
+                    results.append((claim, sim))
         results.sort(key=lambda x: -x[1])
         return results
 
@@ -172,12 +201,39 @@ class CoordinateFrame(ReferenceFrame):
         coords = _coords_of(content)
         if coords is None or not isinstance(claim, CoordinateClaim):
             return Stance.NEUTRAL, 0.0
+
+        if self.use_dim_overlap:
+            # Topical guard: does obs touch any of claim's anchor dims?
+            overlap = _dimensional_overlap_sim(coords, claim.anchor)
+            if overlap == 0:
+                return Stance.NEUTRAL, 0.05
+            # Stance: for each dim where claim's polarity_axis is
+            # nonzero, check sign agreement with obs.
+            agree = 0
+            disagree = 0
+            for i, u in enumerate(claim.polarity_axis):
+                if abs(u) < 1e-6 or i >= len(coords) or abs(coords[i]) < 1e-6:
+                    continue
+                if (u > 0) == (coords[i] > 0):
+                    agree += 1
+                else:
+                    disagree += 1
+            total = agree + disagree
+            if total == 0:
+                return Stance.NEUTRAL, 0.05
+            net = (agree - disagree) / total   # in [-1, 1]
+            if net > self.pro_threshold:
+                return Stance.PRO, abs(net)
+            elif net < -self.pro_threshold:
+                return Stance.CON, abs(net)
+            else:
+                return Stance.NEUTRAL, 1.0 - abs(net)
+
+        # Original Gaussian-distance mode
         sim = _gaussian_sim(coords, claim.anchor, self.bandwidth)
         if sim < self.topic_threshold:
             return Stance.NEUTRAL, max(sim, 0.05)
-        # Project onto polarity axis
         proj = _project(coords, claim.anchor, claim.polarity_axis)
-        # Normalize by distance from anchor so confidence is in [0, 1]
         dist = math.sqrt(_euclid_sq(coords, claim.anchor))
         if dist < 1e-9:
             return Stance.NEUTRAL, 0.0
