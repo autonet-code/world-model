@@ -194,6 +194,16 @@ class GeneralizedTendency:
             node under the contradicted claim (drags its score down).
           - ORTHOGONAL / MAX_ITER -> ignore.
 
+        Joint satisfaction discount: an observation that is *already*
+        satisfied through coordinates of OTHER variables (variables
+        resolved with high confidence by independent evidence) gets
+        its contribution to this tendency discounted. This breaks the
+        symmetric-tie problem in chained implications: an implication
+        c_imp2 = (y, z) at (0, -1, +1) supports both y=F AND z=T;
+        once z=T is independently established, the obs's support for
+        y=F should diminish because the implication is satisfied
+        without needing y=F.
+
         For each foreign node, evaluate its anchor; cross-stake by sign
         of stance.
 
@@ -202,6 +212,11 @@ class GeneralizedTendency:
         as a hard cap.
         """
         intents: dict[tuple[str, str], float] = {}
+
+        # Compute joint-satisfaction scores: for each obs, how much is
+        # it already satisfied by OTHER tendencies' resolved positions?
+        # Used as a discount factor on this tendency's contribution.
+        sat_scores = self._joint_satisfaction(world)
 
         # 1. Stake on / sprout from incoming observations against own tree
         for obs in world.observations.values():
@@ -219,7 +234,12 @@ class GeneralizedTendency:
             parent_node_id = self._claim_to_node_id(claim)
             if parent_node_id is None:
                 continue
-            mag = max(0.05, min(1.0, novelty))
+            # Discount this obs's contribution by how satisfied it
+            # already is through OTHER variables. obs.id -> [0, 1].
+            # 1 = fully satisfied elsewhere -> contribution * 0.
+            # 0 = not satisfied elsewhere -> full contribution.
+            discount = 1.0 - sat_scores.get(obs.id, 0.0)
+            mag = max(0.05, min(1.0, novelty)) * discount
 
             if term == Termination.INTEGRATED:
                 # Find or create a PRO child observation node under the claim
@@ -277,6 +297,84 @@ class GeneralizedTendency:
         # the personality model.
         intents = {k: v * self.budget for k, v in intents.items()}
         self.last_stakes = intents
+
+    def _joint_satisfaction(self, world: "World") -> dict[str, float]:
+        """For each observation in the world, compute how much it is
+        already satisfied by OTHER tendencies' resolved positions.
+
+        For an obs at coords (c_1, ..., c_d), we look at each
+        dimension i where:
+          - This tendency's anchor has component near 0 (this dim is
+            not THIS tendency's responsibility).
+          - Some other tendency's anchor has component sharing sign
+            with c_i (that tendency aligns with this dim of obs).
+          - That other tendency has a strong root score.
+
+        The score is max over satisfied dimensions of (alignment ×
+        normalized score). Returns {obs_id: [0, 1]}.
+
+        Variables that THIS tendency is responsible for (its anchor
+        nonzero on that dim) don't count toward satisfaction --
+        otherwise we'd self-discount.
+        """
+        result: dict[str, float] = {}
+        if not self.anchor:
+            return result
+        my_dims = [i for i, a in enumerate(self.anchor) if abs(a) > 0.01]
+        my_dim_set = set(my_dims)
+
+        # Build a per-dim, per-sign GAP score: how decisively does the
+        # winning tendency on (dim, sign) beat its opposite-sign rival?
+        # We only count satisfaction when there's a clear winner --
+        # otherwise the dim is itself contested and shouldn't satisfy
+        # other obs.
+        all_scores = world.root_scores()
+        # Group tendencies by (dim, sign) of their anchor
+        by_key: dict[tuple[int, int], list[tuple[str, float]]] = {}
+        for tid, t in world.tendencies.items():
+            if not t.anchor:
+                continue
+            for i, a in enumerate(t.anchor):
+                if abs(a) < 0.01:
+                    continue
+                sign = 1 if a > 0 else -1
+                by_key.setdefault((i, sign), []).append((tid, all_scores.get(tid, 0.0)))
+
+        # For each dim, compute the gap between winning sign and losing sign.
+        # gap_score(dim, sign) = max(0, score_at_sign - score_at_-sign).
+        gap_score: dict[tuple[int, int], float] = {}
+        all_dims = {k[0] for k in by_key}
+        for dim in all_dims:
+            pos = max((s for _, s in by_key.get((dim, +1), [])), default=0.0)
+            neg = max((s for _, s in by_key.get((dim, -1), [])), default=0.0)
+            if pos > neg:
+                gap_score[(dim, +1)] = pos - neg
+                gap_score[(dim, -1)] = 0.0
+            else:
+                gap_score[(dim, -1)] = neg - pos
+                gap_score[(dim, +1)] = 0.0
+
+        max_gap = max(gap_score.values()) if gap_score else 0.0
+        if max_gap <= 0:
+            return result
+
+        for obs in world.observations.values():
+            if not obs.coords:
+                continue
+            sat = 0.0
+            for i, c in enumerate(obs.coords):
+                if abs(c) < 0.01:
+                    continue
+                if i in my_dim_set:
+                    continue   # don't self-discount on our own axis
+                sign = 1 if c > 0 else -1
+                key = (i, sign)
+                if key in gap_score:
+                    contribution = gap_score[key] / max_gap
+                    if contribution > sat:
+                        sat = contribution
+            result[obs.id] = sat
+        return result
 
     def _find_existing_obs_child(
         self,
