@@ -95,6 +95,7 @@ class GeneralizedTendency:
     capacity_decay: float = 0.7   # blend factor: cap_new = decay * cap_old + (1-decay) * pro_in
     capacity_reach: float = 0.5   # outbound stake = reach * capacity per round
     capacity_threshold: float = 0.05  # below this, node stays silent
+    smooth_promotion: bool = True   # if False, only the root acts; sub-claims stay passive
 
     def __post_init__(self):
         # Create root claim and tree
@@ -290,9 +291,10 @@ class GeneralizedTendency:
         # same coordinate dimensions. This is the locality rule: a
         # sub-claim's voice carries to neighboring claims, with reach
         # growing as standing grows.
-        sub_intents = self._sub_claim_staking(world)
-        for k, v in sub_intents.items():
-            intents[k] = intents.get(k, 0.0) + v
+        if self.smooth_promotion:
+            sub_intents = self._sub_claim_staking(world)
+            for k, v in sub_intents.items():
+                intents[k] = intents.get(k, 0.0) + v
 
         # 2. Cross-stake on every other tendency's nodes.
         # For each foreign node, evaluate either:
