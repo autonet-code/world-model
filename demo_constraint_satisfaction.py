@@ -95,7 +95,7 @@ def make_var(name: str, world: World) -> tuple[GeneralizedTendency, GeneralizedT
 
 
 def run_case(name: str, constraints: list[Observation],
-             expected: dict[str, str]) -> bool:
+             expected: dict[str, str], use_growth: bool = False) -> bool:
     """Run one SAT case. Returns True if architecture found the expected
     assignment (or, for UNSAT cases with expected=None for some vars,
     if those vars came out ambiguous).
@@ -107,8 +107,15 @@ def run_case(name: str, constraints: list[Observation],
     make_var("z", world)
     for c in constraints:
         world.add_observation(c)
-    rounds = equilibrate(world, max_rounds=20, tolerance=1e-3)
-    print(f"\n  Equilibrated in {rounds} rounds")
+    if use_growth:
+        rounds, new_nodes = equilibrate_with_growth(
+            world, max_outer=4, max_rounds=20, tolerance=1e-3,
+            contention_threshold=0.1, offset=0.4,
+        )
+        print(f"\n  Equilibrated in {rounds} rounds; sprouted {new_nodes} new nodes")
+    else:
+        rounds = equilibrate(world, max_rounds=20, tolerance=1e-3)
+        print(f"\n  Equilibrated in {rounds} rounds")
     scores = world.root_scores()
     print(f"\n  Tendency root scores:")
     success = True
@@ -205,6 +212,38 @@ def main():
             Observation(id="c_xF", coords=(-1.0, 0.0, 0.0), label="x must be F"),
         ],
         {"x": "F", "y": "T", "z": None},
+    )))
+
+    # Case 7: chained implications. x -> y, y -> z. Observe x=T.
+    # Two-hop reasoning: must conclude y=T (from x=T and x->y), then
+    # z=T (from y=T and y->z).
+    # x->y encoded at (-1, +1, 0): x is F or y is T.
+    # y->z encoded at (0, -1, +1): y is F or z is T.
+    results.append(("x->y; y->z; x=T (two-hop infer z=T)", run_case(
+        "x->y; y->z; x=T. Two-hop reasoning: y=T then z=T.",
+        [
+            Observation(id="c_imp1", coords=(-1.0, +1.0, 0.0),
+                        label="x->y"),
+            Observation(id="c_imp2", coords=(0.0, -1.0, +1.0),
+                        label="y->z"),
+            Observation(id="c_xT", coords=(+1.0, 0.0, 0.0), label="x=T"),
+        ],
+        {"x": "T", "y": "T", "z": "T"},
+    )))
+
+    # Case 8: same as 7 but with growth enabled. The contended y
+    # should sprout sub-claims that resolve the conditional structure.
+    results.append(("x->y; y->z; x=T WITH GROWTH", run_case(
+        "x->y; y->z; x=T WITH GROWTH. Test if depth-on-demand resolves it.",
+        [
+            Observation(id="c_imp1", coords=(-1.0, +1.0, 0.0),
+                        label="x->y"),
+            Observation(id="c_imp2", coords=(0.0, -1.0, +1.0),
+                        label="y->z"),
+            Observation(id="c_xT", coords=(+1.0, 0.0, 0.0), label="x=T"),
+        ],
+        {"x": "T", "y": "T", "z": "T"},
+        use_growth=True,
     )))
 
     banner("OVERALL")
