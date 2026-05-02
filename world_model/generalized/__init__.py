@@ -42,6 +42,16 @@ from .world import World, Observation
 from .equilibrate import equilibrate, equilibrate_with_growth
 from .grow import propose_growth
 from .prune import ScoreHistory, prune_settled_negatives, snapshot_scores
+from .locate import (
+    Region,
+    RegionMember,
+    Locator,
+    CoordinateLocator,
+    KeywordLocator,
+    ChainLocator,
+    default_locator,
+)
+from .render import render
 
 __all__ = [
     "CoordinateClaim",
@@ -56,4 +66,12 @@ __all__ = [
     "ScoreHistory",
     "prune_settled_negatives",
     "snapshot_scores",
+    "Region",
+    "RegionMember",
+    "Locator",
+    "CoordinateLocator",
+    "KeywordLocator",
+    "ChainLocator",
+    "default_locator",
+    "render",
 ]

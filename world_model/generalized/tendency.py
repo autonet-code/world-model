@@ -429,21 +429,35 @@ class GeneralizedTendency:
         """For each non-root node with capacity above threshold, stake
         on local targets.
 
-        Targets and signs:
-          - PRO on this node's siblings of the SAME position (PRO
-            siblings reinforce a shared framing).
-          - CON on this node's siblings of the OPPOSITE position (a
-            PRO sub-claim wants its CON siblings demoted; a CON
-            sub-claim wants its PRO siblings demoted).
-          - Cross-tendency: PRO on nodes in OTHER tendencies' trees
-            that share this node's polarity direction on the dims
-            they both care about; CON on opposing-direction nodes.
+        Local targets within own tree (always cheap):
+          - PRO on siblings of the SAME position (reinforce shared frame).
+          - CON on siblings of the OPPOSITE position (demote opposing).
+
+        Cross-tendency targets via locate (locality rule):
+          Use the engine's Locator to find nodes near this sub-claim's
+          coords, restricted to a max neighborhood. Acts on those near
+          neighbors with sign determined by polarity-axis alignment.
+          This bounds per-node cross-influence to the local
+          neighborhood instead of the full N x M product across all
+          tendencies' trees.
 
         Magnitude = capacity * reach for each target, divided across
         the targets so a high-capacity node doesn't double-count.
         """
+        from .locate import CoordinateLocator
+
         intents: dict[tuple[str, str], float] = {}
         root_id = self.tree.root_node.id
+
+        # One locator instance per call, used for every sub-claim
+        # that needs cross-tendency lookup. The neighborhood radius
+        # is the bandwidth -- claims further than this aren't
+        # operationally adjacent.
+        locator = CoordinateLocator(
+            max_distance=self.bandwidth * 1.5,
+            max_results=16,
+        )
+
         for node in self.tree.all_nodes():
             if node.id == root_id:
                 continue
@@ -475,26 +489,27 @@ class GeneralizedTendency:
                     key = (self.id, s.id)
                     intents[key] = intents.get(key, 0.0) - per
 
-            # Cross-tendency targets: peer tendencies' nodes whose
-            # polarity axis aligns or opposes this node's.
+            # Cross-tendency targets via locality (locate-bounded)
             my_claim = self._node_to_claim.get(node.id)
-            if my_claim is None or not my_claim.polarity_axis:
+            if my_claim is None or not my_claim.polarity_axis or not my_claim.anchor:
                 continue
+            neighborhood = locator(world, my_claim.anchor)
             cross_targets: list[tuple[str, str, float]] = []
-            for other in world.tendencies.values():
-                if other.id == self.id:
+            for tid, nid, _dist in neighborhood:
+                if tid == self.id:
                     continue
-                for o_node in other.tree.all_nodes():
-                    o_claim = other._node_to_claim.get(o_node.id)
-                    if o_claim is None or not o_claim.polarity_axis:
-                        continue
-                    align = self._axis_alignment(
-                        my_claim.polarity_axis, o_claim.polarity_axis
-                    )
-                    if abs(align) > 0.3:
-                        cross_targets.append((other.id, o_node.id, align))
+                other = world.tendencies.get(tid)
+                if other is None:
+                    continue
+                o_claim = other._node_to_claim.get(nid)
+                if o_claim is None or not o_claim.polarity_axis:
+                    continue
+                align = self._axis_alignment(
+                    my_claim.polarity_axis, o_claim.polarity_axis
+                )
+                if abs(align) > 0.3:
+                    cross_targets.append((tid, nid, align))
             if cross_targets:
-                # Spread outbound proportionally to alignment magnitude
                 total_align = sum(abs(a) for _, _, a in cross_targets)
                 if total_align > 0:
                     for tid, nid, align in cross_targets:
