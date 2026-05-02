@@ -41,6 +41,7 @@ from .tendency import GeneralizedTendency
 from .world import World, Observation
 from .equilibrate import equilibrate, equilibrate_with_growth
 from .grow import propose_growth
+from .prune import ScoreHistory, prune_settled_negatives, snapshot_scores
 
 __all__ = [
     "CoordinateClaim",
@@ -52,4 +53,7 @@ __all__ = [
     "equilibrate",
     "equilibrate_with_growth",
     "propose_growth",
+    "ScoreHistory",
+    "prune_settled_negatives",
+    "snapshot_scores",
 ]
