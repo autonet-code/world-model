@@ -52,6 +52,7 @@ from .locate import (
     default_locator,
 )
 from .render import render
+from .decay import StabilityTracker, is_decayed
 
 __all__ = [
     "CoordinateClaim",
@@ -74,4 +75,6 @@ __all__ = [
     "ChainLocator",
     "default_locator",
     "render",
+    "StabilityTracker",
+    "is_decayed",
 ]
