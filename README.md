@@ -1,367 +1,180 @@
 # World Model
 
-**Modeling personality as adversarial equilibrium, with novelty-driven attention**
+**A graph-equilibration AI substrate. No backprop, no gradients, no LLMs.**
 
-A computational framework for representing a person's decision-making as competing internal drives that stake evidence, debate in adversarial arenas, and shift allocations based on novelty-modulated attention. Not a profile. Not a summary. A dynamic system that *is* the personality, in computational form.
-
----
-
-## The Core Insight
-
-> Ideas are atomic. Position is relational.
-
-The observation "Lives paycheck to paycheck at 42" has no inherent meaning. Its meaning emerges from what you're optimizing for:
-
-- **SURVIVAL** sees: financial risk, precarity
-- **MEANING** sees: sacrifice for purpose, choosing mission over money
-- **AUTONOMY** sees: rejecting salary slavery, freedom at cost
-- **COMFORT** sees: unsustainable intensity, warning sign
-
-Same fact. Different positions. The World Model captures this by letting the same observation appear across multiple value trees with different polarities.
+A coalition of competing theses (tendencies) that stake on a fractal tree of claims. Observations arrive, equilibrium settles, mint is awarded for movement that survives. The same architecture handles boolean reasoning, alignment scoring, federated training, and decentralized inference — without a single tensor or gradient step.
 
 ---
 
-## Architecture
+## What it does today
 
-Three interlocking systems form a feedback loop:
+Three deployed capabilities, each with a runnable demo:
 
-```
-Input (text/voice/tweets)
-    │
-    ▼
-┌──────────┐     "How surprising is this?"
-│ NOVELTY  │     Fetch/parse loop against reference frame
-│          │     4 dimensions: integration resistance,
-│          │     contradiction depth, coverage gap,
-│          │     allocation disruption
-└────┬─────┘
-     │ novelty score
-     ▼
-┌──────────┐     "Should I attend to it?"
-│ATTENTION │     Bounded symbol streams force prioritization
-│          │     Novelty captures attention → shifts toward CURIOSITY
-│          │     Salience filters: recency, convergence, repetition
-└────┬─────┘
-     │ promoted observations
-     ▼
-┌──────────┐     "What do my tendencies think?"
-│  ARENA   │     7 tendencies propose claims, stake evidence
-│ (life)   │     Winners gain allocation, losers shrink
-│          │     Equilibrium IS the personality
-└────┬─────┘
-     │ updated allocations
-     └──────────────► feeds back into novelty & attention
+### Boolean reasoning by single-pass equilibration
+
+```bash
+python demo_constraint_satisfaction.py    # 10/10 hand-built SAT cases
+python demo_satlib.py 20                   # SATLIB uf20-91: 94.1% clause satisfaction
 ```
 
----
+- 10/10 SAT cases pass via single-pass equilibration: AND, NOT, OR, IMPLICATION, two-hop and three-hop chained reasoning, UNSAT detection, mixed 4-variable constraints.
+- SATLIB uf20-91 (20-variable random 3-SAT at the phase transition): **94.1% clause satisfaction**. Random baseline is 87.5%. Best instance: 97.8%. No backtracking — just one settling round per instance.
 
-## Seven Tendencies
+### Smooth promotion: every node earns standing
 
-Seven universal human drives act as **agents** competing for influence:
+```bash
+python demo_promotion_earns_keep.py       # 3.67-point asymmetric effect
+```
 
-| Tendency | Default | Question It Asks |
-|----------|---------|------------------|
-| SURVIVAL | 18% | "Is this safe? Do I have enough?" |
-| CONNECTION | 20% | "Am I known? Do I belong?" |
-| COMFORT | 18% | "Is this pleasant? Can I sustain this?" |
-| STATUS | 12% | "Am I respected? Do I matter to others?" |
-| AUTONOMY | 12% | "Am I free? Can I choose?" |
-| MEANING | 10% | "Does this matter? Will it outlast me?" |
-| CURIOSITY | 10% | "Do I understand? What's there to learn?" |
+There is no qualitative line between "claim" and "tendency." Every node has an outbound staking capacity proportional to the PRO stake it has accumulated. A freshly sprouted sub-claim starts silent; as it earns standing, its voice grows. The A/B test shows a 3.67-point shift in equilibrium delta attributable to smooth promotion alone, in scenarios where root staking can't reach.
 
-Each agent:
-1. **PROPOSES** claims about what matters
-2. **STAKES** observations as evidence (PRO or CON)
-3. **WINS or LOSES** debates based on evidence strength
-4. **GAINS or LOSES** allocation based on outcomes
+### Pruning at epoch close
 
-The equilibrium that emerges—which tendencies dominate, where they conflict, how they resolve—**is** the personality.
+```bash
+python demo_pruning.py                    # entropy reduction
+```
+
+Branches whose score never moved meaningfully **and** which never accumulated standing get discarded. Roots are never pruned. Idempotent and deterministic — same inputs, same pruned set across all verifiers.
 
 ---
 
-## Quick Start
+## Architecture (generalized model)
 
-### Adversarial Debate
+Located in `world_model/generalized/`. This is what's used in production.
+
+| Type | What it does |
+|---|---|
+| `GeneralizedTendency` | A thesis about the world. Owns a tree of sub-claims, a coordinate-space frame, a budget. |
+| `World` | A coalition of tendencies + an observation stream + the cross-stake graph. |
+| `CoordinateClaim` | A claim anchored at a point in coordinate space, with a polarity axis. |
+| `CoordinateFrame` | Non-LLM ReferenceFrame. Sparse-friendly dimensional-overlap similarity; sign-agreement stance. |
+| `CoordinateProbe` | NoveltyProbe with the formalized terminations (INTEGRATED / CONTRADICTS / DISRUPTS / ORTHOGONAL). |
+| `equilibrate(world)` | Rounds of (act, apply_stakes) until stake intents stabilize. |
+| `propose_growth(world)` | Sprout PRO/CON children under contended nodes. |
+| `prune_settled_negatives(world, history)` | Discard low-score, low-novelty subtrees. |
+| `ScoreHistory` | Append-only ring of per-node score snapshots; feeds pruning and reconciliation. |
+
+The **content-addressed sub-claim ids** mean two solvers proposing the same claim under the same parent at the same coords produce the same node id. Federation converges naturally — no consensus protocol, no central log, no merge resolution.
+
+---
+
+## How novelty and mint relate
+
+Novelty and mint are deliberately separated:
+
+- **Novelty** is descriptive: the magnitude of score movement at a node during an epoch. Captures surprise regardless of direction or correctness.
+- **Mint** is rewarded: only positive movement that ends with positive score qualifies. The agent who caused that upward survival mints; CON-contributors don't, even when correct.
+
+This closes the obvious collusion attack: two agents can't extract mint by manufacturing a false PRO claim and "debunking" each other's claims, because the debunking leg never lands in mint territory.
+
+The full reconciliation pipeline lives in autonet's substrate adapter (`c:\code\autonet\nodes\common\world_model_substrate\reconcile.py`), which uses this engine.
+
+---
+
+## Autonet integration
+
+This engine is the substrate for [autonet](https://github.com/autonet-code/autonet)'s decentralized AI network, replacing the VL-JEPA training architecture that hit a capacity ceiling on real-world data.
+
+Vertical slice (solver → aggregator → verifier → inference) runs end-to-end without any smart-contract changes. Per-agent mint distribution is computed at epoch boundaries; the substrate produces protocol-compatible event streams that the existing FedAvg-shaped aggregator path replaces with `aggregate_contributions`.
+
+```bash
+# In autonet:
+pip install -e c:/code/world-model
+python test_world_model_substrate_e2e.py        # vertical slice
+python test_epoch_reconciliation.py             # mint distribution
+python test_multi_solver_convergence.py         # federation
+```
+
+---
+
+## Quick start (engine only)
 
 ```python
-from world_model import create_world_model, Arena
-
-model = create_world_model("Person", "observations.json")
-
-arena = Arena()
-trees, result = arena.run_full_debate(
-    observations=model.observations,
-    agents=model.agents,
+from world_model.generalized import (
+    GeneralizedTendency, World, Observation, equilibrate,
 )
 
-print(f"Winner: {result.winner}")
-print(f"Allocations: {model.agents}")
-```
-
-### ML-Style Training
-
-```python
-from world_model.dynamics import Trainer, TrainConfig
-
-config = TrainConfig(
-    max_epochs=5,
-    convergence_threshold=0.01,
-    validation_split=0.2,
+# Two opposing tendencies on a 1D axis
+A = GeneralizedTendency(
+    id="left", thesis="left wins",
+    anchor=(-1.0,), polarity_axis=(-1.0,),
+    bandwidth=2.0,
 )
-
-trainer = Trainer(config)
-history, result = trainer.train(
-    observations=model.observations,
-    agents=model.agents,
+B = GeneralizedTendency(
+    id="right", thesis="right wins",
+    anchor=(+1.0,), polarity_axis=(+1.0,),
+    bandwidth=2.0,
 )
+world = World()
+world.add_tendency(A)
+world.add_tendency(B)
 
-print(f"Validation accuracy: {history.validation_results[-1].accuracy:.1%}")
+# Feed evidence on the left side
+for x in [-1.2, -1.0, -0.8]:
+    world.add_observation(Observation(coords=(x,)))
+equilibrate(world)
+
+print(world.root_scores())   # left tendency wins
 ```
 
-### Novelty Measurement
-
-```python
-from world_model.novelty import measure_against_claims
-
-result = measure_against_claims(
-    concept="Bitcoin",
-    claim_texts=[
-        "Traditional banking provides security",
-        "Trust in institutions is necessary",
-    ]
-)
-
-print(f"Termination: {result.termination}")  # CONTRADICTS_ROOT
-print(f"Composite novelty: {result.composite:.3f}")
-```
-
-### Attention Routing
-
-```python
-from world_model.attention import Sequence, Symbol, NoveltyProcess
-
-# Bounded buffers force prioritization (like working memory)
-conscious = Sequence("conscious", capacity=7, min_value=0.5)
-working = Sequence("working", capacity=20, min_value=0.3)
-
-# Novel items auto-promote from working memory to conscious attention
-proc = NoveltyProcess("filter", inputs=[working], outputs=[conscious])
-proc.start()
-
-working.publish(Symbol(data="something novel", value=0.6))
-```
-
-### Full Integration Loop
-
-```python
-from world_model.integration import AttentionBridge
-
-bridge = AttentionBridge(
-    agent_set=model.agents,
-    observation_store=model.observations,
-)
-
-event = bridge.process("New information about the person")
-print(f"Novelty: {event.novelty_score:.2f}")
-print(f"Promoted: {event.was_promoted}")
-print(f"Dominant tendency: {event.dominant_tendency}")
-```
+For boolean reasoning, see `demo_constraint_satisfaction.py`. For multi-tendency federation, see autonet's substrate slice.
 
 ---
 
-## Package Structure
+## Open research
 
-```
-world_model/
-├── models/              Core data structures
-│   ├── observation.py       Atomic facts (~280 bytes, content-hash deduped)
-│   ├── agent.py             Tendency enum, Agent, AgentSet (allocations sum to 1)
-│   └── tree.py              Value hierarchies, PRO/CON positioning, weight propagation
-│
-├── dynamics/            Adversarial competition
-│   ├── arena.py             Debate orchestration (propose → stake → resolve → reallocate)
-│   └── trainer.py           ML-style training (epochs, convergence, learning rate decay)
-│
-├── novelty/             Novelty measurement
-│   ├── core.py              Abstract interfaces (NoveltyProbe, ReferenceFrame)
-│   ├── hybrid_probe.py      Wikidata graph + Neural NLI (recommended)
-│   ├── neural_probe.py      Pure NLI, no external dependencies
-│   ├── wikidata_probe.py    Wikidata graph structure only
-│   ├── wikidata.py          Wikidata API integration
-│   └── embeddings.py        Sentence embeddings + NLI stance detection
-│
-├── attention/           Attention routing
-│   ├── curves.py            Novelty → attention allocation (sigmoid curves)
-│   ├── sequence.py          Bounded symbol buffers with eviction policies
-│   ├── process.py           Pattern matching (repetition, convergence, loop detection)
-│   ├── salience.py          Value functions (recency, keywords, novelty, allocations)
-│   └── novelty_process.py   Novelty-aware routing between sequences
-│
-├── staking/             Evidence staking
-│   ├── staker.py            Tendency-specific evidence analysis
-│   └── hierarchical_staker.py  Recursive claim decomposition
-│
-├── extraction/          Observation extraction
-│   ├── observation_extractor.py  Text → atomic observations
-│   ├── voice_extractor.py       Voice transcripts → voice profile
-│   └── tweet_processor.py       Twitter data → observations
-│
-├── agents/              Autonomous agents
-│   └── moltbook_agent.py    Social media agent driven by world model
-│
-├── storage/             Persistence
-│   ├── world_model_store.py     JSON serialization
-│   └── firestore_adapter.py     Google Firestore
-│
-└── integration.py       AttentionBridge + ArenaFeedback (wires everything together)
+Two engine-level threads, deferred until empirical data from real long-running streams shapes the design:
 
-api/                     FastAPI service
-data/                    Sample encoded world model
-docs/                    Full documentation
-scripts/                 CLI tools for extraction
-tests/                   Test suite
-```
+1. **Novelty decay on settled regions.** Once a node's score has been stable for N epochs, decay its potential-novelty so the engine concentrates probe budget on growth frontiers. Required for the depth-driven attention property to scale.
+2. **Locality rule for sub-claim staking.** Sub-claims at depth d should stake mostly at depth d-1 to d+1, not back at the roots. The operational graph becomes the active frontier rather than the whole tree.
+
+Both are necessary for the engine to scale beyond shallow worlds without re-evaluating settled structure each round. They're tracked but waiting on real-world signal about what "settled" looks like in operation.
 
 ---
 
-## How Novelty Works
+## Origin: the personality model
 
-Novelty is not a one-shot score. It's the **termination reason** of a fetch/parse loop that explores how a concept relates to existing beliefs.
+This module started as a personality-modeling system: seven human drives (SURVIVAL, MEANING, AUTONOMY, COMFORT, CONNECTION, CURIOSITY, STATUS) competing in adversarial debates over observations about a person. That work is still in `world_model/models/`, `world_model/dynamics/`, `world_model/staking/`, etc., and the legacy README sections describing it are at `docs/legacy/`.
 
-```
-WHILE NOT TERMINATED:
-    data = fetch(focus)              # Query knowledge graph
-    verdict = parse(data, frame)     # Evaluate against beliefs
+The generalized model in `world_model/generalized/` was built when it became clear that the same architecture handles any system — physics, alignment, reasoning — not just personality. The personality case is now one application of a general substrate. The seven tendencies become four (life, self-preservation, intelligence, evolution) when the substrate is used for charter alignment in autonet; arbitrary tendencies for other domains.
 
-    IF verdict.terminates:
-        BREAK                        # Termination reason IS the novelty
-    ELSE:
-        frame = frame.absorb(data)   # Update reference frame
-        focus = verdict.next_focus   # Expand search outward
-```
-
-**Termination reasons:**
-- `INTEGRATED` — concept fits naturally (low novelty)
-- `CONTRADICTS_ROOT` — opposes foundational beliefs (high novelty)
-- `ORTHOGONAL` — no connection found despite search (high novelty)
-- `DISRUPTS` — would restructure tendency allocations (high novelty)
-
-**Four dimensions** (combined via geometric mean):
-
-| Dimension | Measures |
-|-----------|----------|
-| Integration Resistance | How many iterations before the loop terminates |
-| Contradiction Depth | How foundational the conflicting belief is |
-| Coverage Gap | Fraction of worldview untouched by the concept |
-| Allocation Disruption | How much tendency priorities would shift |
+The formalization in `docs/FORMALIZATION.md` and `docs/THEORY.md` was domain-agnostic from the start; the LLM-backed concrete probes in `world_model/novelty/` (Wikidata, NLI, Hybrid) are still there. The new `CoordinateFrame` and `CoordinateProbe` in `world_model/generalized/coordinate_frame.py` are the no-LLM concrete implementations of those same abstractions.
 
 ---
 
-## How Attention Works
+## Status
 
-Attention is modeled as **cascading symbol streams** with finite capacity:
-
-```
-                    ┌─────────────┐
-  Input ──────────► │  Sequence   │ ◄──────── Salience
-                    │  (bounded)  │           Function
-                    └──────┬──────┘
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-         ┌────────┐   ┌────────┐   ┌────────┐
-         │Process │   │Process │   │Process │
-         └───┬────┘   └───┬────┘   └───┬────┘
-             │            │            │
-             └────────────┼────────────┘
-                          ▼
-                    ┌─────────────┐
-                    │  Sequence   │
-                    │  (output)   │
-                    └─────────────┘
-```
-
-- **Sequences** are bounded buffers (like Miller's 7±2). Overflow forces eviction — low-value items are dropped.
-- **Processes** watch sequences for patterns: repetition, convergence across sources, loops.
-- **Salience functions** assign value: recency decay, keyword matching, novelty scores, tendency allocations.
-- **Novelty captures attention**: High novelty shifts allocation toward CURIOSITY via sigmoid curves, configurable per personality (explorer, balanced, conservative).
-
----
-
-## Validation
-
-First training run on 165 observations:
-
-| Metric | Value |
-|--------|-------|
-| Accuracy | 27.3% |
-| Baseline | 7.1% (random chance = 1/7) |
-| P-value | 0.001 |
-
-The model predicts which tendency "owns" an observation **4x better than chance**.
-
----
-
-## The Bet
-
-This architecture bets that:
-
-1. **Binary distinction + recursion** = sufficient to model meaning
-2. **Seven tendencies** = comprehensive but tractable agent set
-3. **Competition** = produces coherent personality from plurality
-4. **Novelty is relative** = same information, different surprise depending on who's hearing it
-5. **Attention is finite** = bounded buffers produce intelligent filtering
-6. **Same structure** = applies to anyone (swap observations + allocations)
-
-If the bet pays off, this is a general architecture for modeling minds.
+- 14 / 14 substrate-integration tasks complete (see [autonet's task list](https://github.com/autonet-code/autonet)).
+- 10 / 10 hand-built SAT cases pass.
+- SATLIB 94.1% on 20-instance run, 6.6 percentage points above random.
+- Multi-solver content-addressed convergence verified.
+- Substrate vertical slice through autonet's solver / aggregator / verifier / inference paths runs end-to-end.
 
 ---
 
 ## Installation
 
 ```bash
-# Core (no external dependencies)
 pip install -e .
-
-# With novelty measurement (requires ML models)
-pip install -e ".[novelty]"
-
-# With API server
-pip install -e ".[api]"
-
-# Everything
-pip install -e ".[all]"
 ```
 
-Requires Python 3.11+.
+Python 3.11+. The generalized model has zero external dependencies. The personality-modeling and LLM-backed novelty modules require optional extras:
+
+```bash
+pip install -e ".[novelty]"        # LLM-backed novelty probes
+pip install -e ".[api]"            # FastAPI service for personality model
+pip install -e ".[all]"
+```
 
 ---
 
 ## Documentation
 
-- [Architecture](docs/architecture.md) — System design and components
-- [Core Concepts](docs/concepts.md) — Key ideas and terminology
-- [Training Guide](docs/training.md) — ML-style training with convergence detection
-- [API Reference](docs/api-reference.md) — Module documentation
-- [Novelty Theory](docs/THEORY.md) — Theoretical foundation for novelty measurement
-- [Novelty Formalization](docs/FORMALIZATION.md) — Mathematical specification
-- [Wikidata Integration](docs/wikidata-integration.md) — Knowledge graph specifics
-- [Attention Mechanisms](docs/attention.md) — Salience, routing, and novelty-modulated allocation
-- [Future: Digital Twin](docs/future-digital-twin.md) — Vision for complete embodiment
-
----
-
-## Connection to After Me
-
-This system is infrastructure for [After Me](https://github.com/dOrgTech/afterme-contracts)—trustless estate planning with posthumous digital continuity.
-
-The world model captures the **mind**—values and decision-making. A complete digital twin adds the **body**—voice, face, mannerisms. Together they create a digital double that:
-
-- **Reasons from your values** (world model)
-- **Looks and sounds like you** (embodiment model, future)
-- **Carries cryptographic attestation** via embedded weight hashes
-
-This inverts the deepfake problem: instead of detecting fakes, you prove authenticity.
+- [`world_model/generalized/STATUS.md`](world_model/generalized/STATUS.md) — substrate state, what works, open threads.
+- [`docs/FORMALIZATION.md`](docs/FORMALIZATION.md) — mathematical specification of novelty.
+- [`docs/THEORY.md`](docs/THEORY.md) — theoretical foundation.
+- [`docs/architecture.md`](docs/architecture.md) — original layered description (personality-era).
+- [`docs/concepts.md`](docs/concepts.md) — terminology.
 
 ---
 
