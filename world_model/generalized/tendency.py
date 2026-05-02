@@ -38,6 +38,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Iterable, List, Optional, Tuple
+import hashlib
+import json
 import math
 
 from ..models.tree import Node, Position, Stake, Tree
@@ -122,6 +124,56 @@ class GeneralizedTendency:
 
     # ----- Tree growth -----
 
+    def _stable_path_to_root(self, parent_node_id: str) -> str:
+        """Return a stable path string from this parent up to the root,
+        so two trees with the same shape produce the same string.
+
+        The local UUID of the parent is replaced by a chain of
+        (position, anchor, axis) hops terminating in
+        "ROOT:<tendency_id>". This way two solvers with the same
+        tendency id and the same intermediate-claim shape compute the
+        same parent input regardless of their roots' local UUIDs.
+        """
+        parts: list[str] = []
+        node_id: Optional[str] = parent_node_id
+        while node_id is not None:
+            node = self.tree.get_node(node_id)
+            if node is None:
+                break
+            if node.position == Position.ROOT:
+                parts.append(f"ROOT:{self.id}")
+                break
+            claim = self._node_to_claim.get(node_id)
+            anchor = list(claim.anchor) if claim and claim.anchor else []
+            axis = list(claim.polarity_axis) if claim and claim.polarity_axis else []
+            parts.append(f"{node.position.value}|{anchor}|{axis}")
+            node_id = node.parent_id
+        return ">".join(reversed(parts))
+
+    def _content_address(
+        self,
+        parent_path: str,
+        position: Position,
+        anchor: Tuple[float, ...],
+        polarity_axis: Tuple[float, ...],
+    ) -> str:
+        """Compute a deterministic node id from structural inputs.
+
+        Two solvers proposing the same sub-claim under the same
+        parent path with the same coordinates and polarity will
+        produce the same id, enabling natural consolidation.
+        """
+        payload = json.dumps(
+            {
+                "parent": parent_path,
+                "pos": position.value,
+                "anchor": list(anchor) if anchor else [],
+                "axis": list(polarity_axis) if polarity_axis else [],
+            },
+            sort_keys=True,
+        )
+        return "n_" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
     def sprout_child(
         self,
         parent_node_id: str,
@@ -136,6 +188,13 @@ class GeneralizedTendency:
         The child's polarity_axis defaults to the parent's if none
         provided. Stake starts at 0 and grows as tendencies stake on
         the child.
+
+        The new node's id is content-addressed: a hash of the parent's
+        stable path-to-root together with this child's position,
+        anchor and polarity. Two solvers proposing the same sub-claim
+        under structurally identical parents thus produce the same id
+        and consolidate naturally on merge. ROOT nodes keep their
+        UUID id (assigned by Tree).
         """
         parent_node = self.tree.get_node(parent_node_id)
         if parent_node is None:
@@ -145,8 +204,20 @@ class GeneralizedTendency:
         if not polarity_axis:
             polarity_axis = parent_claim.polarity_axis
 
+        # Compute the content-addressed id from structural inputs.
+        parent_path = self._stable_path_to_root(parent_node_id)
+        new_id = self._content_address(parent_path, position, anchor, polarity_axis)
+
+        # If the same content-addressed node already exists in this
+        # tree, return it instead of double-adding (which would
+        # silently overwrite the existing entry in the tree's index).
+        existing = self.tree.get_node(new_id)
+        if existing is not None:
+            return existing
+
         # New node in the tree
         new_node = Node(
+            id=new_id,
             observation_id=observation.id if observation else None,
             tree_id=self.tree.id,
             position=position,
