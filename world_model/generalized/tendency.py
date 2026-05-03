@@ -67,6 +67,13 @@ def _intrinsic_score(node: Node, _seen: Optional[set] = None) -> float:
     Cycle protection: a multi-parented node could appear in multiple
     places in a recursive walk. The `_seen` set guards against
     revisiting the same node id within one call.
+
+    NOTE: this is the *global* intrinsic — it walks every child edge
+    regardless of which tendency owns it. For a node co-parented
+    across trees with different positions, the global walk may
+    over-subtract (a child that is CON of `node` in tree T1 may be
+    PRO of `node` in T2; the walk subtracts unconditionally). For
+    per-tendency reads, prefer `_intrinsic_score_in_tendency`.
     """
     if _seen is None:
         _seen = set()
@@ -76,6 +83,51 @@ def _intrinsic_score(node: Node, _seen: Optional[set] = None) -> float:
     direct = float(len(node.stakes))
     pro_sum = sum(_intrinsic_score(c, _seen) for c in node.pro_children)
     con_sum = sum(_intrinsic_score(c, _seen) for c in node.con_children)
+    return direct + pro_sum - con_sum
+
+
+def _intrinsic_score_in_tendency(
+    node: Node,
+    tendency_id: str,
+    _seen: Optional[set] = None,
+) -> float:
+    """Tendency-aware intrinsic walk.
+
+    For each child of `node`, the child contributes only if it has a
+    parent_link `(node.id, position, tendency_id)`. PRO at that edge
+    contributes +intrinsic_in_tendency(child); CON contributes
+    -intrinsic_in_tendency(child). Direct posts on `node` count
+    toward intrinsic in every tendency.
+
+    This is what `prune_veto_negatives` should consult when
+    computing a CON child's contribution to its tendency-tree-root
+    score, because it correctly ignores edges from other tendencies.
+    """
+    if _seen is None:
+        _seen = set()
+    if node.id in _seen:
+        return 0.0
+    _seen.add(node.id)
+    direct = float(len(node.stakes))
+    pro_sum = 0.0
+    con_sum = 0.0
+    # Look at every node in the world that lists `node.id` as a
+    # parent in this tendency. We don't have a back-pointer index, so
+    # walk the union of pro_children + con_children and filter by
+    # parent_link matching (node.id, ?, tendency_id).
+    for child in node.pro_children + node.con_children:
+        edge_position = None
+        for link in child.parents:
+            if link.parent_id == node.id and link.tendency_id == tendency_id:
+                edge_position = link.position
+                break
+        if edge_position is None:
+            continue
+        sub = _intrinsic_score_in_tendency(child, tendency_id, _seen)
+        if edge_position == Position.PRO:
+            pro_sum += sub
+        else:
+            con_sum += sub
     return direct + pro_sum - con_sum
 
 

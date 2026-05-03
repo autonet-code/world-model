@@ -312,7 +312,7 @@ def prune_veto_negatives(
 
     Returns the list of pruned node ids in traversal order.
     """
-    from .tendency import _intrinsic_score
+    from .tendency import _intrinsic_score_in_tendency
     from ..models.tree import Position
 
     pruned: List[str] = []
@@ -323,13 +323,19 @@ def prune_veto_negatives(
         active_floor = floor if floor is not None else tendency.veto_score_floor
         root = tendency.tree.root_node
 
+        # For each direct child, compute its tendency-tree-aware
+        # intrinsic score (only edges in THIS tendency contribute,
+        # avoiding over-subtraction from co-parented children whose
+        # edges in OTHER tendencies have a different polarity).
         candidates: List[Node] = []
         for child in list(root.pro_children):
-            contribution = +_intrinsic_score(child)
+            intr = _intrinsic_score_in_tendency(child, tendency.id)
+            contribution = +intr
             if contribution < active_floor:
                 candidates.append(child)
         for child in list(root.con_children):
-            contribution = -_intrinsic_score(child)
+            intr = _intrinsic_score_in_tendency(child, tendency.id)
+            contribution = -intr
             if contribution < active_floor:
                 candidates.append(child)
 
