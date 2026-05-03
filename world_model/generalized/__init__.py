@@ -39,7 +39,7 @@ from .coordinate_frame import (
 )
 from .tendency import GeneralizedTendency
 from .world import World, Observation
-from .equilibrate import equilibrate, equilibrate_with_growth
+from .equilibrate import equilibrate, equilibrate_with_growth, equilibrate_continuous
 from .grow import propose_growth
 from .prune import ScoreHistory, prune_settled_negatives, snapshot_scores
 from .locate import (
@@ -63,6 +63,7 @@ __all__ = [
     "Observation",
     "equilibrate",
     "equilibrate_with_growth",
+    "equilibrate_continuous",
     "propose_growth",
     "ScoreHistory",
     "prune_settled_negatives",
