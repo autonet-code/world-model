@@ -656,12 +656,36 @@ class GeneralizedTendency:
         observation_id: str,
         position: Position,
     ) -> Optional[str]:
-        """Search the whole tree for a node with the given observation_id
-        and position. Returns its node id or None.
+        """Search this tendency's tree for a node with the given
+        observation_id whose first parent_link's position matches.
+        Returns its node id or None. Used for the (legacy) same-
+        position re-stake path in `act`.
         """
         for node in self.tree.all_nodes():
             if node.observation_id == observation_id and node.position == position:
                 return node.id
+        return None
+
+    def _find_obs_node_anywhere(
+        self,
+        world: Optional["World"],
+        observation_id: str,
+    ) -> Optional[Node]:
+        """Search across all tendencies in `world` for any node bearing
+        this observation_id. Used by `_ensure_obs_child` to dedup
+        same-observation sprouts that two tendencies might otherwise
+        place as separately-hashed nodes (different polarity_axis ->
+        different content hash even though it's the same observation).
+        Falls back to this tendency's own tree if `world` is None.
+        """
+        if world is not None:
+            for tendency in world.tendencies.values():
+                for node in tendency.tree.all_nodes():
+                    if node.observation_id == observation_id:
+                        return node
+        for node in self.tree.all_nodes():
+            if node.observation_id == observation_id:
+                return node
         return None
 
     def _ensure_obs_child(
@@ -671,18 +695,63 @@ class GeneralizedTendency:
         position: Position,
         world: Optional["World"] = None,
     ) -> str:
-        """Find an existing node in the tree linked to this observation
-        with the given position, or create one as a child of parent.
-        Returns the node id.
+        """Find or create a node carrying this observation as a child of
+        the given parent at the requested position. Returns the node id.
 
-        Tree-wide search prevents duplicate sprouts when equilibration
-        re-evaluates the same observation through different paths. The
-        optional `world` argument is passed through to `sprout_child`
-        so cross-tendency edges can be discovered at sprout time.
+        Three-step dedup, in order:
+
+          1. Existing node in THIS tendency's tree with the same
+             (observation_id, position) -- direct re-use (the legacy
+             case).
+          2. Existing node anywhere in `world` with this
+             observation_id, regardless of its current position --
+             append a parent link in this tendency at the requested
+             position; do NOT create a new hash. This prevents
+             "two parallel S11 nodes" when two tendencies disagree
+             on the obs's polarity, and is the surgical fix for the
+             sub-child accretion that cancels veto contributions.
+          3. Otherwise sprout fresh (existing behavior). Cross-
+             tendency edge discovery still runs via `world`.
         """
         existing = self._find_existing_obs_child(observation.id, position)
         if existing is not None:
             return existing
+
+        # Cross-tendency dedup: another tendency may have already
+        # sprouted a node for this observation. Reuse it.
+        anywhere = self._find_obs_node_anywhere(world, observation.id)
+        if anywhere is not None:
+            # Make sure this tendency's tree indexes the node, has a
+            # parent link at the requested position, and lists it as
+            # a child of the requested parent.
+            anywhere.add_parent_link(parent_node_id, position, self.id)
+            self.tree._node_index[anywhere.id] = anywhere
+            parent_node = self.tree.get_node(parent_node_id)
+            if parent_node is not None:
+                if anywhere not in parent_node.pro_children and anywhere not in parent_node.con_children:
+                    if position == Position.PRO:
+                        parent_node.pro_children.append(anywhere)
+                    else:
+                        parent_node.con_children.append(anywhere)
+                    parent_node.invalidate_cache()
+            # Make sure this tendency has a claim record so `act`
+            # downstream lookups don't break.
+            if anywhere.id not in self._node_to_claim:
+                parent_claim = self._node_to_claim.get(parent_node_id)
+                if parent_claim is not None:
+                    polarity = parent_claim.polarity_axis
+                    if position == Position.CON:
+                        polarity = tuple(-u for u in polarity)
+                    new_claim = CoordinateClaim(
+                        content=observation.label or f"obs:{observation.id[:6]}",
+                        depth=parent_claim.depth + 1,
+                        stake=0.0,
+                        anchor=observation.coords,
+                        polarity_axis=polarity,
+                    )
+                    self._node_to_claim[anywhere.id] = new_claim
+            return anywhere.id
+
         parent_claim = self._node_to_claim[parent_node_id]
         anchor = observation.coords
         polarity = parent_claim.polarity_axis
