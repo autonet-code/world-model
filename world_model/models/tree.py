@@ -7,10 +7,21 @@ as pro or con relative to their parent. Weight propagation follows:
     net_score = direct_weight + Σ(pro_children.net_score) - Σ(con_children.net_score)
 
 The same observation can appear in multiple trees with different positions.
+
+Under the post-and-coparent refactor, a node carries a *list* of
+parent links: each link is (parent_node_id, position, tendency_id).
+A node with parents in multiple tendencies is a "work item" that
+emerged structurally from cross-tendency relevance. Backward-compat
+properties `Node.parent_id` and `Node.position` expose the first
+parent link so single-parent callers keep working.
+
+Stakes are unit-weight ("posts"): each `Stake.weight` is always 1.0.
+The weight field is preserved in the schema for forward-compat, but
+the dynamics no longer modulate it.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import NamedTuple, Optional
 from enum import Enum
 import uuid
 
@@ -22,18 +33,36 @@ class Position(Enum):
     ROOT = "root" # Root node, no parent
 
 
+class ParentLink(NamedTuple):
+    """A single parent edge on a node.
+
+    A node can have multiple parent links: one per tendency in which
+    it participates. Each link records the parent node id, the
+    position (PRO/CON) at this edge, and which tendency owns this
+    link.
+    """
+    parent_id: str
+    position: Position
+    tendency_id: str
+
+
 @dataclass
 class Stake:
-    """A stake placed by an agent on a node."""
+    """A unit-weight post placed by an agent on a node.
+
+    Under the post-and-coparent refactor, every stake has weight=1.0.
+    The weight field is preserved for forward-compatibility but is
+    not currently varied.
+    """
     agent_id: str       # Which tendency (from Tendency enum value)
-    weight: float       # How much the agent stakes (from their allocation)
+    weight: float = 1.0 # Unit-weight post; field reserved for future use
 
     def to_dict(self) -> dict:
         return {"agent_id": self.agent_id, "weight": self.weight}
 
     @classmethod
     def from_dict(cls, data: dict) -> "Stake":
-        return cls(agent_id=data["agent_id"], weight=data["weight"])
+        return cls(agent_id=data["agent_id"], weight=data.get("weight", 1.0))
 
 
 @dataclass
@@ -41,20 +70,28 @@ class Node:
     """
     A node in a value tree.
 
-    Each node links to an observation and has a position (pro/con) relative
-    to its parent. Agents stake on nodes, and scores propagate up the tree.
+    Each node links to an observation and carries one or more parent
+    links (one per tendency in which it participates). The first
+    parent link is exposed as `node.parent_id` / `node.position` for
+    backward compatibility; multi-parent nodes (work items) read from
+    `node.parents`. Agents post unit-weight stakes on nodes; scores
+    propagate up the tree.
     """
 
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     observation_id: Optional[str] = None  # Links to atomic observation (None for abstract nodes)
     tree_id: str = ""
-    parent_id: Optional[str] = None       # None for root
-    position: Position = Position.ROOT
+
+    # Parent links: one entry per (parent_id, position, tendency_id).
+    # Empty list = root node. Length-1 list = standard single-parent
+    # node. Length-2+ list = multi-parented (work item) node bridging
+    # multiple tendencies.
+    parents: list[ParentLink] = field(default_factory=list)
 
     # Content for root/abstract nodes that don't link to observations
     content: str = ""
 
-    # Stakes from agents
+    # Posts (unit-weight stakes) from agents
     stakes: list[Stake] = field(default_factory=list)
 
     # Metadata (e.g., reasoning behind stakes)
@@ -75,8 +112,49 @@ class Node:
     _net_score: Optional[float] = field(default=None, repr=False)
 
     @property
+    def parent_id(self) -> Optional[str]:
+        """Backward-compat: first parent link's parent id, or None for root."""
+        return self.parents[0].parent_id if self.parents else None
+
+    @parent_id.setter
+    def parent_id(self, value: Optional[str]) -> None:
+        """Backward-compat setter: replace first parent's parent_id.
+
+        Used by callers that mutate parent_id directly (e.g.
+        `child.parent_id = parent.id` in legacy code paths). If the
+        node has no parents yet, creates a length-1 list with ROOT
+        position; if it has parents, replaces the first link's
+        parent_id while preserving its position and tendency_id.
+        """
+        if value is None:
+            self.parents = []
+            return
+        if not self.parents:
+            self.parents = [ParentLink(value, Position.ROOT, "")]
+        else:
+            old = self.parents[0]
+            self.parents[0] = ParentLink(value, old.position, old.tendency_id)
+
+    @property
+    def position(self) -> Position:
+        """Backward-compat: first parent link's position. ROOT if no parents."""
+        return self.parents[0].position if self.parents else Position.ROOT
+
+    @position.setter
+    def position(self, value: Position) -> None:
+        """Backward-compat setter for callers that assign position
+        directly. If the node has no parents, stores a placeholder
+        link; if it has parents, replaces the first link's position.
+        """
+        if not self.parents:
+            self.parents = [ParentLink("", value, "")]
+        else:
+            old = self.parents[0]
+            self.parents[0] = ParentLink(old.parent_id, value, old.tendency_id)
+
+    @property
     def direct_weight(self) -> float:
-        """Sum of all stakes on this node."""
+        """Number of posts on this node (each weight=1)."""
         if self._direct_weight is None:
             self._direct_weight = sum(s.weight for s in self.stakes)
         return self._direct_weight
@@ -99,23 +177,61 @@ class Node:
         self._direct_weight = None
         self._net_score = None
 
-    def add_stake(self, agent_id: str, weight: float):
-        """Add a stake from an agent."""
+    def add_stake(self, agent_id: str, weight: float = 1.0):
+        """Add a unit-weight post from an agent.
+
+        The weight argument is accepted for backward compatibility but
+        is normalized to 1.0 under the post-only refactor. Negative
+        weights remain meaningful only at the World.apply_stakes layer
+        (signed intents); on the node itself, every stored Stake is
+        weight=1.
+        """
         self.stakes.append(Stake(agent_id=agent_id, weight=weight))
         self.invalidate_cache()
 
-    def add_child(self, child: "Node", position: Position):
-        """Add a child node with the given position."""
-        child.parent_id = self.id
-        child.position = position
-        child.tree_id = self.tree_id
+    def add_post(self, agent_id: str) -> None:
+        """Convenience: append a unit-weight post from `agent_id`."""
+        self.add_stake(agent_id=agent_id, weight=1.0)
+
+    def add_parent_link(
+        self,
+        parent_id: str,
+        position: Position,
+        tendency_id: str,
+    ) -> None:
+        """Append a parent link if not already present.
+
+        Idempotent on (parent_id, tendency_id): re-calling with the
+        same parent in the same tendency is a no-op.
+        """
+        for link in self.parents:
+            if link.parent_id == parent_id and link.tendency_id == tendency_id:
+                return
+        self.parents.append(ParentLink(parent_id, position, tendency_id))
+        self.invalidate_cache()
+
+    def add_child(self, child: "Node", position: Position, tendency_id: str = ""):
+        """Add a child node with the given position.
+
+        Records the parent link on the child rather than overwriting a
+        single parent_id field. The tendency_id argument identifies
+        which tree this edge belongs to; it defaults to empty for
+        backward compatibility but should be set explicitly by
+        callers that own a tendency context.
+        """
+        if position not in (Position.PRO, Position.CON):
+            raise ValueError(f"Child position must be PRO or CON, got {position}")
+
+        child.add_parent_link(self.id, position, tendency_id or self.tree_id)
+        if not child.tree_id:
+            child.tree_id = self.tree_id
 
         if position == Position.PRO:
-            self.pro_children.append(child)
-        elif position == Position.CON:
-            self.con_children.append(child)
+            if child not in self.pro_children:
+                self.pro_children.append(child)
         else:
-            raise ValueError(f"Child position must be PRO or CON, got {position}")
+            if child not in self.con_children:
+                self.con_children.append(child)
 
         self.invalidate_cache()
 
@@ -132,10 +248,10 @@ class Node:
     @property
     def is_root(self) -> bool:
         """Whether this is the root node."""
-        return self.parent_id is None
+        return len(self.parents) == 0
 
     def stakes_by_agent(self) -> dict[str, float]:
-        """Total stakes per agent on this node."""
+        """Total stake count per agent on this node."""
         by_agent: dict[str, float] = {}
         for stake in self.stakes:
             by_agent[stake.agent_id] = by_agent.get(stake.agent_id, 0) + stake.weight
@@ -150,6 +266,16 @@ class Node:
             "id": self.id,
             "observation_id": self.observation_id,
             "tree_id": self.tree_id,
+            "parents": [
+                {
+                    "parent_id": p.parent_id,
+                    "position": p.position.value,
+                    "tendency_id": p.tendency_id,
+                }
+                for p in self.parents
+            ],
+            # Backward-compat fields (first parent link). Older readers
+            # that read parent_id/position directly stay working.
             "parent_id": self.parent_id,
             "position": self.position.value,
             "content": self.content,
@@ -162,12 +288,32 @@ class Node:
 
     @classmethod
     def from_dict(cls, data: dict) -> "Node":
+        # Prefer the new `parents` list when present; fall back to the
+        # old (parent_id, position) fields for legacy serializations.
+        if "parents" in data and data["parents"]:
+            parents = [
+                ParentLink(
+                    parent_id=p["parent_id"],
+                    position=Position(p["position"]),
+                    tendency_id=p.get("tendency_id", ""),
+                )
+                for p in data["parents"]
+            ]
+        elif data.get("parent_id") is not None:
+            parents = [
+                ParentLink(
+                    parent_id=data["parent_id"],
+                    position=Position(data["position"]),
+                    tendency_id=data.get("tree_id", ""),
+                )
+            ]
+        else:
+            parents = []
         node = cls(
             id=data["id"],
             observation_id=data.get("observation_id"),
             tree_id=data.get("tree_id", ""),
-            parent_id=data.get("parent_id"),
-            position=Position(data["position"]),
+            parents=parents,
             content=data.get("content", ""),
             stakes=[Stake.from_dict(s) for s in data.get("stakes", [])],
             metadata=data.get("metadata", {}),
@@ -198,10 +344,9 @@ class Tree:
 
     def __post_init__(self):
         if self.root_node is None:
-            # Create root node from root_value
+            # Create root node from root_value. No parents = root.
             self.root_node = Node(
                 tree_id=self.id,
-                position=Position.ROOT,
                 content=self.root_value,
             )
         self._index_nodes(self.root_node)
@@ -216,14 +361,25 @@ class Tree:
         """Get node by ID."""
         return self._node_index.get(node_id)
 
-    def add_node(self, parent_id: str, node: Node, position: Position) -> Node:
-        """Add a node as a child of the specified parent."""
+    def add_node(
+        self,
+        parent_id: str,
+        node: Node,
+        position: Position,
+        tendency_id: str = "",
+    ) -> Node:
+        """Add a node as a child of the specified parent.
+
+        The tendency_id argument identifies which tree the new edge
+        belongs to. It defaults to the tree's own id when not given,
+        matching the common case of one tendency per tree.
+        """
         parent = self.get_node(parent_id)
         if parent is None:
             raise ValueError(f"Parent node not found: {parent_id}")
 
         node.tree_id = self.id
-        parent.add_child(node, position)
+        parent.add_child(node, position, tendency_id=tendency_id or self.id)
         self._node_index[node.id] = node
 
         # Invalidate ancestors' caches up to root

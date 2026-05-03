@@ -54,6 +54,32 @@ from .observation import Observation
 
 
 # ---------------------------------------------------------------------------
+# intrinsic_score: count-of-posts + signed children walk (cycle-safe)
+# ---------------------------------------------------------------------------
+
+
+def _intrinsic_score(node: Node, _seen: Optional[set] = None) -> float:
+    """Walk the node's full subtree across all child edges (PRO/CON)
+    and return its intrinsic score.
+
+      intrinsic_score = len(stakes) + Σ pro_children.intrinsic - Σ con_children.intrinsic
+
+    Cycle protection: a multi-parented node could appear in multiple
+    places in a recursive walk. The `_seen` set guards against
+    revisiting the same node id within one call.
+    """
+    if _seen is None:
+        _seen = set()
+    if node.id in _seen:
+        return 0.0
+    _seen.add(node.id)
+    direct = float(len(node.stakes))
+    pro_sum = sum(_intrinsic_score(c, _seen) for c in node.pro_children)
+    con_sum = sum(_intrinsic_score(c, _seen) for c in node.con_children)
+    return direct + pro_sum - con_sum
+
+
+# ---------------------------------------------------------------------------
 # Tendency
 # ---------------------------------------------------------------------------
 
@@ -110,6 +136,16 @@ class GeneralizedTendency:
     novelty_gamma_con: float = 0.5
     novelty_drift: float = 0.01
 
+    # Correctness-as-veto. Deployers tag a tendency as `veto_shaped`
+    # to mark it as a hard-veto root: subtrees rooted under its
+    # children that drop below a configured intrinsic-score floor get
+    # pruned regardless of n. Pair with a higher novelty_gamma_con so
+    # CON evidence settles fast on this root. See
+    # `prune.prune_veto_negatives` for the asymmetric-pruning
+    # mechanic.
+    veto_shaped: bool = False
+    veto_score_floor: float = -1.0   # subtree pruned if intrinsic_score < this
+
     def __post_init__(self):
         # Create root claim and tree
         self._root_claim = CoordinateClaim(
@@ -163,21 +199,19 @@ class GeneralizedTendency:
 
     def _content_address(
         self,
-        parent_path: str,
-        position: Position,
         anchor: Tuple[float, ...],
         polarity_axis: Tuple[float, ...],
     ) -> str:
-        """Compute a deterministic node id from structural inputs.
+        """Compute a deterministic node id from coordinate inputs only.
 
-        Two solvers proposing the same sub-claim under the same
-        parent path with the same coordinates and polarity will
-        produce the same id, enabling natural consolidation.
+        Under the post-and-coparent refactor, the hash is over
+        {anchor, axis}. Two solvers proposing the same coordinate-
+        anchored claim get the same node id regardless of which
+        parent they hung it under; on merge, the parent links
+        accumulate on the shared node (federation-friendly).
         """
         payload = json.dumps(
             {
-                "parent": parent_path,
-                "pos": position.value,
                 "anchor": list(anchor) if anchor else [],
                 "axis": list(polarity_axis) if polarity_axis else [],
             },
@@ -193,19 +227,28 @@ class GeneralizedTendency:
         polarity_axis: Tuple[float, ...],
         observation: Optional[Observation] = None,
         content: str = "",
+        world: Optional["World"] = None,
     ) -> Node:
         """Add a child node + matching claim under an existing node.
 
         The child's polarity_axis defaults to the parent's if none
-        provided. Stake starts at 0 and grows as tendencies stake on
-        the child.
+        provided. Stakes are unit-weight posts; magnitude lives in
+        the count of posts and per-node `n`.
 
-        The new node's id is content-addressed: a hash of the parent's
-        stable path-to-root together with this child's position,
-        anchor and polarity. Two solvers proposing the same sub-claim
-        under structurally identical parents thus produce the same id
-        and consolidate naturally on merge. ROOT nodes keep their
-        UUID id (assigned by Tree).
+        Content-addressed id: hashed over {anchor, axis} only. Two
+        solvers proposing the same coordinate-anchored claim get the
+        same node id regardless of parent, so federation merges
+        naturally accumulate parent edges on a single node.
+
+        If `world` is provided, cross-tendency edge discovery runs:
+        for every other tendency whose anchor falls within
+        `bandwidth * 1.5` of the new node's anchor, a parent link is
+        appended pointing at that tendency's nearest existing node
+        (or root). The polarity at the new edge is determined by
+        projecting the new node's anchor onto that tendency's
+        polarity axis. This is how nodes become "work items"
+        bridging multiple tendencies — emergent multi-parenthood
+        rather than an explicit type.
         """
         parent_node = self.tree.get_node(parent_node_id)
         if parent_node is None:
@@ -215,26 +258,40 @@ class GeneralizedTendency:
         if not polarity_axis:
             polarity_axis = parent_claim.polarity_axis
 
-        # Compute the content-addressed id from structural inputs.
-        parent_path = self._stable_path_to_root(parent_node_id)
-        new_id = self._content_address(parent_path, position, anchor, polarity_axis)
+        # Hash from coordinates only; parent set is structural metadata
+        # appended onto the node, not part of identity.
+        new_id = self._content_address(anchor, polarity_axis)
 
         # If the same content-addressed node already exists in this
-        # tree, return it instead of double-adding (which would
-        # silently overwrite the existing entry in the tree's index).
+        # tree, just append our parent edge if missing and return it.
+        # Self-references are skipped (a node can't be its own parent).
         existing = self.tree.get_node(new_id)
         if existing is not None:
+            if parent_node_id != existing.id:
+                existing.add_parent_link(parent_node_id, position, self.id)
+                # Make sure tree's pro/con child lists for the parent
+                # include this existing node (in case it was originally
+                # sprouted via a different path).
+                parent_pro = parent_node.pro_children
+                parent_con = parent_node.con_children
+                if existing not in parent_pro and existing not in parent_con:
+                    if position == Position.PRO:
+                        parent_pro.append(existing)
+                    else:
+                        parent_con.append(existing)
+                    parent_node.invalidate_cache()
+            self._maybe_add_cross_tendency_edges(existing, anchor, world)
             return existing
 
-        # New node in the tree
+        # New node in the tree. The parent link (with position +
+        # tendency_id) is appended by tree.add_node -> add_child.
         new_node = Node(
             id=new_id,
             observation_id=observation.id if observation else None,
             tree_id=self.tree.id,
-            position=position,
             content=content,
         )
-        self.tree.add_node(parent_node_id, new_node, position)
+        self.tree.add_node(parent_node_id, new_node, position, tendency_id=self.id)
 
         # Matching claim under the parent claim
         new_claim = CoordinateClaim(
@@ -250,7 +307,87 @@ class GeneralizedTendency:
         # Refresh frame's claim list (frame is recreated to keep it
         # internally consistent; integrated set is preserved)
         self._refresh_frame()
+
+        # Cross-tendency edge discovery -- replaces the old
+        # _sub_claim_staking locality propagation.
+        self._maybe_add_cross_tendency_edges(new_node, anchor, world)
         return new_node
+
+    def _maybe_add_cross_tendency_edges(
+        self,
+        node: Node,
+        anchor: Tuple[float, ...],
+        world: Optional["World"],
+    ) -> None:
+        """If a world is provided, walk every other tendency and
+        append a parent edge to nodes whose coordinate sits inside
+        the locality bandwidth of this node's anchor. The position
+        at the new edge is determined by sign of the dot product
+        between the anchor and that tendency's polarity axis.
+
+        Idempotent: re-calling with the same node + world is a no-op
+        once the edges exist.
+        """
+        if world is None or not anchor:
+            return
+        my_id = self.id
+        for other_id, other in world.tendencies.items():
+            if other_id == my_id:
+                continue
+            if not other.anchor:
+                continue
+            d = math.sqrt(sum(
+                (a - b) ** 2 for a, b in zip(anchor, other.anchor)
+            ))
+            if d >= other.bandwidth * 1.5:
+                continue
+            # Find the nearest existing node in the other tendency's
+            # tree to be the parent of our edge. If nothing better,
+            # fall back to the other root.
+            other_parent_id = other.tree.root_node.id
+            best_d = float("inf")
+            for cand in other.tree.all_nodes():
+                if cand.id == other.tree.root_node.id:
+                    continue
+                claim = other._node_to_claim.get(cand.id)
+                if claim is None or not claim.anchor:
+                    continue
+                cand_d = math.sqrt(sum(
+                    (a - b) ** 2 for a, b in zip(anchor, claim.anchor)
+                ))
+                if cand_d < best_d:
+                    best_d = cand_d
+                    other_parent_id = cand.id
+            # Determine PRO vs CON by polarity-axis projection.
+            dot = 0.0
+            if other.polarity_axis:
+                dot = sum(a * p for a, p in zip(anchor, other.polarity_axis))
+            other_position = Position.PRO if dot >= 0 else Position.CON
+            # Append the parent edge if not already present.
+            had = any(
+                p.parent_id == other_parent_id and p.tendency_id == other_id
+                for p in node.parents
+            )
+            if had:
+                continue
+            node.add_parent_link(other_parent_id, other_position, other_id)
+            # Reflect the edge in the other tendency's tree by
+            # listing this node as a child of `other_parent_id`.
+            other_parent_node = other.tree.get_node(other_parent_id)
+            if other_parent_node is None:
+                continue
+            if (
+                node not in other_parent_node.pro_children
+                and node not in other_parent_node.con_children
+            ):
+                if other_position == Position.PRO:
+                    other_parent_node.pro_children.append(node)
+                else:
+                    other_parent_node.con_children.append(node)
+                other_parent_node.invalidate_cache()
+            # Index the node in the other tendency's tree so
+            # tree.get_node finds it.
+            other.tree._node_index[node.id] = node
 
     def _refresh_frame(self) -> None:
         self.frame = CoordinateFrame(
@@ -279,59 +416,44 @@ class GeneralizedTendency:
         return result.termination, result.composite, best  # type: ignore[return-value]
 
     def act(self, world: "World") -> None:
-        """Compute and record this tendency's stakes for the current
+        """Compute and record this tendency's posts for the current
         observation set and world state.
+
+        Under the post-only refactor, every intent is unit-magnitude
+        (+1 or -1). Magnitude lives in the count of posts and in
+        per-node `n` rather than in stake weight.
 
         For each observation:
           - Evaluate stance through the probe.
-          - INTEGRATED with a PRO stance against the most-related claim
-            -> sprout a PRO child observation node under that claim
-            (or stake PRO if the node already exists), absorb the obs.
-          - CONTRADICTS / DISRUPTS -> sprout a CON child observation
-            node under the contradicted claim (drags its score down).
+          - INTEGRATED -> ensure PRO child under the related claim,
+            post +1 on it, absorb the obs.
+          - CONTRADICTS_ROOT / DISRUPTS -> ensure CON child under the
+            contradicted claim, post +1 on it (CON-position drags
+            parent score down).
           - ORTHOGONAL / MAX_ITER -> ignore.
 
-        Joint satisfaction discount: an observation that is *already*
-        satisfied through coordinates of OTHER variables (variables
-        resolved with high confidence by independent evidence) gets
-        its contribution to this tendency discounted. This breaks the
-        symmetric-tie problem in chained implications: an implication
-        c_imp2 = (y, z) at (0, -1, +1) supports both y=F AND z=T;
-        once z=T is independently established, the obs's support for
-        y=F should diminish because the implication is satisfied
-        without needing y=F.
+        Cross-tendency posts: for each other tendency's node, post
+        +1 if INTEGRATED into our frame, -1 if CONTRADICTS/DISRUPTS,
+        nothing otherwise.
 
-        For each foreign node, evaluate its anchor; cross-stake by sign
-        of stance.
-
-        Stakes are stored in self.last_stakes; the World's apply_stakes
-        writes Stake objects onto the actual nodes. Budget is enforced
-        as a hard cap.
+        Stakes are stored in self.last_stakes as a (target, node) ->
+        signed-unit dict; World.apply_stakes writes the actual posts.
         """
         intents: dict[tuple[str, str], float] = {}
 
-        # ---- Capacity update ----
-        # For each node in our tree, blend last round's net PRO stake
-        # received (from any tendency) into the node's capacity. Nodes
-        # that accumulate PRO support gain a voice; nodes that don't
-        # stay silent. This is the smooth-promotion mechanism: standing
-        # is earned, not granted by category.
+        # Capacity update: smooth-promotion bookkeeping. Under the
+        # post-only model the input is a count of positive posts.
         self._update_capacities()
-
-        # Compute joint-satisfaction scores: for each obs, how much is
-        # it already satisfied by OTHER tendencies' resolved positions?
-        # Used as a discount factor on this tendency's contribution.
-        sat_scores = self._joint_satisfaction(world)
 
         # 1. Stake on / sprout from incoming observations against own tree
         for obs in world.observations.values():
             # If we've already CON-positioned this obs in a prior round,
-            # don't re-evaluate -- just re-stake the existing CON child
-            # at standard magnitude. Prevents runaway descendant growth.
+            # don't re-evaluate -- just re-post on the existing CON
+            # child at unit weight.
             if obs.id in self._con_positioned:
                 existing_id = self._find_existing_obs_child(obs.id, position=Position.CON)
                 if existing_id is not None:
-                    intents[(self.id, existing_id)] = intents.get((self.id, existing_id), 0.0) + 0.5
+                    intents[(self.id, existing_id)] = intents.get((self.id, existing_id), 0.0) + 1.0
                     continue
             term, novelty, claim = self.evaluate(obs)
             if claim is None:
@@ -339,56 +461,26 @@ class GeneralizedTendency:
             parent_node_id = self._claim_to_node_id(claim)
             if parent_node_id is None:
                 continue
-            # Discount this obs's contribution by how satisfied it
-            # already is through OTHER variables. obs.id -> [0, 1].
-            # 1 = fully satisfied elsewhere -> contribution * 0.
-            # 0 = not satisfied elsewhere -> full contribution.
-            discount = 1.0 - sat_scores.get(obs.id, 0.0)
-            mag = max(0.05, min(1.0, novelty)) * discount
 
             if term == Termination.INTEGRATED:
-                # Find or create a PRO child observation node under the claim
-                child_id = self._ensure_obs_child(parent_node_id, obs, position=Position.PRO)
-                intents[(self.id, child_id)] = intents.get((self.id, child_id), 0.0) + mag
+                child_id = self._ensure_obs_child(parent_node_id, obs, position=Position.PRO, world=world)
+                intents[(self.id, child_id)] = intents.get((self.id, child_id), 0.0) + 1.0
                 # Absorb only on PRO -- this obs *fits* our worldview.
                 self.frame = self.frame.absorb(obs)
 
             elif term in (Termination.CONTRADICTS_ROOT, Termination.DISRUPTS):
-                # Sprout a CON child under the contradicted claim
-                child_id = self._ensure_obs_child(parent_node_id, obs, position=Position.CON)
-                # Stake on the CON node positively (we are *backing* the
-                # CON observation -- it really does contradict our claim).
-                # Because CON children subtract from parent score, the
-                # net effect is to drag the parent's net_score down.
-                intents[(self.id, child_id)] = intents.get((self.id, child_id), 0.0) + mag
-                # Track that we've already positioned this obs as CON
-                # (so we don't keep sprouting deeper CON descendants),
-                # but DO NOT absorb -- absorbed = fits our worldview.
+                child_id = self._ensure_obs_child(parent_node_id, obs, position=Position.CON, world=world)
+                intents[(self.id, child_id)] = intents.get((self.id, child_id), 0.0) + 1.0
                 self._con_positioned.add(obs.id)
 
-        # 1.5 Sub-claim staking: every node with non-trivial capacity
-        # stakes on related targets. Magnitude = capacity * reach.
-        # Targets: the node's parent's siblings (peer claims under same
-        # parent) and peer tendencies' nodes at comparable depth on the
-        # same coordinate dimensions. This is the locality rule: a
-        # sub-claim's voice carries to neighboring claims, with reach
-        # growing as standing grows.
-        if self.smooth_promotion:
-            sub_intents = self._sub_claim_staking(world)
-            for k, v in sub_intents.items():
-                intents[k] = intents.get(k, 0.0) + v
-
-        # 2. Cross-stake on every other tendency's nodes.
-        # For each foreign node, evaluate either:
-        #   (a) the observation it links to (if any), or
-        #   (b) a synthetic Observation at the node's claim anchor.
-        # Both routes let cross-staking land on roots and abstract nodes,
-        # not just observation-linked leaves.
+        # 2. Cross-tendency posts on other tendencies' nodes.
+        # Under the post-only model these are unit-magnitude intents
+        # signed by stance: +1 if INTEGRATED, -1 if
+        # CONTRADICTS/DISRUPTS, 0 otherwise.
         for other in world.tendencies.values():
             if other.id == self.id:
                 continue
             for node in other.tree.all_nodes():
-                # Resolve a probe target for this node
                 if node.observation_id is not None:
                     target = world.observations.get(node.observation_id)
                     if target is None:
@@ -402,16 +494,20 @@ class GeneralizedTendency:
                         coords=foreign_claim.anchor,
                         label=f"anchor:{foreign_claim.content}",
                     )
-                term, novelty, _claim = self.evaluate(target)
-                signed = self._cross_stake_sign(term, novelty)
+                term, _novelty, _claim = self.evaluate(target)
+                if term == Termination.INTEGRATED:
+                    signed = +1.0
+                elif term in (Termination.CONTRADICTS_ROOT, Termination.DISRUPTS):
+                    signed = -1.0
+                else:
+                    signed = 0.0
                 if signed != 0.0:
                     key = (other.id, node.id)
                     intents[key] = intents.get(key, 0.0) + signed
 
-        # 3. Apply budget as a multiplier (not a cap). Each intent
-        # already encodes magnitude per observation; budget scales the
-        # tendency's overall influence. Equivalent to "allocation" in
-        # the personality model.
+        # 3. Budget as integer post-cap. If the tendency's intent
+        # count exceeds budget, scale down proportionally. Default
+        # budget=1.0 leaves intents as-is.
         intents = {k: v * self.budget for k, v in intents.items()}
         self.last_stakes = intents
 
@@ -482,199 +578,21 @@ class GeneralizedTendency:
                 new_n = 1.0
             node.n = new_n
 
-    def _sub_claim_staking(self, world: "World") -> dict[tuple[str, str], float]:
-        """For each non-root node with capacity above threshold, stake
-        on local targets.
+    def intrinsic_score(self, node: Node) -> float:
+        """How strongly this node is supported by its full subtree
+        across ALL tendencies that share it.
 
-        Local targets within own tree (always cheap):
-          - PRO on siblings of the SAME position (reinforce shared frame).
-          - CON on siblings of the OPPOSITE position (demote opposing).
+        Walks every child edge regardless of which tendency owns it:
+          intrinsic_score(node) = len(stakes)
+                                + Σ intrinsic_score(c) for c PRO of node anywhere
+                                - Σ intrinsic_score(c) for c CON of node anywhere
 
-        Cross-tendency targets via locate (locality rule):
-          Use the engine's Locator to find nodes near this sub-claim's
-          coords, restricted to a max neighborhood. Acts on those near
-          neighbors with sign determined by polarity-axis alignment.
-          This bounds per-node cross-influence to the local
-          neighborhood instead of the full N x M product across all
-          tendencies' trees.
-
-        Magnitude = capacity * reach for each target, divided across
-        the targets so a high-capacity node doesn't double-count.
+        For single-parent nodes, this collapses to the existing
+        recursion. For multi-parented (work-item) nodes, the same
+        intrinsic value gets signed differently when read up each
+        parent's tree (see substrate architecture docs).
         """
-        from .locate import CoordinateLocator
-
-        intents: dict[tuple[str, str], float] = {}
-        root_id = self.tree.root_node.id
-
-        # One locator instance per call, used for every sub-claim
-        # that needs cross-tendency lookup. The neighborhood radius
-        # is the bandwidth -- claims further than this aren't
-        # operationally adjacent.
-        locator = CoordinateLocator(
-            max_distance=self.bandwidth * 1.5,
-            max_results=16,
-        )
-
-        for node in self.tree.all_nodes():
-            if node.id == root_id:
-                continue
-            cap = self.node_capacity.get(node.id, 0.0)
-            if cap < self.capacity_threshold:
-                continue
-            outbound = cap * self.capacity_reach
-
-            # Local sibling targets within own tree
-            parent_id = node.parent_id
-            if parent_id is None:
-                continue
-            parent = self.tree.get_node(parent_id)
-            if parent is None:
-                continue
-            same_pos = (parent.pro_children if node.position == Position.PRO
-                        else parent.con_children)
-            opp_pos = (parent.con_children if node.position == Position.PRO
-                       else parent.pro_children)
-            siblings_same = [s for s in same_pos if s.id != node.id]
-            siblings_opp = list(opp_pos)
-            n_targets = len(siblings_same) + len(siblings_opp)
-            if n_targets > 0:
-                per = outbound / n_targets
-                for s in siblings_same:
-                    key = (self.id, s.id)
-                    intents[key] = intents.get(key, 0.0) + per
-                for s in siblings_opp:
-                    key = (self.id, s.id)
-                    intents[key] = intents.get(key, 0.0) - per
-
-            # Cross-tendency targets via locality (locate-bounded)
-            my_claim = self._node_to_claim.get(node.id)
-            if my_claim is None or not my_claim.polarity_axis or not my_claim.anchor:
-                continue
-            neighborhood = locator(world, my_claim.anchor)
-            cross_targets: list[tuple[str, str, float]] = []
-            for tid, nid, _dist in neighborhood:
-                if tid == self.id:
-                    continue
-                other = world.tendencies.get(tid)
-                if other is None:
-                    continue
-                o_claim = other._node_to_claim.get(nid)
-                if o_claim is None or not o_claim.polarity_axis:
-                    continue
-                align = self._axis_alignment(
-                    my_claim.polarity_axis, o_claim.polarity_axis
-                )
-                if abs(align) > 0.3:
-                    cross_targets.append((tid, nid, align))
-            if cross_targets:
-                total_align = sum(abs(a) for _, _, a in cross_targets)
-                if total_align > 0:
-                    for tid, nid, align in cross_targets:
-                        share = outbound * (abs(align) / total_align)
-                        signed = share if align > 0 else -share
-                        intents[(tid, nid)] = intents.get((tid, nid), 0.0) + signed
-        return intents
-
-    def _axis_alignment(self, a: Tuple[float, ...], b: Tuple[float, ...]) -> float:
-        """Sign-overlap between two polarity axes. In [-1, 1].
-
-        +1 = same direction on every shared dim. -1 = opposite. 0 =
-        orthogonal or no shared nonzero dims.
-        """
-        if not a or not b:
-            return 0.0
-        n = min(len(a), len(b))
-        agree = 0
-        disagree = 0
-        for i in range(n):
-            if abs(a[i]) < 1e-6 or abs(b[i]) < 1e-6:
-                continue
-            if (a[i] > 0) == (b[i] > 0):
-                agree += 1
-            else:
-                disagree += 1
-        total = agree + disagree
-        if total == 0:
-            return 0.0
-        return (agree - disagree) / total
-
-    def _joint_satisfaction(self, world: "World") -> dict[str, float]:
-        """For each observation in the world, compute how much it is
-        already satisfied by OTHER tendencies' resolved positions.
-
-        For an obs at coords (c_1, ..., c_d), we look at each
-        dimension i where:
-          - This tendency's anchor has component near 0 (this dim is
-            not THIS tendency's responsibility).
-          - Some other tendency's anchor has component sharing sign
-            with c_i (that tendency aligns with this dim of obs).
-          - That other tendency has a strong root score.
-
-        The score is max over satisfied dimensions of (alignment ×
-        normalized score). Returns {obs_id: [0, 1]}.
-
-        Variables that THIS tendency is responsible for (its anchor
-        nonzero on that dim) don't count toward satisfaction --
-        otherwise we'd self-discount.
-        """
-        result: dict[str, float] = {}
-        if not self.anchor:
-            return result
-        my_dims = [i for i, a in enumerate(self.anchor) if abs(a) > 0.01]
-        my_dim_set = set(my_dims)
-
-        # Build a per-dim, per-sign GAP score: how decisively does the
-        # winning tendency on (dim, sign) beat its opposite-sign rival?
-        # We only count satisfaction when there's a clear winner --
-        # otherwise the dim is itself contested and shouldn't satisfy
-        # other obs.
-        all_scores = world.root_scores()
-        # Group tendencies by (dim, sign) of their anchor
-        by_key: dict[tuple[int, int], list[tuple[str, float]]] = {}
-        for tid, t in world.tendencies.items():
-            if not t.anchor:
-                continue
-            for i, a in enumerate(t.anchor):
-                if abs(a) < 0.01:
-                    continue
-                sign = 1 if a > 0 else -1
-                by_key.setdefault((i, sign), []).append((tid, all_scores.get(tid, 0.0)))
-
-        # For each dim, compute the gap between winning sign and losing sign.
-        # gap_score(dim, sign) = max(0, score_at_sign - score_at_-sign).
-        gap_score: dict[tuple[int, int], float] = {}
-        all_dims = {k[0] for k in by_key}
-        for dim in all_dims:
-            pos = max((s for _, s in by_key.get((dim, +1), [])), default=0.0)
-            neg = max((s for _, s in by_key.get((dim, -1), [])), default=0.0)
-            if pos > neg:
-                gap_score[(dim, +1)] = pos - neg
-                gap_score[(dim, -1)] = 0.0
-            else:
-                gap_score[(dim, -1)] = neg - pos
-                gap_score[(dim, +1)] = 0.0
-
-        max_gap = max(gap_score.values()) if gap_score else 0.0
-        if max_gap <= 0:
-            return result
-
-        for obs in world.observations.values():
-            if not obs.coords:
-                continue
-            sat = 0.0
-            for i, c in enumerate(obs.coords):
-                if abs(c) < 0.01:
-                    continue
-                if i in my_dim_set:
-                    continue   # don't self-discount on our own axis
-                sign = 1 if c > 0 else -1
-                key = (i, sign)
-                if key in gap_score:
-                    contribution = gap_score[key] / max_gap
-                    if contribution > sat:
-                        sat = contribution
-            result[obs.id] = sat
-        return result
+        return _intrinsic_score(node)
 
     def _find_existing_obs_child(
         self,
@@ -694,13 +612,16 @@ class GeneralizedTendency:
         parent_node_id: str,
         observation: Observation,
         position: Position,
+        world: Optional["World"] = None,
     ) -> str:
         """Find an existing node in the tree linked to this observation
         with the given position, or create one as a child of parent.
         Returns the node id.
 
         Tree-wide search prevents duplicate sprouts when equilibration
-        re-evaluates the same observation through different paths.
+        re-evaluates the same observation through different paths. The
+        optional `world` argument is passed through to `sprout_child`
+        so cross-tendency edges can be discovered at sprout time.
         """
         existing = self._find_existing_obs_child(observation.id, position)
         if existing is not None:
@@ -717,6 +638,7 @@ class GeneralizedTendency:
             polarity_axis=polarity,
             observation=observation,
             content=observation.label or f"obs:{observation.id[:6]}",
+            world=world,
         )
         return new_node.id
 
@@ -727,42 +649,6 @@ class GeneralizedTendency:
             if c is claim:
                 return node_id
         return None
-
-    def _termination_to_signed_stake(self, term: Termination, novelty: float) -> float:
-        """Translate a termination + novelty into a signed stake on
-        this tendency's *own* tree. Defensive: PRO when integrating,
-        CON when contradicting.
-        """
-        # Normalize novelty into a magnitude in [0.05, 1.0] so that
-        # something always lands when on-topic.
-        mag = max(0.05, min(1.0, novelty))
-        if term == Termination.INTEGRATED:
-            return +mag
-        if term == Termination.CONTRADICTS_ROOT:
-            # The observation contradicts our thesis -- we still need
-            # to defend our claim, so stake PRO on the root with high
-            # weight (the conflict pulls us to defend).
-            return +mag * 1.5
-        if term == Termination.DISRUPTS:
-            return +mag * 2.0
-        # ORTHOGONAL or MAX_ITERATIONS -- not our concern
-        return 0.0
-
-    def _cross_stake_sign(self, term: Termination, novelty: float) -> float:
-        """Translate a termination + novelty into a signed stake on
-        *another* tendency's tree.
-
-        If their node was absorbed cleanly into our frame (INTEGRATED),
-        we stake PRO -- we agree with their evidence.
-        If their node contradicts our root or disrupts our allocation,
-        we stake CON -- we attack.
-        """
-        mag = max(0.05, min(1.0, novelty))
-        if term == Termination.INTEGRATED:
-            return +mag
-        if term in (Termination.CONTRADICTS_ROOT, Termination.DISRUPTS):
-            return -mag
-        return 0.0
 
     def __repr__(self) -> str:
         return (

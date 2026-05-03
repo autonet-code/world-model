@@ -276,6 +276,56 @@ def prune_settled_negatives(
     return pruned
 
 
+def prune_veto_negatives(
+    world: World,
+    floor: Optional[float] = None,
+) -> List[str]:
+    """Asymmetric pruning under veto-shaped tendency roots.
+
+    A tendency tagged `veto_shaped=True` carries hard-veto semantics:
+    any subtree rooted at one of its direct root children whose
+    intrinsic_score has fallen below the floor is pruned outright,
+    regardless of n or settled-quiet history. This is how
+    correctness-as-veto manifests dynamically -- once a sub-claim
+    under the correctness root has accumulated enough negative weight
+    to clear the floor, the work item it gates is removed.
+
+    The floor defaults to each tendency's `veto_score_floor`. Pass an
+    explicit `floor` to override.
+
+    Returns the list of pruned node ids in traversal order.
+    """
+    from .tendency import _intrinsic_score
+
+    pruned: List[str] = []
+
+    for tendency in world.tendencies.values():
+        if not getattr(tendency, "veto_shaped", False):
+            continue
+        active_floor = floor if floor is not None else tendency.veto_score_floor
+        root = tendency.tree.root_node
+
+        # Candidate roots: every direct child of the veto root.
+        candidates: List[Node] = []
+        for child in list(root.all_children):
+            if _intrinsic_score(child) < active_floor:
+                candidates.append(child)
+
+        for subtree_root in candidates:
+            ids = _collect_subtree_ids(subtree_root)
+            if not _detach_from_parent(tendency, subtree_root):
+                continue
+            for nid in ids:
+                _purge_node_from_tendency(tendency, nid)
+            pruned.extend(ids)
+
+        if candidates:
+            _scrub_dead_claims(tendency)
+            tendency._refresh_frame()
+
+    return pruned
+
+
 def _scrub_dead_claims(tendency) -> None:
     """Remove dangling CoordinateClaim references whose backing nodes
     have been pruned.

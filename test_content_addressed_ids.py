@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """Tests for content-addressed node IDs in GeneralizedTendency.
 
+Under the post-and-coparent refactor, the hash is over
+(anchor, axis) only -- parent context is no longer part of identity.
+Two solvers proposing the same coordinate-anchored claim under
+different parents thus produce the SAME node id, and the parent set
+accumulates as a list of edges on the shared node (federation-friendly).
+
 The contract:
-  1. Two GeneralizedTendency instances with the same id, anchor, and
-     polarity, after sprouting an identical child (same position, same
-     anchor, same axis), produce the same child node id.
-  2. Sprouting different children (different position OR different
-     anchor OR different axis) under the same parent produces
-     different ids.
-  3. Sprouting an identical child under different parents (different
-     tendency id, or different intermediate-claim path) produces
-     different ids.
+  1. Two GeneralizedTendency instances sprouting an identical child
+     (same anchor, same axis) produce the same child node id, even
+     when their tendency ids and parent paths differ.
+  2. Sprouting different children (different anchor OR different
+     axis) produces different ids.
+  3. Position no longer affects the node id; sprouting at the same
+     (anchor, axis) with different positions yields the same id.
+     The position lives on the parent edge, not in the node identity.
 """
 
 from __future__ import annotations
@@ -71,7 +76,8 @@ def test_identical_children_same_id() -> None:
 
 def test_different_children_different_ids() -> None:
     """Sprouting different children under the same parent produces
-    different node ids."""
+    different node ids when (anchor, axis) differs. Position no
+    longer participates in the hash."""
     t = _make_tendency()
     parent = t.tree.root_node.id
 
@@ -84,16 +90,6 @@ def test_different_children_different_ids() -> None:
         anchor=base_anchor,
         polarity_axis=base_axis,
     )
-
-    # Different position: CON instead of PRO.
-    t2 = _make_tendency()
-    n_con = t2.sprout_child(
-        parent_node_id=t2.tree.root_node.id,
-        position=Position.CON,
-        anchor=base_anchor,
-        polarity_axis=base_axis,
-    )
-    assert n_pro.id != n_con.id, "different position must yield different id"
 
     # Different anchor.
     t3 = _make_tendency()
@@ -116,11 +112,36 @@ def test_different_children_different_ids() -> None:
     assert n_pro.id != n_axis.id, "different polarity axis must yield different id"
 
 
-def test_identical_child_different_parents_different_ids() -> None:
-    """An identical child under different parents must produce
-    different ids, whether the parent differs by tendency id or by
-    intermediate-claim path."""
-    # Case A: different tendency ids -> different ROOT path -> different id.
+def test_position_does_not_affect_id() -> None:
+    """A node sprouted at the same (anchor, axis) with different
+    positions yields the same id. Position now lives on the parent
+    edge (ParentLink.position), not in the node identity."""
+    base_anchor = (1.0, 0.0, 0.0)
+    base_axis = (1.0, 0.0, 0.0)
+    t1 = _make_tendency()
+    t2 = _make_tendency()
+    n_pro = t1.sprout_child(
+        parent_node_id=t1.tree.root_node.id,
+        position=Position.PRO,
+        anchor=base_anchor,
+        polarity_axis=base_axis,
+    )
+    n_con = t2.sprout_child(
+        parent_node_id=t2.tree.root_node.id,
+        position=Position.CON,
+        anchor=base_anchor,
+        polarity_axis=base_axis,
+    )
+    assert n_pro.id == n_con.id, (
+        "same (anchor, axis) should produce same id regardless of position"
+    )
+
+
+def test_identical_child_different_parents_same_id() -> None:
+    """An identical (anchor, axis) child under different parents
+    produces the SAME id under post-and-coparent semantics. Federation
+    merge uses this property to consolidate cross-solver work items.
+    """
     t1 = _make_tendency(tid="T_a")
     t2 = _make_tendency(tid="T_b")
     child_anchor = (1.0, 0.5, 0.0)
@@ -137,18 +158,16 @@ def test_identical_child_different_parents_different_ids() -> None:
         anchor=child_anchor,
         polarity_axis=child_axis,
     )
-    assert n1.id != n2.id, (
-        "identical content under different tendency roots should differ"
+    assert n1.id == n2.id, (
+        "identical (anchor, axis) under different tendency roots "
+        "should produce the same id"
     )
 
-    # Case B: same tendency id but child placed under different
-    # intermediate parents (different intermediate anchors). The deeper
-    # child should differ between the two parent paths.
+    # Same conclusion for differing intermediate paths under the same
+    # tendency id: as long as (anchor, axis) match, id matches.
     ta = _make_tendency(tid="T_shared")
     tb = _make_tendency(tid="T_shared")
 
-    # Sprout an intermediate node in each, with DIFFERENT anchors so
-    # the path string differs.
     mid_a = ta.sprout_child(
         parent_node_id=ta.tree.root_node.id,
         position=Position.PRO,
@@ -161,8 +180,6 @@ def test_identical_child_different_parents_different_ids() -> None:
         anchor=(0.0, 1.0, 0.0),
         polarity_axis=(1.0, 0.0, 0.0),
     )
-    assert mid_a.id != mid_b.id, "different intermediate anchors should differ"
-
     leaf_a = ta.sprout_child(
         parent_node_id=mid_a.id,
         position=Position.PRO,
@@ -175,40 +192,9 @@ def test_identical_child_different_parents_different_ids() -> None:
         anchor=child_anchor,
         polarity_axis=child_axis,
     )
-    assert leaf_a.id != leaf_b.id, (
-        "identical leaf content under different parent paths should differ"
-    )
-
-    # Sanity: same intermediate path -> same leaf id.
-    tc = _make_tendency(tid="T_shared")
-    td = _make_tendency(tid="T_shared")
-    mid_c = tc.sprout_child(
-        parent_node_id=tc.tree.root_node.id,
-        position=Position.PRO,
-        anchor=(1.0, 0.0, 0.0),
-        polarity_axis=(1.0, 0.0, 0.0),
-    )
-    mid_d = td.sprout_child(
-        parent_node_id=td.tree.root_node.id,
-        position=Position.PRO,
-        anchor=(1.0, 0.0, 0.0),
-        polarity_axis=(1.0, 0.0, 0.0),
-    )
-    assert mid_c.id == mid_d.id, "same intermediate path should yield same id"
-    leaf_c = tc.sprout_child(
-        parent_node_id=mid_c.id,
-        position=Position.PRO,
-        anchor=child_anchor,
-        polarity_axis=child_axis,
-    )
-    leaf_d = td.sprout_child(
-        parent_node_id=mid_d.id,
-        position=Position.PRO,
-        anchor=child_anchor,
-        polarity_axis=child_axis,
-    )
-    assert leaf_c.id == leaf_d.id, (
-        "same path + same leaf content should yield same id across solvers"
+    assert leaf_a.id == leaf_b.id, (
+        "identical leaf (anchor, axis) under different parent paths "
+        "should produce the same id"
     )
 
 
@@ -216,7 +202,8 @@ def main() -> int:
     tests = [
         test_identical_children_same_id,
         test_different_children_different_ids,
-        test_identical_child_different_parents_different_ids,
+        test_position_does_not_affect_id,
+        test_identical_child_different_parents_same_id,
     ]
     failed = 0
     for t in tests:

@@ -46,31 +46,44 @@ class World:
         self.observations.clear()
 
     def apply_stakes(self) -> None:
-        """Walk every tendency's last_stakes and write Stakes onto the
-        relevant node. Existing stakes from this tendency are removed
-        first to avoid double-counting across rounds.
+        """Walk every tendency's last_stakes and write unit-weight
+        posts onto the relevant nodes.
+
+        Under the post-only refactor, every stored Stake has weight=1.
+        Positive intents become a single PRO post by the tendency on
+        the target node; negative intents are dropped here because
+        cross-tendency disagreement is expressed structurally (via
+        CON-position children in the disagreer's own tree, possibly
+        co-parented into the target tendency's tree at sprout time)
+        rather than via signed weight.
+
+        Existing posts attributed to any tendency in `self.tendencies`
+        are removed first to avoid double-counting across rounds.
         """
-        # 1. Remove existing stakes attributed to any tendency in self.tendencies
+        # 1. Remove existing posts attributed to any tendency in self.tendencies
         all_tendency_ids = set(self.tendencies.keys())
         for tendency in self.tendencies.values():
             for node in tendency.tree.all_nodes():
                 node.stakes = [s for s in node.stakes if s.agent_id not in all_tendency_ids]
                 node.invalidate_cache()
 
-        # 2. Apply each tendency's recorded intents
+        # 2. Apply each tendency's recorded intents as unit-weight posts.
         for tendency in self.tendencies.values():
             for (target_tendency_id, node_id), signed in tendency.last_stakes.items():
+                if signed <= 0.0:
+                    continue   # disagreement is structural, not weight-based
                 target = self.tendencies.get(target_tendency_id)
                 if target is None:
                     continue
                 node = target.tree.get_node(node_id)
                 if node is None:
                     continue
-                node.add_stake(agent_id=tendency.id, weight=signed)
+                node.add_post(agent_id=tendency.id)
 
     def total_stake_on(self, target_tendency_id: str, node_id: str) -> float:
-        """Net stake on a node (sum of signed stakes from all
-        tendencies). Positive = supported, negative = undermined.
+        """Number of posts on a node (count of unit-weight stakes from
+        all tendencies). Always non-negative under the post-only
+        model. Returns 0.0 if the node or tendency is unknown.
         """
         target = self.tendencies.get(target_tendency_id)
         if target is None:
@@ -78,8 +91,21 @@ class World:
         node = target.tree.get_node(node_id)
         if node is None:
             return 0.0
-        return sum(s.weight for s in node.stakes)
+        return float(len(node.stakes))
+
+    def intrinsic_score(self, node) -> float:
+        """How strongly this node is supported by its full subtree
+        across all tendencies that share it. See
+        `tendency._intrinsic_score`.
+        """
+        from .tendency import _intrinsic_score
+        return _intrinsic_score(node)
 
     def root_scores(self) -> Dict[str, float]:
-        """Net score of each tendency's thesis."""
+        """Net score of each tendency's thesis (its tree's root
+        net_score). The net_score recursion picks up unit-weight
+        posts and signed children naturally; for co-parented nodes,
+        the child's contribution is signed by the edge polarity in
+        each parent's tree.
+        """
         return {tid: t.tree.score for tid, t in self.tendencies.items()}
