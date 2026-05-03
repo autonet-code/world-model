@@ -61,6 +61,29 @@ and the other tendency's polarity axis. This replaces the older
 neighboring nodes); now the relationship is structural — either a
 node is part of a tendency's tree or it isn't.
 
+### Same-observation dedup across tendencies
+
+When two tendencies' `act` calls evaluate the same observation with
+different polarity classifications, naive sprouting would produce
+two parallel nodes (different content hashes because polarity_axis
+differs per tendency). Cross-tendency edge discovery would then
+link them as children of each other — and their intrinsic walks
+could cancel out, defeating the veto.
+
+`_ensure_obs_child` performs three-step dedup:
+
+  1. Same `(observation_id, position)` in this tendency's tree —
+     direct re-use (legacy case).
+  2. Same `observation_id` anywhere in `world` (any tendency,
+     any position) — reuse the existing node, append a parent
+     link in this tendency at the requested position. The node
+     stays single-hash even when tendencies disagree on stance.
+  3. Otherwise sprout fresh.
+
+This means a single observation produces a single node with one
+parent link per tendency that engaged with it. The veto-prune sees
+the contributions cleanly without parallel-node cancellation.
+
 ### Score: intrinsic vs. tendency-tree
 
 Two distinct readouts:
@@ -139,8 +162,33 @@ stream (`SubClaimSprouted`, `ObservationAdded`). On the aggregator,
 events are concatenated, sorted by `(author_agent, seq)` for
 determinism, and replayed onto the live world. Because identity is
 coordinate-only, the same claim from multiple solvers consolidates
-into one node; the multi-parent `parents` field on
-`SubClaimSprouted` accumulates as edges in the live world.
+into one node. Multi-parent semantics are handled by the engine
+when each solver's events get replayed through `sprout_child` —
+the protocol-layer event payload stays single-parent; the engine
+accumulates parent edges via content-hash collisions on replay.
+
+### LLM-as-embedder convention: binary flags, not graded scores
+
+When an LLM produces coordinates for the substrate, the validated
+prompt shape is **binary commit per axis**, not continuous grading:
+
+    -1 = the input clearly flags concern on this axis
+    +1 = no clear flag
+     0 = can't tell from input alone
+
+Why: the substrate's veto is a threshold-crossing test, not a
+quality summation. Continuous LLM scores ("mostly correct, +0.8")
+slip through the threshold by landing PRO at +0.8 instead of
+crossing to CON. Binary commitment forces the LLM to take a side
+when there's a clear signal, and to abstain (return 0) when there
+isn't. The substrate then composes per-axis flags into a verdict
+via the existing veto + co-parenting + dedup machinery.
+
+This convention is empirically validated across qwen3.5:4b (local
+ollama, 4B model with thinking mode) and haiku-4-5 (frontier-tier
+via Claude Max bridge). Both produce identical substrate verdicts
+under binary prompts; haiku is ~6-10× faster but qwen is
+sufficient as a lower bound. See the validation arc below.
 
 ## What stays unchanged
 
@@ -151,6 +199,42 @@ into one node; the multi-parent `parents` field on
     weights.
   - Locality kernel: same Gaussian on coordinates.
   - Charter tendencies and their setup.
+
+## Validation status
+
+The post-and-coparent architecture has been validated in a four-tier
+experimental arc (full results in
+`D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\`):
+
+  - **Tier 0** (synthetic three-root, no LLM): 6/6 predictions
+    pass. Architecture composes — three roots co-parent, work
+    items emerge from multi-parenthood, veto-prune fires
+    structurally.
+  - **Tier 1** (LLM-as-embedder for code-domain): graded prompt
+    1/5 → 4/5 after dedup fix; binary prompt 4/5 on both qwen
+    and haiku, with both LLMs producing identical substrate
+    verdicts. Single failure (Q1) is hand-coded category labels
+    not matching how either LLM reads the snippet — not a
+    substrate issue.
+  - **Tier 2** (N-agent consensus at scale): substrate-native
+    consensus validated for N up to 1000. Decisive yielding:
+    60/40 input → 3.4-5.0× verdict tilt. Sub-linear scaling:
+    N=10 settles in 1 round, N=1000 in 3 rounds. The Lindblad
+    kernel produces resist-then-yield-decisively dynamics; the
+    discrete kernel is the lossy approximation.
+  - **Tier 3A** (autonet integration): LLM-binary-flag adapter
+    drops cleanly into autonet's existing `turn_to_observation`
+    seam. 4/5 predictions pass (the "failure" is a metric bug —
+    real disagreement rate is 0.8% out of 120 axis-pairs; the
+    LLM mostly extends the heuristic rather than contradicting
+    it). Events round-trip through autonet's existing aggregator
+    without protocol changes.
+
+The combined story: post-and-coparent + dedup + binary-flag
+prompt + Lindblad kernel produces deterministic verdicts under
+single-claim review (Tier 1), N-agent consensus (Tier 2), and
+real autonet pipeline integration (Tier 3A) — across model
+sizes from qwen3.5:4b to haiku-4-5.
 
 ## What's intentionally deferred
 

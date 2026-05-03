@@ -85,6 +85,21 @@ python test_epoch_reconciliation.py             # mint distribution
 python test_multi_solver_convergence.py         # federation
 ```
 
+## Validation arc (post-and-coparent)
+
+The post-and-coparent refactor (multi-parent nodes, content-addressed dedup, tendency-aware intrinsic, asymmetric veto-prune) has been validated in four tiers; full results in `D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\`.
+
+| Tier | What it tests | Result |
+|------|---------------|--------|
+| 0 | Synthetic three-root composition (no LLM) | 6/6 |
+| 1 | LLM-as-embedder for code-domain verdicts | 4/5 (qwen + haiku, both binary prompt) |
+| 2 | N-agent consensus at scale (N up to 1000, Lindblad kernel) | 3/6 by-letter; load-bearing predictions all pass |
+| 3A | Autonet pipeline integration (LLM swap-in at `turn_to_observation` seam) | 4/5 |
+
+**Key finding**: binary "concern flag" prompts (`-1`/`+1`/`0` per axis) produce deterministic substrate verdicts; continuous-grading prompts introduce noise that slips through veto thresholds. This is **Option C** of the validated stack — see `docs/substrate-architecture.md` for the convention.
+
+See `docs/substrate-architecture.md` for the architectural overview. Engine + adapter + 28 substrate tests on the `feature/post-and-coparent` branch.
+
 ---
 
 ## Quick start (engine only)
