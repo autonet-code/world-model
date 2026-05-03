@@ -110,6 +110,7 @@ class Node:
     # Cached scores (recomputed on demand)
     _direct_weight: Optional[float] = field(default=None, repr=False)
     _net_score: Optional[float] = field(default=None, repr=False)
+    _in_progress: bool = field(default=False, repr=False)
 
     @property
     def parent_id(self) -> Optional[str]:
@@ -165,17 +166,31 @@ class Node:
         Score after weight propagation from children.
 
         net_score = direct_weight + Σ(pro_children.net_score) - Σ(con_children.net_score)
+
+        Cycle protection: under co-parenting a node may transitively
+        appear in its own subtree (rare but possible if cross-tendency
+        edge discovery joins two regions). A sentinel `_in_progress`
+        flag short-circuits reentrant access to 0.0 so the recursion
+        terminates cleanly; the cache then completes with the
+        consistent (cycle-broken) value.
         """
         if self._net_score is None:
-            pro_sum = sum(child.net_score for child in self.pro_children)
-            con_sum = sum(child.net_score for child in self.con_children)
-            self._net_score = self.direct_weight + pro_sum - con_sum
+            if self._in_progress:
+                return 0.0
+            self._in_progress = True
+            try:
+                pro_sum = sum(child.net_score for child in self.pro_children)
+                con_sum = sum(child.net_score for child in self.con_children)
+                self._net_score = self.direct_weight + pro_sum - con_sum
+            finally:
+                self._in_progress = False
         return self._net_score
 
     def invalidate_cache(self):
         """Clear cached scores - call after modifying stakes or children."""
         self._direct_weight = None
         self._net_score = None
+        self._in_progress = False
 
     def add_stake(self, agent_id: str, weight: float = 1.0):
         """Add a unit-weight post from an agent.
@@ -202,8 +217,12 @@ class Node:
         """Append a parent link if not already present.
 
         Idempotent on (parent_id, tendency_id): re-calling with the
-        same parent in the same tendency is a no-op.
+        same parent in the same tendency is a no-op. Self-references
+        (parent_id == self.id) are silently refused -- a node can't
+        be its own parent.
         """
+        if parent_id == self.id:
+            return
         for link in self.parents:
             if link.parent_id == parent_id and link.tendency_id == tendency_id:
                 return

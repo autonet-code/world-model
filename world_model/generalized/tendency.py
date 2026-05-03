@@ -343,11 +343,16 @@ class GeneralizedTendency:
                 continue
             # Find the nearest existing node in the other tendency's
             # tree to be the parent of our edge. If nothing better,
-            # fall back to the other root.
+            # fall back to the other root. Skip self -- a node can't
+            # be its own parent (this comes up under co-parenting:
+            # `node` may already be indexed in the other tendency's
+            # tree from a prior round).
             other_parent_id = other.tree.root_node.id
             best_d = float("inf")
             for cand in other.tree.all_nodes():
                 if cand.id == other.tree.root_node.id:
+                    continue
+                if cand.id == node.id:
                     continue
                 claim = other._node_to_claim.get(cand.id)
                 if claim is None or not claim.anchor:

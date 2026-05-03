@@ -117,11 +117,20 @@ scores and is intended to run *between* observation events.
 A tendency tagged `veto_shaped=True` carries hard-veto semantics. The
 deployer pairs this with a higher `γ_con` for fast settling of CON
 evidence. The asymmetric pruning helper `prune_veto_negatives(world)`
-drops any direct child of a veto-shaped root whose `intrinsic_score`
-falls below `tendency.veto_score_floor` — regardless of `n`,
-regardless of settled-quiet history. This is how "correctness fails
-this work item" propagates as a veto without giving correctness an
-exotic gate mechanism.
+walks each direct child of a veto-shaped root and computes its
+*signed* contribution to the root's score:
+
+  - PRO children contribute `+intrinsic_score(child)`
+  - CON children contribute `-intrinsic_score(child)`
+
+When that signed contribution falls below `tendency.veto_score_floor`
+(typically a small negative number), the child and its subtree are
+removed — regardless of `n`, regardless of settled-quiet history.
+The substrate has already done the classification work via PRO/CON
+position; veto-prune just enforces "this work item is too
+anti-correctness to keep around in correctness's tree." The same
+work item can survive in non-veto trees, where its CON-position is
+informative metadata rather than a kill signal.
 
 ### Federation merge
 

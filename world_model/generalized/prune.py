@@ -130,18 +130,25 @@ def _settled_quiet(
     )
 
 
-def _collect_subtree_ids(node: Node) -> List[str]:
+def _collect_subtree_ids(node: Node, _seen: Optional[set] = None) -> List[str]:
     """All ids in the subtree rooted at `node`, including `node` itself.
 
-    Visits PRO children before CON children, in list order. Used both
-    to enumerate ids for index cleanup and to ensure deterministic
-    behaviour.
+    Visits PRO children before CON children, in list order. Cycle-
+    safe via the `_seen` set: under co-parenting, the same node may
+    appear in multiple parents' child lists, so a naive walk could
+    revisit. Used both to enumerate ids for index cleanup and to
+    ensure deterministic behaviour.
     """
+    if _seen is None:
+        _seen = set()
+    if node.id in _seen:
+        return []
+    _seen.add(node.id)
     ids: List[str] = [node.id]
     for child in node.pro_children:
-        ids.extend(_collect_subtree_ids(child))
+        ids.extend(_collect_subtree_ids(child, _seen))
     for child in node.con_children:
-        ids.extend(_collect_subtree_ids(child))
+        ids.extend(_collect_subtree_ids(child, _seen))
     return ids
 
 
@@ -282,20 +289,31 @@ def prune_veto_negatives(
 ) -> List[str]:
     """Asymmetric pruning under veto-shaped tendency roots.
 
-    A tendency tagged `veto_shaped=True` carries hard-veto semantics:
-    any subtree rooted at one of its direct root children whose
-    intrinsic_score has fallen below the floor is pruned outright,
-    regardless of n or settled-quiet history. This is how
-    correctness-as-veto manifests dynamically -- once a sub-claim
-    under the correctness root has accumulated enough negative weight
-    to clear the floor, the work item it gates is removed.
+    A tendency tagged `veto_shaped=True` carries hard-veto semantics.
+    For each direct child of its root, the child's *signed*
+    contribution to the root's score is computed:
 
-    The floor defaults to each tendency's `veto_score_floor`. Pass an
-    explicit `floor` to override.
+      - PRO children: contribution = +intrinsic_score(child)
+      - CON children: contribution = -intrinsic_score(child)
+
+    The child (and its subtree) is pruned outright when its signed
+    contribution falls below `veto_score_floor` (a negative number).
+    This catches both modes of failure:
+      - A PRO child that should have supported correctness but had
+        its intrinsic_score dragged deeply negative by accumulated
+        CON descendants.
+      - A CON child that has accumulated enough evidence that it
+        actively contradicts correctness (its negative contribution
+        clears the floor).
+
+    Pruning ignores n and settled-quiet history; the threshold is
+    structural. The floor defaults to each tendency's
+    `veto_score_floor`.
 
     Returns the list of pruned node ids in traversal order.
     """
     from .tendency import _intrinsic_score
+    from ..models.tree import Position
 
     pruned: List[str] = []
 
@@ -305,10 +323,14 @@ def prune_veto_negatives(
         active_floor = floor if floor is not None else tendency.veto_score_floor
         root = tendency.tree.root_node
 
-        # Candidate roots: every direct child of the veto root.
         candidates: List[Node] = []
-        for child in list(root.all_children):
-            if _intrinsic_score(child) < active_floor:
+        for child in list(root.pro_children):
+            contribution = +_intrinsic_score(child)
+            if contribution < active_floor:
+                candidates.append(child)
+        for child in list(root.con_children):
+            contribution = -_intrinsic_score(child)
+            if contribution < active_floor:
                 candidates.append(child)
 
         for subtree_root in candidates:

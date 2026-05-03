@@ -100,6 +100,35 @@ def test_positive_subtree_survives() -> None:
     assert t.tree.get_node(good.id) is not None, "good node was removed unexpectedly"
 
 
+def test_con_child_accumulates_pruned() -> None:
+    """A CON-position direct child of a veto root, with enough
+    accumulated posts that its negative contribution clears the
+    floor, gets pruned. This is the structural-veto case: the
+    substrate has classified the work item as anti-correctness
+    (CON-position), and the evidence has accumulated."""
+    world, t = _make_world_with_veto_root()
+    # Sprout a CON child of the correctness root with 3 posts on it.
+    # Contribution to correctness = -intrinsic_score(child) = -3,
+    # well below floor=-1.0 -> should be pruned.
+    bad = t.sprout_child(
+        parent_node_id=t.tree.root_node.id,
+        position=Position.CON,
+        anchor=(-1.0, 0.5, 0.0),
+        polarity_axis=(-1.0, 0.0, 0.0),
+        content="anti_correctness_claim",
+    )
+    for k in range(3):
+        bad.add_post(agent_id=f"agent_{k}")
+
+    pruned = prune_veto_negatives(world)
+    assert bad.id in pruned, (
+        f"CON child with intrinsic={_intrinsic_score(bad)} contributing "
+        f"{-_intrinsic_score(bad):+.2f} (floor={t.veto_score_floor}) "
+        f"should have been pruned; got {pruned}"
+    )
+    assert t.tree.get_node(bad.id) is None, "pruned node still in tree index"
+
+
 def test_non_veto_tendency_not_affected() -> None:
     """prune_veto_negatives only acts on tendencies tagged
     veto_shaped=True; other tendencies' subtrees are untouched."""
@@ -142,6 +171,7 @@ def main() -> int:
     tests = [
         test_negative_subtree_pruned,
         test_positive_subtree_survives,
+        test_con_child_accumulates_pruned,
         test_non_veto_tendency_not_affected,
     ]
     failed = 0
