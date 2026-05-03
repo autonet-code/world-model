@@ -98,6 +98,31 @@ class StabilityTracker:
                     self.consecutive_stable[node.id] = 0
                     self.decayed.discard(node.id)
 
+    def observe_novelty(self, world: World, novelty_threshold: float = 0.1) -> None:
+        """Persistent-novelty-based decay. A node whose persistent n has
+        stayed below `novelty_threshold` for `stability_window` rounds
+        is marked decayed. A node whose n bumps above threshold (e.g.
+        due to CON-driven re-surprise) gets reactivated.
+
+        Use this in place of observe(world, history) when the substrate
+        is using the persistent-novelty refactor (see
+        lindblad/NOVELTY_REFACTOR.md).
+        """
+        for tendency in world.tendencies.values():
+            for node in tendency.tree.all_nodes():
+                if node.parent_id is None:
+                    continue
+                if node.n < novelty_threshold:
+                    self.consecutive_stable[node.id] = (
+                        self.consecutive_stable.get(node.id, 0) + 1
+                    )
+                    if self.consecutive_stable[node.id] >= self.stability_window:
+                        self.decayed.add(node.id)
+                else:
+                    # n popped back up -- re-surprise. Reactivate.
+                    self.consecutive_stable[node.id] = 0
+                    self.decayed.discard(node.id)
+
     def is_decayed(self, node_id: str) -> bool:
         return node_id in self.decayed
 

@@ -99,6 +99,17 @@ class GeneralizedTendency:
     capacity_threshold: float = 0.05  # below this, node stays silent
     smooth_promotion: bool = True   # if False, only the root acts; sub-claims stay passive
 
+    # Per-node novelty rate constants (see lindblad/NOVELTY_REFACTOR.md).
+    # Per-round update of node.n via:
+    #   dn/dt = -gamma_pro * n * pro_rate + gamma_con * (1-n) * con_rate
+    #         + epsilon * (1-n)
+    # gamma_pro > gamma_con so confirmation reduces uncertainty faster
+    # than contradiction restores it. epsilon is a slow drift toward
+    # uncertainty when no observations land.
+    novelty_gamma_pro: float = 1.0
+    novelty_gamma_con: float = 0.5
+    novelty_drift: float = 0.01
+
     def __post_init__(self):
         # Create root claim and tree
         self._root_claim = CoordinateClaim(
@@ -424,6 +435,52 @@ class GeneralizedTendency:
             old = self.node_capacity.get(node.id, 0.0)
             new = self.capacity_decay * old + (1.0 - self.capacity_decay) * pro_in
             self.node_capacity[node.id] = new
+
+    def update_novelty(self, dt: float = 1.0) -> None:
+        """Update per-node persistent novelty n based on the current
+        round's stake deltas.
+
+        Discretized form of:
+          dn/dt = -gamma_pro * n * pro_rate
+                + gamma_con * (1-n) * con_rate
+                + epsilon * (1-n)
+
+        Per-round we use stake deltas as proxies for the rates:
+          pro_rate_i = positive stakes currently on node i (round-fresh,
+                       since apply_stakes wipes prior round)
+          con_rate_i = magnitude of CON-position influence: net negative
+                       contribution from CON children's net_score,
+                       capped at 0 if children sum positively.
+
+        n is clipped to [0, 1] after the update.
+        """
+        root_id = self.tree.root_node.id
+        for node in self.tree.all_nodes():
+            if node.id == root_id:
+                # Root never decays in novelty -- it's the founding
+                # claim and stays "always potentially surprising" in
+                # the sense that further evidence can always shift it.
+                # Keep n=1.0 anchored at the root.
+                node.n = 1.0
+                continue
+            pro_rate = sum(s.weight for s in node.stakes if s.weight > 0)
+            # CON pressure on this node: weight of CON children's net
+            # contribution. If this node has CON children with positive
+            # net_score, those drive n upward (re-surprise).
+            con_rate = sum(max(c.net_score, 0.0) for c in node.con_children)
+            n = node.n
+            d_n = (
+                -self.novelty_gamma_pro * n * pro_rate
+                + self.novelty_gamma_con * (1.0 - n) * con_rate
+                + self.novelty_drift * (1.0 - n)
+            ) * dt
+            new_n = n + d_n
+            # Clip
+            if new_n < 0.0:
+                new_n = 0.0
+            elif new_n > 1.0:
+                new_n = 1.0
+            node.n = new_n
 
     def _sub_claim_staking(self, world: "World") -> dict[tuple[str, str], float]:
         """For each non-root node with capacity above threshold, stake

@@ -40,6 +40,10 @@ def equilibrate(world: World, max_rounds: int = 20, tolerance: float = 1e-3) -> 
             tendency.act(world)
         # Apply
         world.apply_stakes()
+        # Update per-node persistent novelty (continuous-surprise state).
+        # See lindblad/NOVELTY_REFACTOR.md.
+        for tendency in world.tendencies.values():
+            tendency.update_novelty(dt=1.0)
         # Check convergence
         max_delta = 0.0
         for tid, tendency in world.tendencies.items():

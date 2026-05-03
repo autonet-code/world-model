@@ -64,6 +64,12 @@ class Node:
     pro_children: list["Node"] = field(default_factory=list)
     con_children: list["Node"] = field(default_factory=list)
 
+    # Persistent novelty (continuous "surprise" state).
+    # Decays under PRO confirmation, regrows under CON contradiction,
+    # drifts upward without observations. See lindblad/NOVELTY_REFACTOR.md.
+    # 1.0 = maximally surprising (fresh, untested); 0.0 = fully settled.
+    n: float = 1.0
+
     # Cached scores (recomputed on demand)
     _direct_weight: Optional[float] = field(default=None, repr=False)
     _net_score: Optional[float] = field(default=None, repr=False)
@@ -149,6 +155,7 @@ class Node:
             "content": self.content,
             "stakes": [s.to_dict() for s in self.stakes],
             "metadata": self.metadata,
+            "n": self.n,
             "pro_children": [c.to_dict() for c in self.pro_children],
             "con_children": [c.to_dict() for c in self.con_children],
         }
@@ -164,6 +171,7 @@ class Node:
             content=data.get("content", ""),
             stakes=[Stake.from_dict(s) for s in data.get("stakes", [])],
             metadata=data.get("metadata", {}),
+            n=data.get("n", 1.0),
         )
         node.pro_children = [cls.from_dict(c) for c in data.get("pro_children", [])]
         node.con_children = [cls.from_dict(c) for c in data.get("con_children", [])]
