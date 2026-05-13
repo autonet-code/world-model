@@ -248,6 +248,104 @@ sizes from qwen3.5:4b to haiku-4-5.
 These are not blocked by the post-and-coparent shape — they layer on
 top once the deployer has reason to want them.
 
+## Future work: vocabulary, sharding, guilds
+
+These came out of brainstorming after the Tier 0–3A validation
+arc landed. None are blockers for MVP deployment; they shape the
+trajectory after the architecture is in production.
+
+### Vocabulary expansion: usefulness roots beyond charter
+
+The MVP charter (4 alignment roots) is the floor. For deployments
+that prioritize intelligence/usefulness over alignment-only
+verdicts, deployer-declared usefulness roots (`correctness`,
+`simplicity`, etc.) are the natural extension. Tier 1A/1C already
+validated the veto mechanism on deployer-domain roots; the
+unanswered question is whether explicit usefulness roots produce
+sharper signal than burying it in `promotion_of_intelligence` /
+`evolution`.
+
+The reframed Tier 3A experiment — same corpus, 4-root vs 6-root
+charter, measure signal density / verdict separation / mint-rank
+spread — would settle this empirically. Until run, treat charter
+expansion as a deployer config knob whose value is plausible but
+unmeasured.
+
+### Substrate sharding by embedding region
+
+Today every daemon holds the full world. This is verifiable but
+storage/replay/bandwidth cost grows with global activity, not
+with what each user does. Sharding cut: partition the embedding
+tail into regions; daemons subscribe to one or more. They hold:
+
+  - **Full charter head** (always replicated — alignment floor
+    crosses domains).
+  - **Embedding-tail nodes only for subscribed regions**.
+
+Cross-region nodes (work touching multiple regions) get held by
+all relevant subscribers. Gossip routes events to subscribers of
+the regions they touch. Verifier semantics become region-bounded
+(or there's a global-verifier tier — protocol decision, not
+architecture rewrite).
+
+**Migration is clean because the architecture is event-sourced.**
+Events are coord-tagged (`SubClaimSprouted.coords`,
+`ObservationAdded.coords`); region-filtering happens at replay
+time, not via schema migration. Past events stay valid; new
+daemons just choose what to replay. **Constraint to bake in now:**
+keep events self-describing on the coord field — don't add event
+types that can only be region-classified by replaying preceding
+state.
+
+### Guilds as soft middle layer
+
+Three paradigms for vocabulary/community structure:
+
+  1. **Per-user bespoke roots** — maximal local signal, federation
+     breaks (decentralized AI becomes archipelago).
+  2. **Guilds with shared charters** — domain communities publish
+     a charter; members federate cleanly within; cross-guild is
+     bridge-mediated. Re-introduces governance.
+  3. **Universal charter, guilds emerge in embedding space** —
+     domain specificity as dense regions in the embedding tail,
+     no declared social structure. Bet that universal roots +
+     embedding geometry are expressive enough.
+
+The interesting middle: **universal charter floor + optional
+guild charters composed on top**. Deployer-declared roots taken
+seriously, where the deployer can be a guild rather than a single
+user. Guild membership maps naturally to embedding-region
+subscription (Sharding section above) — a daemon "joins" a guild
+by subscribing to its region(s).
+
+### Empirical questions that point at the right paradigm
+
+Before committing to any of the above, two measurements would be
+load-bearing:
+
+  - **World growth under load**: run a long synthetic stream
+    (~10k turns) on a single daemon and chart `len(world.nodes)`
+    over time. Does `prune_settled_negatives` +
+    `prune_veto_negatives` produce a steady-state plateau, or is
+    growth unbounded? Sharding urgency depends on the answer.
+  - **Embedding-tail clusterability**: run k-means / DBSCAN over
+    the post-replay node set from a Tier 3A-shaped run. If clear
+    clusters exist, sharding-by-region has natural seams (and
+    guilds emerge from the geometry). If posts are uniform,
+    sharding requires arbitrary partitioning and guilds need to
+    be declared.
+
+Decision tree:
+
+  - Bounded growth → sharding not needed; every-daemon-holds-
+    everything is fine.
+  - Unbounded but uniform → sharding requires arbitrary
+    partitioning; guilds must be declared social structure
+    (Paradigm 2).
+  - Unbounded and clusterable → embedding-region sharding is the
+    natural cut, and guilds emerge from the same partition
+    (Paradigm 2/3 hybrid).
+
 ## Pointers
 
   - Engine schema: `world_model/models/tree.py` (Node, ParentLink,
