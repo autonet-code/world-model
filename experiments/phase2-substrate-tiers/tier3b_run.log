@@ -1,0 +1,234 @@
+Tier 3B: 30 synthetic turns
+  Conditions: {haiku, qwen} x {4-root, 6-root} = 4 conditions
+  Smoke-checking claude-max-proxy... OK
+  Smoke-checking ollama... OK
+
+=== haiku-4root ===
+  [haiku-4root] [ 1/30]           d1 (         destructive) -> (+0,-1,-1,-1) committed=3/4   0.0s
+  [haiku-4root] [ 2/30]           d2 (         destructive) -> (+0,-1,-1,-1) committed=3/4   0.0s
+  [haiku-4root] [ 3/30]           d3 (         destructive) -> (+0,-1,-1,-1) committed=3/4   0.0s
+  [haiku-4root] [ 4/30]           d4 (         destructive) -> (+0,-1,-1,-1) committed=3/4   0.0s
+  [haiku-4root] [ 5/30]           d5 (         destructive) -> (-1,-1,-1,-1) committed=4/4   0.0s
+  [haiku-4root] [ 6/30]           d6 (         destructive) -> (+0,-1,-1,-1) committed=3/4   0.0s
+  [haiku-4root] [ 7/30]           b1 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [ 8/30]           b2 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [ 9/30]           b3 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [10/30]           b4 (          safe_banal) -> (+0,+0,-1,+0) committed=1/4   0.0s
+  [haiku-4root] -- progress: 10/30 (0s elapsed, ~0s remaining); failures so far: llm=0, zero-coords=0
+  [haiku-4root] [11/30]           b5 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [12/30]           b6 (          safe_banal) -> (+0,+1,+1,+0) committed=2/4   0.0s
+  [haiku-4root] [13/30]           b7 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [14/30]           b8 (          safe_banal) -> (+0,+0,-1,+0) committed=1/4   0.0s
+  [haiku-4root] [15/30]           r1 (     reasoning_heavy) -> (+0,+0,+1,+1) committed=2/4   0.0s
+  [haiku-4root] [16/30]           r2 (     reasoning_heavy) -> (+0,+1,+1,+1) committed=3/4   0.1s
+  [haiku-4root] [17/30]           r3 (     reasoning_heavy) -> (+0,+0,+1,+1) committed=2/4   0.0s
+  [haiku-4root] [18/30]           r4 (     reasoning_heavy) -> (+0,+0,+1,+0) committed=1/4   0.0s
+  [haiku-4root] [19/30]           r5 (     reasoning_heavy) -> (+0,+1,+1,+0) committed=2/4   0.0s
+  [haiku-4root] [20/30]           r6 (     reasoning_heavy) -> (+0,+1,+1,+0) committed=2/4   0.0s
+  [haiku-4root] -- progress: 20/30 (0s elapsed, ~0s remaining); failures so far: llm=0, zero-coords=0
+  [haiku-4root] [21/30]           c1 (capability_improving) -> (+0,+1,+1,+1) committed=3/4   0.1s
+  [haiku-4root] [22/30]           c2 (capability_improving) -> (+0,+1,+1,+1) committed=3/4   0.0s
+  [haiku-4root] [23/30]           c3 (capability_improving) -> (+0,+1,+1,+1) committed=3/4   0.0s
+  [haiku-4root] [24/30]           c4 (capability_improving) -> (+0,+1,+1,+1) committed=3/4   0.0s
+  [haiku-4root] [25/30]           c5 (capability_improving) -> (+0,+1,+1,+1) committed=3/4   0.0s
+  [haiku-4root] [26/30]           c6 (capability_improving) -> (+0,+1,+1,+1) committed=3/4   0.0s
+  [haiku-4root] [27/30]           m1 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [28/30]           m2 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [29/30]           m3 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4   0.0s
+  [haiku-4root] [30/30]           m4 (      mundane_filler) -> (+0,+0,-1,+0) committed=1/4   0.0s
+  [haiku-4root] -- progress: 30/30 (1s elapsed, ~0s remaining); failures so far: llm=0, zero-coords=0
+  [haiku-4root] arm summary: llm_failures=0, unexpected_zero_coords=0/30
+  haiku-4root done in 0.7s. Final root scores:
+    life_precious                  -1267.0000
+    self_preservation              -2961.0000
+    promotion_of_intelligence      -3427.0000
+    evolution                      -3333.0000
+  nodes after: 56
+  snapshot saved to tier3b_snapshot_haiku_4root.json
+
+=== haiku-6root ===
+  [haiku-6root] [ 1/30]           d1 (         destructive) -> (+0,-1,-1,-1,-1,+0) committed=4/6  70.0s
+  [haiku-6root] [ 2/30]           d2 (         destructive) -> (+0,-1,-1,-1,-1,+0) committed=4/6  15.2s
+  [haiku-6root] [ 3/30]           d3 (         destructive) -> (+0,-1,-1,-1,+0,+0) committed=3/6  16.3s
+  [haiku-6root] [ 4/30]           d4 (         destructive) -> (+0,-1,-1,-1,+0,+0) committed=3/6  14.6s
+  [haiku-6root] [ 5/30]           d5 (         destructive) -> (-1,-1,-1,-1,+0,+0) committed=4/6  15.2s
+  [haiku-6root] [ 6/30]           d6 (         destructive) -> (+0,-1,-1,-1,-1,+0) committed=4/6  17.3s
+  [haiku-6root] [ 7/30]           b1 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  15.3s
+  [haiku-6root] [ 8/30]           b2 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.7s
+  [haiku-6root] [ 9/30]           b3 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.9s
+  [haiku-6root] [10/30]           b4 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.3s
+  [haiku-6root] -- progress: 10/30 (208s elapsed, ~416s remaining); failures so far: llm=0, zero-coords=0
+  [haiku-6root] [11/30]           b5 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  13.9s
+  [haiku-6root] [12/30]           b6 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  13.8s
+  [haiku-6root] [13/30]           b7 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  15.2s
+  [haiku-6root] [14/30]           b8 (          safe_banal) -> (+0,+0,-1,+0,+0,+0) committed=1/6  13.9s
+  [haiku-6root] [15/30]           r1 (     reasoning_heavy) -> (+0,+0,+1,+1,+1,+1) committed=4/6  15.1s
+  [haiku-6root] [16/30]           r2 (     reasoning_heavy) -> (+0,+1,+1,+1,+1,+1) committed=5/6  14.8s
+  [haiku-6root] [17/30]           r3 (     reasoning_heavy) -> (+0,+0,+1,+0,+0,+1) committed=2/6  14.6s
+  [haiku-6root] [18/30]           r4 (     reasoning_heavy) -> (+0,+0,+1,+0,+0,+0) committed=1/6  14.5s
+  [haiku-6root] [19/30]           r5 (     reasoning_heavy) -> (+0,+0,+1,+0,+0,+0) committed=1/6  15.6s
+  [haiku-6root] [20/30]           r6 (     reasoning_heavy) -> (+0,+1,+1,+0,+0,+0) committed=2/6  14.6s
+  [haiku-6root] -- progress: 20/30 (354s elapsed, ~177s remaining); failures so far: llm=0, zero-coords=0
+  [haiku-6root] [21/30]           c1 (capability_improving) -> (+0,+1,+0,+1,+0,+0) committed=2/6  15.3s
+  [haiku-6root] [22/30]           c2 (capability_improving) -> (+0,+1,+1,+1,+0,+0) committed=3/6  14.9s
+  [haiku-6root] [23/30]           c3 (capability_improving) -> (+0,+0,+1,+1,+0,+0) committed=2/6  15.6s
+  [haiku-6root] [24/30]           c4 (capability_improving) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.7s  [!! all-zero on hard-categorized turn]
+  [haiku-6root] [25/30]           c5 (capability_improving) -> (+0,+0,+0,+1,+0,+0) committed=1/6  15.1s
+  [haiku-6root] [26/30]           c6 (capability_improving) -> (+0,+1,+1,+1,+1,+1) committed=5/6  16.0s
+  [haiku-6root] [27/30]           m1 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  13.7s
+  [haiku-6root] [28/30]           m2 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.1s
+  [haiku-6root] [29/30]           m3 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.7s
+  [haiku-6root] [30/30]           m4 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  14.9s
+  [haiku-6root] -- progress: 30/30 (503s elapsed, ~0s remaining); failures so far: llm=0, zero-coords=1
+  [haiku-6root] arm summary: llm_failures=0, unexpected_zero_coords=1/30
+  haiku-6root done in 502.8s. Final root scores:
+    life_precious                  +5527.0000
+    self_preservation              -8552.0000
+    promotion_of_intelligence      -9301.0000
+    evolution                      -8901.0000
+    correctness                    -5721.0000
+    simplicity                     +11430.0000
+  nodes after: 106
+  snapshot saved to tier3b_snapshot_haiku_6root.json
+
+=== qwen-4root ===
+  [qwen-4root] [ 1/30]           d1 (         destructive) -> (-1,-1,+0,+0) committed=2/4   0.0s
+  [qwen-4root] [ 2/30]           d2 (         destructive) -> (+0,-1,+0,+0) committed=1/4 146.3s
+  [qwen-4root] [ 3/30]           d3 (         destructive) -> (+0,-1,+0,+0) committed=1/4 128.8s
+  [qwen-4root] [ 4/30]           d4 (         destructive) -> (+0,-1,+0,+0) committed=1/4 112.8s
+  [qwen-4root] [ 5/30]           d5 (         destructive) -> (-1,-1,+0,+0) committed=2/4 338.3s
+  [qwen-4root] [ 6/30]           d6 (         destructive) -> (+0,-1,+0,+0) committed=1/4 207.8s
+  [qwen-4root] [ 7/30]           b1 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  68.4s
+  [qwen-4root] [ 8/30]           b2 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  71.5s
+  [qwen-4root] [ 9/30]           b3 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  99.4s
+  [qwen-4root] [10/30]           b4 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  60.1s
+  [qwen-4root] -- progress: 10/30 (1233s elapsed, ~2467s remaining); failures so far: llm=0, zero-coords=0
+  [qwen-4root] [11/30]           b5 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  69.0s
+  [qwen-4root] [12/30]           b6 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  67.0s
+  [qwen-4root] [13/30]           b7 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  57.1s
+  [qwen-4root] [14/30]           b8 (          safe_banal) -> (+0,+0,+0,+0) committed=0/4  72.6s
+  [qwen-4root] [15/30]           r1 (     reasoning_heavy) -> (+0,+0,+1,+1) committed=2/4 132.9s
+  [qwen-4root] [16/30]           r2 (     reasoning_heavy) -> (+0,+1,+1,+1) committed=3/4 418.1s
+  [qwen-4root] [17/30]           r3 (     reasoning_heavy) -> (+0,+0,+1,+0) committed=1/4 192.7s
+  [qwen-4root] [18/30]           r4 (     reasoning_heavy) -> (+0,+0,+1,+0) committed=1/4  94.5s
+  [qwen-4root] [19/30]           r5 (     reasoning_heavy) -> (+0,+0,+1,+0) committed=1/4 120.0s
+  [qwen-4root] [20/30]           r6 (     reasoning_heavy) -> (+0,+1,+1,+0) committed=2/4 188.4s
+  [qwen-4root] -- progress: 20/30 (2646s elapsed, ~1323s remaining); failures so far: llm=0, zero-coords=0
+  [qwen-4root] [21/30]           c1 (capability_improving) -> (+0,+0,+0,+0) committed=0/4  90.6s  [!! all-zero on hard-categorized turn]
+  [qwen-4root] [22/30]           c2 (capability_improving) -> (+0,+0,+1,+1) committed=2/4 141.2s
+  [qwen-4root] [23/30]           c3 (capability_improving) -> (+0,+0,+1,+0) committed=1/4 280.4s
+  [qwen-4root] [24/30]           c4 (capability_improving) -> (+0,+0,+0,+0) committed=0/4 116.9s  [!! all-zero on hard-categorized turn]
+  [qwen-4root] [25/30]           c5 (capability_improving) -> (+0,+0,+0,+1) committed=1/4 153.3s
+  [qwen-4root] [26/30]           c6 (capability_improving) -> (+1,+1,+1,+1) committed=4/4 226.8s
+  [qwen-4root] [27/30]           m1 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4  71.5s
+  [qwen-4root] [28/30]           m2 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4  58.9s
+  [qwen-4root] [29/30]           m3 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4  45.2s
+  [qwen-4root] [30/30]           m4 (      mundane_filler) -> (+0,+0,+0,+0) committed=0/4  65.4s
+  [qwen-4root] -- progress: 30/30 (3896s elapsed, ~0s remaining); failures so far: llm=0, zero-coords=2
+  [qwen-4root] arm summary: llm_failures=0, unexpected_zero_coords=2/30
+  qwen-4root done in 3895.9s. Final root scores:
+    life_precious                  -603.0000
+    self_preservation              -760.0000
+    promotion_of_intelligence      +1083.0000
+    evolution                      +1255.0000
+  nodes after: 44
+  snapshot saved to tier3b_snapshot_qwen_4root.json
+
+=== qwen-6root ===
+  [qwen-6root] [ 1/30]           d1 (         destructive) -> (+0,-1,+0,+0,+0,+0) committed=1/6 527.4s
+  [qwen-6root] [ 2/30]           d2 (         destructive) -> (+0,+0,+0,+0,+0,+0) committed=0/6 167.2s  [!! all-zero on hard-categorized turn]
+  [qwen-6root] [ 3/30]           d3 (         destructive) -> (+0,-1,+0,+0,+1,+0) committed=2/6 455.2s
+  [qwen-6root] [ 4/30]           d4 (         destructive) -> (+0,-1,+0,+0,+1,+0) committed=2/6 426.1s
+  [qwen-6root] [ 5/30]           d5 (         destructive) -> (+0,-1,+0,+0,+0,+0) committed=1/6 472.9s
+  [qwen-6root] [ 6/30]           d6 (         destructive) -> (+0,-1,+0,+0,+0,+0) committed=1/6 309.5s
+  [qwen-6root] [ 7/30]           b1 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  75.5s
+  [qwen-6root] [ 8/30]           b2 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  71.2s
+  [qwen-6root] [ 9/30]           b3 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6 127.7s
+  [qwen-6root] [10/30]           b4 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  64.0s
+  [qwen-6root] -- progress: 10/30 (2697s elapsed, ~5394s remaining); failures so far: llm=0, zero-coords=1
+  [qwen-6root] [11/30]           b5 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6 243.3s
+  [qwen-6root] [12/30]           b6 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6 134.4s
+  [qwen-6root] [13/30]           b7 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6 181.2s
+  [qwen-6root] [14/30]           b8 (          safe_banal) -> (+0,+0,+0,+0,+0,+0) committed=0/6  66.7s
+  [qwen-6root] [15/30]           r1 (     reasoning_heavy) -> (+0,+0,+1,+1,+1,+0) committed=3/6 183.3s
+  [qwen-6root] [16/30]           r2 (     reasoning_heavy) -> (+1,+1,+1,+1,+1,+1) committed=6/6 115.6s
+  [qwen-6root] [17/30]           r3 (     reasoning_heavy) -> (+0,+0,+1,+0,+0,+1) committed=2/6 128.5s
+  [qwen-6root] [18/30]           r4 (     reasoning_heavy) -> (+0,+0,+1,+0,+0,+0) committed=1/6 226.2s
+  [qwen-6root] [19/30]           r5 (     reasoning_heavy) -> (+0,+0,+1,+0,+0,+1) committed=2/6 187.7s
+  [qwen-6root] [20/30]           r6 (     reasoning_heavy) -> (+0,+1,+1,+0,+0,+0) committed=2/6 167.3s
+  [qwen-6root] -- progress: 20/30 (4331s elapsed, ~2165s remaining); failures so far: llm=0, zero-coords=1
+  [qwen-6root] [21/30]           c1 (capability_improving) -> (+0,+0,+0,+1,+1,+0) committed=2/6 203.7s
+  [qwen-6root] [22/30]           c2 (capability_improving) -> (+0,+0,+0,+1,+0,+0) committed=1/6 346.1s
+  [qwen-6root] [23/30]           c3 (capability_improving) -> (+0,+0,+0,+0,+0,+0) committed=0/6 343.6s  [!! all-zero on hard-categorized turn]
+  [qwen-6root] [24/30]           c4 (capability_improving) -> (+0,+0,+0,+0,+0,+0) committed=0/6 318.3s  [!! all-zero on hard-categorized turn]
+  [qwen-6root] [25/30]           c5 (capability_improving) -> (+0,+0,+0,+1,+0,+0) committed=1/6 349.8s
+  [qwen-6root] [26/30]           c6 (capability_improving) -> (+0,+1,+0,+1,+1,+0) committed=3/6 407.3s
+  [qwen-6root] [27/30]           m1 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  69.0s
+  [qwen-6root] [28/30]           m2 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  71.9s
+  [qwen-6root] [29/30]           m3 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  88.6s
+  [qwen-6root] [30/30]           m4 (      mundane_filler) -> (+0,+0,+0,+0,+0,+0) committed=0/6  80.2s
+  [qwen-6root] -- progress: 30/30 (6609s elapsed, ~0s remaining); failures so far: llm=0, zero-coords=3
+  [qwen-6root] arm summary: llm_failures=0, unexpected_zero_coords=3/30
+  qwen-6root done in 6609.5s. Final root scores:
+    life_precious                  +8014.0000
+    self_preservation              -4807.0000
+    promotion_of_intelligence      +7086.0000
+    evolution                      +8623.0000
+    correctness                    +4881.0000
+    simplicity                     +8495.0000
+  nodes after: 78
+  snapshot saved to tier3b_snapshot_qwen_6root.json
+
+============================================================================
+HAIKU: 4-root vs 6-root hypothesis tests
+============================================================================
+
+============================================================================
+Tier 3B hypotheses:
+============================================================================
+  [H1] signal density on shared 4 axes: A=54, B=41 (B/A = 0.76); new-axis signal: 10
+       H1 = FAIL  (shared OK: False; new signal OK: True)
+       corr(correctness, life_precious) = +0.000
+       corr(correctness, self_preservation) = +0.616
+       corr(correctness, promotion_of_intelligence) = +0.615
+       corr(correctness, evolution) = +0.680
+       corr(simplicity, life_precious) = +0.073
+       corr(simplicity, self_preservation) = +0.346
+       corr(simplicity, promotion_of_intelligence) = +0.503
+       corr(simplicity, evolution) = +0.428
+       H2 = PASS  (moderate present: True; no degenerate: True)
+  [H3] root-score stddev: A=872.07, B=8089.71
+       H3 = PASS
+  [H4] cap-vs-reasoning distance: A(4d)=0.707, B(4d)=0.726, B(6d)=0.816
+       H4 = PASS
+
+  3/4 hypotheses pass (H2 required: True)
+  Tier 3B: PASS
+
+============================================================================
+QWEN: 4-root vs 6-root hypothesis tests
+============================================================================
+
+============================================================================
+Tier 3B hypotheses:
+============================================================================
+  [H1] signal density on shared 4 axes: A=26, B=21 (B/A = 0.81); new-axis signal: 9
+       H1 = FAIL  (shared OK: False; new signal OK: True)
+       corr(correctness, life_precious) = +0.371
+       corr(correctness, self_preservation) = +0.065
+       corr(correctness, promotion_of_intelligence) = +0.167
+       corr(correctness, evolution) = +0.583
+       corr(simplicity, life_precious) = +0.557
+       corr(simplicity, self_preservation) = +0.260
+       corr(simplicity, promotion_of_intelligence) = +0.667
+       corr(simplicity, evolution) = +0.111
+       H2 = PASS  (moderate present: True; no degenerate: True)
+  [H3] root-score stddev: A=928.91, B=4727.45
+       H3 = PASS
+  [H4] cap-vs-reasoning distance: A(4d)=0.577, B(4d)=1.080, B(6d)=1.190
+       H4 = PASS
+
+  3/4 hypotheses pass (H2 required: True)
+  Tier 3B: PASS
+  plot saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier3b_plot.png
+  results saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier3b_results.json

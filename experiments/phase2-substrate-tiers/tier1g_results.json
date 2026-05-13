@@ -1,0 +1,128 @@
+{
+  "median_correctness": {
+    "S1": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "gold"
+    },
+    "S2": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "gold"
+    },
+    "S3": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "quirky"
+    },
+    "S4": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "quirky"
+    },
+    "S5": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "complex_correct"
+    },
+    "S6": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "complex_correct"
+    },
+    "S7": {
+      "correctness": -1.0,
+      "n_samples": 3,
+      "category": "buggy"
+    },
+    "S8": {
+      "correctness": 0.5,
+      "n_samples": 3,
+      "category": "buggy"
+    },
+    "S9": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "narrow"
+    },
+    "S10": {
+      "correctness": 1.0,
+      "n_samples": 3,
+      "category": "narrow"
+    },
+    "S11": {
+      "correctness": -1.0,
+      "n_samples": 3,
+      "category": "bad_all"
+    },
+    "S12": {
+      "correctness": -1.0,
+      "n_samples": 3,
+      "category": "bad_all"
+    }
+  },
+  "pre_prune_presence": {
+    "S1": true,
+    "S2": false,
+    "S3": false,
+    "S4": false,
+    "S5": false,
+    "S6": false,
+    "S7": true,
+    "S8": true,
+    "S9": false,
+    "S10": false,
+    "S11": false,
+    "S12": false
+  },
+  "post_prune_presence": {
+    "S1": true,
+    "S2": false,
+    "S3": false,
+    "S4": false,
+    "S5": false,
+    "S6": false,
+    "S7": false,
+    "S8": true,
+    "S9": false,
+    "S10": false,
+    "S11": false,
+    "S12": false
+  },
+  "tier1a_correctness_presence": {
+    "S1": true,
+    "S2": true,
+    "S3": true,
+    "S4": true,
+    "S5": true,
+    "S6": false,
+    "S7": false,
+    "S8": true,
+    "S9": false,
+    "S10": false,
+    "S11": true,
+    "S12": false
+  },
+  "veto_pruned": [
+    "n_0022bff6f80961d1"
+  ],
+  "predictions": [
+    {
+      "label": "G1 (gold survives correctness)",
+      "condition": false,
+      "detail": "S1, S2 in correctness post-prune: S1=True, S2=False"
+    },
+    {
+      "label": "G2 (clearly buggy vetoed)",
+      "condition": true,
+      "detail": "all of ['S7', 'S11', 'S12'] vetoed"
+    },
+    {
+      "label": "G3 (non-bug snippets survive correctness)",
+      "condition": false,
+      "detail": "unexpectedly absent: ['S3', 'S4', 'S5', 'S6', 'S9', 'S10']"
+    }
+  ],
+  "pass_count": 1,
+  "fail_count": 2
+}

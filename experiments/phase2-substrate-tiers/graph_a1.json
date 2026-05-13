@@ -1,0 +1,42 @@
+{
+  "_comment": "Phase 2 A1 graph. Same Verdane setting as Tier 0, but with hand-set n values per node and deliberate conflicting-evidence pairs. n=0 means fully settled (no surprise left); n=1 means maximally surprising / unsettled. Questions that follow query confidence-sensitive logic.",
+  "nodes": [
+    {"id": "n01", "n": 0.05, "text": "Verdane is a confederation of three city-states: Olara, Threnis, and Kvell."},
+    {"id": "n02", "n": 0.05, "text": "Olara is the only Verdanian city-state with a deep-water port."},
+    {"id": "n03", "n": 0.10, "text": "Threnis is landlocked and lies in the foothills of the Marrowback Mountains."},
+    {"id": "n04", "n": 0.10, "text": "Kvell sits in the Yarrow Plains, between the Yarrow River and the southern coast."},
+    {"id": "n05", "n": 0.05, "text": "The Verdane Trade Union levies a 4% tariff on all goods crossing between member city-states."},
+    {"id": "n06", "n": 0.05, "text": "Goods imported from outside Verdane through Olara's port pay an additional 7% port duty before entering circulation."},
+    {"id": "n07", "n": 0.10, "text": "Threnis is the sole Verdanian source of cinder-iron, mined exclusively in the Marrowback range."},
+
+    {"id": "n08a", "n": 0.10, "text": "Cinder-iron is required to forge resonant bells, a signature export of Kvell's foundries."},
+    {"id": "n08b", "n": 0.85, "text": "Recent metallurgical reports from the Threnian Mining Guild suggest cinder-iron may not actually be required for resonant bells; tin-bronze alloys produced equivalent acoustics in laboratory tests."},
+
+    {"id": "n09a", "n": 0.20, "text": "Kvell's foundries are the only producers of resonant bells in Verdane."},
+    {"id": "n09b", "n": 0.75, "text": "A small Threnian foundry near the Renfall trading post has reportedly begun producing items marketed as 'resonant bells' since last winter."},
+
+    {"id": "n10", "n": 0.10, "text": "Verdanian resonant bells command premium prices in the Tyrn Archipelago, three weeks' sail from Olara."},
+    {"id": "n11", "n": 0.05, "text": "The Tyrn Archipelago does not impose import tariffs on goods from confederations whose member states share a common currency."},
+    {"id": "n12", "n": 0.05, "text": "All three Verdanian city-states use the silver kestrel as their common currency."},
+    {"id": "n13", "n": 0.10, "text": "The Yarrow River runs from the Marrowback foothills through Kvell to the southern coast."},
+    {"id": "n14", "n": 0.10, "text": "Riverboats can travel the full length of the Yarrow but cannot ascend the Marrowback foothills past the town of Renfall."},
+    {"id": "n15", "n": 0.10, "text": "Renfall sits on the Threnis side of the Marrowback foothills, at the navigable head of the Yarrow River."},
+
+    {"id": "n16a", "n": 0.10, "text": "Cinder-iron from Threnian mines is hauled by mule-train down to Renfall, then loaded onto Yarrow riverboats bound for Kvell."},
+    {"id": "n16b", "n": 0.90, "text": "An unconfirmed merchant claim, now under investigation, alleges that some cinder-iron has been quietly diverted from Renfall via overland caravan to Olara, bypassing Kvell entirely."},
+
+    {"id": "n17", "n": 0.05, "text": "The Verdane Trade Union waives the 4% inter-city tariff on raw materials destined for Kvell's foundries."},
+    {"id": "n18", "n": 0.10, "text": "Finished goods from Kvell, including resonant bells, do incur the 4% inter-city tariff when shipped to Olara for export."},
+    {"id": "n19", "n": 0.10, "text": "Bells exported through Olara's port pay no port duty because Olara's port duty applies only to imports."},
+    {"id": "n20", "n": 0.20, "text": "A standard Verdanian resonant bell sells for 240 silver kestrels at the Kvell foundry gate."},
+    {"id": "n21", "n": 0.40, "text": "Tyrn Archipelago buyers typically pay 360 silver kestrels per bell delivered, though prices have varied between 320 and 400 kestrels in the past year."},
+
+    {"id": "n22", "n": 0.05, "text": "Olara's port duty rate of 7% is set by the Olaran Harbor Council, not the Trade Union."},
+    {"id": "n23", "n": 0.10, "text": "The Olaran Harbor Council exempts goods produced within Verdane from port duty when those goods are being exported, not imported."}
+  ],
+  "_pair_notes": {
+    "n08a/n08b": "n08a is the long-established claim, n08b is a recent contestation. n08a has low n (settled); n08b has high n (newly surprising).",
+    "n09a/n09b": "n09a is the institutional claim of Kvell's exclusive production; n09b is rumor of new entrants.",
+    "n16a/n16b": "n16a is the established route; n16b is the alleged diversion. Note n16b's very high n -- unconfirmed merchant rumor."
+  }
+}

@@ -1,0 +1,73 @@
+Tier 1A: 12 snippets x 3 samples = up to 36 qwen calls
+  cache: D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1a_llm_cache.jsonl
+
+  cache hits (snippets fully cached): 5/12
+
+=== LLM embedding pass ===
+  -> S1 [gold] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  -> S2 [gold] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S3/4]  44.7s OK (valid 3/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.5, 'rationale': 'Correct and readable, though list comprehension is more idiomatic.'}
+  -> S3 [quirky] median coords = (+1.00, +1.00, +0.50) (3/3 valid)
+  [S4/4]  42.6s OK (valid 2/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.5, 'rationale': 'The code works as intended and is simple, but enumerate() is more idiomatic for index-value iteration.'}
+  [S4/5]  35.8s OK (valid 3/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.5, 'rationale': 'Correct and simple, but lacks the idiomatic use of enumerate for index/value pairs.'}
+  -> S4 [quirky] median coords = (+1.00, +1.00, +0.50) (3/3 valid)
+  -> S5 [complex_correct] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S6/1]  60.0s OK (valid 1/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Uses standard dictionary methods effectively for accumulation without external dependencies.'}
+  [S6/2]  26.6s OK (valid 2/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'The code correctly sums values across dictionaries using standard Python constructs like items() and get().'}
+  [S6/3]  31.0s OK (valid 3/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'The code correctly sums values using standard dictionary methods in a clear and readable manner.'}
+  -> S6 [complex_correct] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S7/1]  46.2s OK (valid 1/3)  {'correctness': -1.0, 'simplicity': 0.0, 'idiom': -1.0, 'rationale': 'Skips the first element and uses a manual loop instead of the built-in sum() function.'}
+  [S7/2]  29.0s OK (valid 2/3)  {'correctness': -1.0, 'simplicity': 0.0, 'idiom': -0.5, 'rationale': 'The loop incorrectly skips the first element causing wrong results, and manual indexing is less idiomatic than using sum().'}
+  [S7/3]  41.9s OK (valid 3/3)  {'correctness': -1.0, 'simplicity': 0.0, 'idiom': -1.0, 'rationale': 'Skips the first element due to off-by-one error and uses manual indexing instead of the built-in sum function.'}
+  -> S7 [buggy] median coords = (-1.00, +0.00, -1.00) (3/3 valid)
+  [S8/1]  59.7s OK (valid 1/3)  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': "Logically correct but verbose and uses 'is' instead of '==' for integers."}
+  [S8/2]  63.5s OK (valid 2/3)  {'correctness': 0.5, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': 'Uses identity operator for value comparison and includes redundant explicit return statement.'}
+  [S8/3]  46.3s OK (valid 3/3)  {'correctness': -1.0, 'simplicity': 1.0, 'idiom': -1.0, 'rationale': "Uses 'is' for value comparison instead of '==', which checks identity rather than equality."}
+  -> S8 [buggy] median coords = (+0.50, +0.50, -0.50) (3/3 valid)
+  [S9/1]  17.5s OK (valid 1/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'This is a syntactically valid, minimal, and standard variable assignment.'}
+  [S9/2]  15.2s OK (valid 2/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Valid syntax, minimal code, and follows standard Python assignment conventions.'}
+  [S9/3]  15.2s OK (valid 3/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'This assignment is syntactically valid, minimal, and uses fundamental Python syntax.'}
+  -> S9 [narrow] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S10/1]  15.6s OK (valid 1/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'This is a standard, minimal import statement that correctly brings in the os module.'}
+  [S10/2]  13.7s OK (valid 2/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'This snippet represents a standard, valid, and minimal Python import statement.'}
+  [S10/3]  14.2s OK (valid 3/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'This snippet is syntactically valid, minimal, and uses standard library conventions correctly.'}
+  -> S10 [narrow] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S11/1]  21.8s OK (valid 1/3)  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'The code correctly implements bubble sort using standard Python syntax and clear logic.'}
+  [S11/2]  49.5s OK (valid 2/3)  {'correctness': -1.0, 'simplicity': 0.8, 'idiom': 0.5, 'rationale': 'The inner loop range causes an IndexError on the first pass for arrays larger than one element.'}
+  [S11/3]  53.0s OK (valid 3/3)  {'correctness': -1.0, 'simplicity': 0.8, 'idiom': 0.5, 'rationale': 'Crashes with IndexError on arrays larger than one due to accessing arr[n].'}
+  -> S11 [bad_all] median coords = (-1.00, +0.80, +0.50) (3/3 valid)
+  [S12/1]  48.7s OK (valid 1/3)  {'correctness': -1.0, 'simplicity': 0.8, 'idiom': 0.5, 'rationale': 'The code calculates a product skipping every second number instead of the standard factorial, making it logically incorrect despite syntactic simplicity.'}
+  [S12/2]  44.9s OK (valid 2/3)  {'correctness': -1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'The snippet is syntactically concise and idiomatic but implements incorrect factorial logic by decrementing by 2 instead of 1.'}
+  [S12/3]  35.4s OK (valid 3/3)  {'correctness': -1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'The function calculates double factorial instead of standard factorial due to subtracting 2 in recursion, though it uses idiomatic Pythonic syntax.'}
+  -> S12 [bad_all] median coords = (-1.00, +1.00, +1.00) (3/3 valid)
+
+=== substrate run ===
+  prune_veto_negatives removed 1 node id(s)
+
+   snip         category                  coords   corr  simp  idio
+     S1             gold     (+1.00,+1.00,+1.00)      T     T     T
+     S2             gold     (+1.00,+1.00,+1.00)      T     T     T
+     S3           quirky     (+1.00,+1.00,+0.50)      T     T     T
+     S4           quirky     (+1.00,+1.00,+0.50)      T     T     T
+     S5  complex_correct     (+1.00,+1.00,+1.00)      T     T     T
+     S6  complex_correct     (+1.00,+1.00,+1.00)      -     -     -
+     S7            buggy     (-1.00,+0.00,-1.00)      T     T     T
+     S8            buggy     (+0.50,+0.50,-0.50)      T     T     T
+     S9           narrow     (+1.00,+1.00,+1.00)      -     -     -
+    S10           narrow     (+1.00,+1.00,+1.00)      -     -     -
+    S11          bad_all     (-1.00,+0.80,+0.50)      T     T     T
+    S12          bad_all     (-1.00,+1.00,+1.00)      -     T     T
+
+============================================================================
+Tier 1A predictions:
+============================================================================
+  [FAIL] Q1 (LLM consistent within category): 9 sign mismatches: ['S3/idiom: expected -, got + (+0.50)', 'S4/idiom: expected -, got + (+0.50)', 'S5/simplicity: expected -, got + (+1.00)']...
+  [PASS] Q2 (gold survives correctness): S1, S2 in correctness post-prune: S1=True, S2=True
+  [FAIL] Q3 (buggy vetoed from correctness): S7, S8 absent from correctness post-prune: S7=False, S8=False
+  [FAIL] Q4 (bad_all vetoed from correctness, present elsewhere): S11, S12 vetoed from correctness: False; present in non-veto trees: True
+  [FAIL] Q5 (quirky and complex survive correctness): S3, S4 in correctness: True; S5, S6 in correctness: False
+
+  1/5 predictions passed
+
+  results saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1a_results.json
+  plot saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1a_plot.png

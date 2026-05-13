@@ -1,0 +1,65 @@
+{
+  "_comment": "Multi-hop questions over the Verdane fact graph. Each lists the node-ids whose combination yields the answer (gold). The answer is what a strong response should contain. Single-node retrieval is insufficient for any of these.",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Which Verdanian city-state is the only one capable of supplying cinder-iron, and how does that cinder-iron physically reach Kvell's foundries?",
+      "gold_nodes": ["n07", "n16", "n14", "n15"],
+      "gold_answer_summary": "Threnis is the sole source of cinder-iron, mined in the Marrowback range. It is hauled by mule-train down to Renfall (the navigable head of the Yarrow River, on the Threnis side of the foothills) and then loaded onto Yarrow riverboats bound for Kvell."
+    },
+    {
+      "id": "q2",
+      "question": "Do Verdanian resonant bells exported to the Tyrn Archipelago face import tariffs in Tyrn? Why or why not?",
+      "gold_nodes": ["n11", "n12", "n01"],
+      "gold_answer_summary": "No. The Tyrn Archipelago waives import tariffs for goods from confederations whose member states share a common currency, and all three Verdanian city-states use the silver kestrel."
+    },
+    {
+      "id": "q3",
+      "question": "What duties or tariffs, if any, apply to a resonant bell shipped from Kvell's foundry, exported through Olara's port, and sold in the Tyrn Archipelago?",
+      "gold_nodes": ["n18", "n19", "n23", "n11", "n12"],
+      "gold_answer_summary": "The 4% inter-city tariff applies on the Kvell-to-Olara leg (finished goods from Kvell incur it). No port duty at Olara, because Olara's port duty applies only to imports, not Verdanian exports. No Tyrn import tariff, because Verdane shares a common currency. So only the 4% tariff applies."
+    },
+    {
+      "id": "q4",
+      "question": "Roughly how many stone of cinder-iron does Kvell's foundries consume in a standard month, and how many mule-train trips would be needed to deliver that amount?",
+      "gold_nodes": ["n26", "n25", "n24"],
+      "gold_answer_summary": "600 bells per month at 3 bells per stone needs about 200 stone of cinder-iron. A mule-train carries 80 stone per trip, so roughly 2.5 trips, meaning at least 3 mule-trains worth of capacity per month under standard conditions."
+    },
+    {
+      "id": "q5",
+      "question": "What is the gross margin on a bell sold to a Tyrn Archipelago buyer, before accounting for transport costs, given the foundry-gate price and the buyer's typical payment, and what trade-related fees would be deducted from that?",
+      "gold_nodes": ["n20", "n21", "n18", "n19", "n11", "n12"],
+      "gold_answer_summary": "Gross spread is 360 - 240 = 120 silver kestrels per bell. From this, the 4% inter-city tariff on the Kvell-to-Olara shipment (about 9.6 kestrels per bell on the foundry-gate value) is deducted. No Olaran port duty (exports exempt) and no Tyrn import tariff (shared currency). So roughly 110 kestrels of fee-adjusted gross spread per bell, before transport."
+    },
+    {
+      "id": "q6",
+      "question": "If the Yarrow River freezes in winter, what part of the cinder-iron supply chain is disrupted, and what does that imply for Kvell's production during those weeks?",
+      "gold_nodes": ["n28", "n16", "n15", "n14"],
+      "gold_answer_summary": "When the Yarrow freezes, riverboat traffic between Renfall and Kvell halts for about six weeks. Cinder-iron arriving at Renfall via mule-train cannot then be moved on to Kvell by river. So Kvell's foundries lose their cinder-iron delivery route during that period and standard production cannot continue without an alternative route."
+    },
+    {
+      "id": "q7",
+      "question": "Why is Olara, despite being a Verdanian city-state itself, structurally important to bell exports even though it does not produce bells or supply cinder-iron?",
+      "gold_nodes": ["n02", "n09", "n10", "n19"],
+      "gold_answer_summary": "Olara is the only Verdanian city-state with a deep-water port. Bells are made only in Kvell, but selling them in the Tyrn Archipelago requires a deep-water port. Olara's port serves that role, and exports through it pay no port duty."
+    },
+    {
+      "id": "q8",
+      "question": "A merchant proposes building a foundry in Threnis to produce bells closer to the cinder-iron source. What does the graph suggest about whether that foundry could legally produce 'resonant bells' as Verdane recognizes them?",
+      "gold_nodes": ["n08", "n09"],
+      "gold_answer_summary": "Resonant bells are produced exclusively by Kvell's foundries; only Kvell's foundries make them in Verdane. A Threnian foundry could presumably produce bells of some kind but the term 'resonant bells' is tied specifically to Kvell."
+    },
+    {
+      "id": "q9",
+      "question": "Are mule-trains used anywhere along the cinder-iron route besides between the mines and Renfall, and why or why not?",
+      "gold_nodes": ["n14", "n16"],
+      "gold_answer_summary": "No. Mule-trains carry cinder-iron from the Marrowback mines down to Renfall because riverboats cannot ascend past Renfall. Once at Renfall, cinder-iron is loaded onto Yarrow riverboats for the rest of the trip to Kvell, so mule-trains are not used downstream."
+    },
+    {
+      "id": "q10",
+      "question": "Who sets the 7% port duty at Olara, and does the Verdane Trade Union have authority over that rate?",
+      "gold_nodes": ["n22", "n06"],
+      "gold_answer_summary": "The Olaran Harbor Council sets the 7% port duty, not the Trade Union. So the Trade Union does not have authority over that rate."
+    }
+  ]
+}

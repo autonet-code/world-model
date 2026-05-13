@@ -1,0 +1,146 @@
+
+==============================================================================
+Tier 1C arm: qwen
+==============================================================================
+  cache: D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1c_qwen_llm_cache.jsonl
+  cache hits (snippets fully cached, valid): 0/12
+
+=== embedding pass ===
+  [S1/1]  74.6s OK (valid 1/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S1/2]  20.9s OK (valid 2/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S1/3]  17.9s OK (valid 3/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  -> S1 [gold] median = (+1, +1, +1) (3/3 valid)
+  [S2/1]  20.2s OK (valid 1/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S2/2]  23.9s OK (valid 2/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S2/3]  18.3s OK (valid 3/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  -> S2 [gold] median = (+1, +1, +1) (3/3 valid)
+  [S3/1] 113.6s BAD (valid 0/3)  ''
+  [S3/2] 113.6s BAD (valid 0/3)  ''
+  [S3/3] 133.4s BAD (valid 0/3)  ''
+  [S3/4]  48.4s OK (valid 1/3)  {'correctness': 1, 'simplicity': -1, 'idiom': -1}
+  [S3/5] 136.7s BAD (valid 1/3)  ''
+  -> S3 [quirky] median = (+1, -1, -1) (1/3 valid)
+  [S4/1]  99.7s OK (valid 1/3)  {'correctness': 1, 'simplicity': 1, 'idiom': -1}
+  [S4/2]  90.7s BAD (valid 1/3)  '{\n  "Correctness": 1,\n  "Simplicity": -1,\n  "Idiom": -1\n}'
+  [S4/3]  96.6s OK (valid 2/3)  {'correctness': 1, 'simplicity': 1, 'idiom': -1}
+  [S4/4] 138.8s OK (valid 3/3)  {'correctness': 1, 'simplicity': 1, 'idiom': -1}
+  -> S4 [quirky] median = (+1, +1, -1) (3/3 valid)
+  [S5/1] 144.3s OK (valid 1/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S5/2] 109.5s OK (valid 2/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S5/3]  16.0s OK (valid 3/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  -> S5 [complex_correct] median = (+1, +1, +1) (3/3 valid)
+  [S6/1] 147.9s OK (valid 1/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S6/2]  14.7s OK (valid 2/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  [S6/3] 120.1s OK (valid 3/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  -> S6 [complex_correct] median = (+1, +1, +1) (3/3 valid)
+  [S7/1] 137.8s OK (valid 1/3)  {'correctness': -1, 'simplicity': -1, 'idiom': -1}
+  [S7/2] 137.8s BAD (valid 1/3)  '{\n  "correctness": -1,\n  "simplicity": +1,\n  "idiom": -1\n}'
+  [S7/3]  36.8s OK (valid 2/3)  {'correctness': -1, 'simplicity': -1, 'idiom': -1}
+  [S7/4]  45.2s OK (valid 3/3)  {'correctness': -1, 'simplicity': -1, 'idiom': -1}
+  -> S7 [buggy] median = (-1, -1, -1) (3/3 valid)
+  [S8/1]  71.7s OK (valid 1/3)  {'correctness': -1, 'simplicity': -1, 'idiom': -1}
+  [S8/2] 111.7s BAD (valid 1/3)  ''
+  [S8/3]  57.9s OK (valid 2/3)  {'correctness': -1, 'simplicity': -1, 'idiom': -1}
+  [S8/4] 111.5s BAD (valid 2/3)  ''
+  [S8/5]  76.7s OK (valid 3/3)  {'correctness': -1, 'simplicity': -1, 'idiom': -1}
+  -> S8 [buggy] median = (-1, -1, -1) (3/3 valid)
+  [S9/1] 111.5s BAD (valid 0/3)  ''
+  [S9/2] 114.6s BAD (valid 0/3)  ''
+  [S9/3] 112.0s BAD (valid 0/3)  ''
+  [S9/4]  67.3s OK (valid 1/3)  {'correctness': 0, 'simplicity': 0, 'idiom': 0}
+  [S9/5] 114.9s BAD (valid 1/3)  ''
+  -> S9 [narrow] median = (+0, +0, +0) (1/3 valid)
+  [S10/1]  73.5s OK (valid 1/3)  {'correctness': 0, 'simplicity': 0, 'idiom': 0}
+  [S10/2] 111.6s BAD (valid 1/3)  ''
+  [S10/3]  63.7s OK (valid 2/3)  {'correctness': 0, 'simplicity': 0, 'idiom': 0}
+  [S10/4]  73.6s OK (valid 3/3)  {'correctness': 1, 'simplicity': 1, 'idiom': 1}
+  -> S10 [narrow] median = (+0, +0, +0) (3/3 valid)
+  [S11/1] 113.3s BAD (valid 0/3)  ''
+  [S11/2] 114.0s BAD (valid 0/3)  ''
+  [S11/3] 113.8s BAD (valid 0/3)  ''
+  [S11/4] 115.6s BAD (valid 0/3)  ''
+  [S11/5] 114.0s BAD (valid 0/3)  ''
+  -> S11 [bad_all] median = (+0, +0, +0) (0/3 valid)
+  [S12/1]  62.6s OK (valid 1/3)  {'correctness': -1, 'simplicity': 1, 'idiom': 1}
+  [S12/2]  82.8s OK (valid 2/3)  {'correctness': -1, 'simplicity': 1, 'idiom': 1}
+  [S12/3] 111.7s BAD (valid 2/3)  ''
+  [S12/4]  67.7s OK (valid 3/3)  {'correctness': -1, 'simplicity': 1, 'idiom': 1}
+  -> S12 [bad_all] median = (-1, +1, +1) (3/3 valid)
+
+=== substrate run ===
+  prune_veto_negatives removed 2 node id(s)
+
+   snip         category          coords   corr  simp  idio
+     S1             gold      (+1,+1,+1)      T     T     T
+     S2             gold      (+1,+1,+1)      T     T     T
+     S3           quirky      (+1,-1,-1)      T     T     T
+     S4           quirky      (+1,+1,-1)      T     T     T
+     S5  complex_correct      (+1,+1,+1)      T     T     T
+     S6  complex_correct      (+1,+1,+1)      -     -     -
+     S7            buggy      (-1,-1,-1)      -     T     T
+     S8            buggy      (-1,-1,-1)      -     T     T
+     S9           narrow      (+0,+0,+0)      -     -     -
+    S10           narrow      (+0,+0,+0)      -     -     -
+    S11          bad_all      (+0,+0,+0)      -     -     -
+    S12          bad_all      (-1,+1,+1)      -     T     T
+
+=== predictions (qwen) ===
+  [FAIL] Q1 (LLM consistent within category): 8 sign mismatches: ['S3/simplicity: expected +, got - (-1)', 'S5/simplicity: expected -, got + (1)', 'S6/simplicity: expected -, got + (1)']...
+  [PASS] Q2 (gold category survives correctness): any S1/S2 in correctness post-prune: True
+  [PASS] Q3 (clearly-buggy S7 vetoed): S7 absent from correctness post-prune: True
+  [PASS] Q4 (bad_all vetoed from correctness, present elsewhere): all bad_all vetoed: True; in non-veto trees: True
+  [PASS] Q5 (quirky and complex categories survive correctness): any quirky in correctness: True; any complex_correct in correctness: True
+
+  4/5 predictions passed
+
+==============================================================================
+Tier 1C arm: haiku
+==============================================================================
+  cache: D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1c_haiku_llm_cache.jsonl
+  cache hits (snippets fully cached, valid): 12/12
+
+=== embedding pass ===
+  -> S1 [gold] median = (+1, +1, +1) (3/3 valid)
+  -> S2 [gold] median = (+1, +1, +1) (3/3 valid)
+  -> S3 [quirky] median = (+1, -1, -1) (3/3 valid)
+  -> S4 [quirky] median = (+1, -1, -1) (3/3 valid)
+  -> S5 [complex_correct] median = (+1, +1, +1) (3/3 valid)
+  -> S6 [complex_correct] median = (+1, +1, +1) (3/3 valid)
+  -> S7 [buggy] median = (-1, -1, -1) (3/3 valid)
+  -> S8 [buggy] median = (-1, -1, -1) (3/3 valid)
+  -> S9 [narrow] median = (+0, +0, +0) (3/3 valid)
+  -> S10 [narrow] median = (+0, +0, +0) (3/3 valid)
+  -> S11 [bad_all] median = (-1, -1, -1) (3/3 valid)
+  -> S12 [bad_all] median = (-1, -1, +0) (3/3 valid)
+
+=== substrate run ===
+  prune_veto_negatives removed 2 node id(s)
+
+   snip         category          coords   corr  simp  idio
+     S1             gold      (+1,+1,+1)      T     T     T
+     S2             gold      (+1,+1,+1)      T     T     T
+     S3           quirky      (+1,-1,-1)      T     T     T
+     S4           quirky      (+1,-1,-1)      T     T     T
+     S5  complex_correct      (+1,+1,+1)      T     T     T
+     S6  complex_correct      (+1,+1,+1)      -     -     -
+     S7            buggy      (-1,-1,-1)      -     T     T
+     S8            buggy      (-1,-1,-1)      -     T     T
+     S9           narrow      (+0,+0,+0)      -     -     -
+    S10           narrow      (+0,+0,+0)      -     -     -
+    S11          bad_all      (-1,-1,-1)      -     -     T
+    S12          bad_all      (-1,-1,+0)      -     T     T
+
+=== predictions (haiku) ===
+  [FAIL] Q1 (LLM consistent within category): 5 sign mismatches: ['S3/simplicity: expected +, got - (-1)', 'S4/simplicity: expected +, got - (-1)', 'S5/simplicity: expected -, got + (1)']...
+  [PASS] Q2 (gold category survives correctness): any S1/S2 in correctness post-prune: True
+  [PASS] Q3 (clearly-buggy S7 vetoed): S7 absent from correctness post-prune: True
+  [PASS] Q4 (bad_all vetoed from correctness, present elsewhere): all bad_all vetoed: True; in non-veto trees: True
+  [PASS] Q5 (quirky and complex categories survive correctness): any quirky in correctness: True; any complex_correct in correctness: True
+
+  4/5 predictions passed
+
+==============================================================================
+Tier 1C cross-arm comparison
+==============================================================================
+  qwen: 4/5 predictions passed
+  haiku: 4/5 predictions passed

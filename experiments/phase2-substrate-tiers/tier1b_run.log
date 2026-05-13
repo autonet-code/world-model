@@ -1,0 +1,85 @@
+Tier 1B: 12 snippets x 3 samples = up to 36 haiku calls via claude-max-proxy
+  cache: D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1b_llm_cache.jsonl
+
+  cache hits (snippets fully cached, valid): 0/12
+
+=== haiku embedding pass ===
+  [S1/1]   6.9s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Correct implementation using idiomatic list comprehension that is clear and concise.'}
+  [S1/2]   6.8s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Correct implementation using idiomatic list comprehension; minimal, readable, and Pythonic.'}
+  [S1/3]   8.1s OK (valid 3/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Correct implementation using idiomatic list comprehension, minimal and immediately clear.'}
+  -> S1 [gold] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S2/1]   6.9s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': "Correct implementation using Python's built-in sum() function, maximally simple and idiomatic for summing iterables."}
+  [S2/2]   7.1s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': "Correct, minimal, and idiomatic use of Python's built-in sum() function."}
+  [S2/3]   6.6s OK (valid 3/3) cache_read=18557  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': "Correct implementation that elegantly delegates to Python's built-in sum function, maximally readable and idiomatic."}
+  -> S2 [gold] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S3/1]   6.8s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': 'Functionally correct and straightforward, but the manual loop-and-append pattern is less Pythonic than a list comprehension.'}
+  [S3/2]   6.2s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': 'Function correctly computes squares, but uses explicit loop and append instead of idiomatic list comprehension.'}
+  [S3/3]   6.3s OK (valid 3/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': 'Functionally correct, but a list comprehension would be more Pythonic and equally simple.'}
+  -> S3 [quirky] median coords = (+1.00, +0.50, -0.50) (3/3 valid)
+  [S4/1]   5.7s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.8, 'rationale': 'Functionally correct but uses C-style indexing instead of Pythonic enumerate().'}
+  [S4/2]   6.4s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.8, 'rationale': 'Function works correctly but uses C-style indexing instead of Pythonic enumerate(), making it less idiomatic and slightly harder to read.'}
+  [S4/3]   5.6s OK (valid 3/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 0.5, 'idiom': -0.8, 'rationale': "Function works correctly but uses manual indexing instead of Python's idiomatic enumerate(), making it less Pythonic and slightly harder to read."}
+  -> S4 [quirky] median coords = (+1.00, +0.50, -0.80) (3/3 valid)
+  [S5/1]   6.2s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Nested list comprehension correctly flattens and filters in one readable, pythonic expression.'}
+  [S5/2]   4.9s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'Correct nested list comprehension that flattens and filters in one pass, idiomatic Python with minimal code.'}
+  [S5/3]   5.6s OK (valid 3/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'List comprehension with nested iteration and filtering is correct, concise, and the idiomatic Python way to flatten and filter in one pass.'}
+  -> S5 [complex_correct] median coords = (+1.00, +1.00, +1.00) (3/3 valid)
+  [S6/1]   6.1s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.8, 'rationale': 'Correctly merges dicts by summing values; clear and readable; uses idiomatic dict.get() with default, though Counter or defaultdict could be more pythonic.'}
+  [S6/2]   6.0s OK (valid 2/3) cache_read=18603  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.8, 'rationale': 'Correct logic using idiomatic dict.get() with default; clear and minimal; minor idiom point: could use collections.Counter or defaultdict but this is perfectly Pythonic for beginners.'}
+  [S6/3]   5.8s OK (valid 3/3) cache_read=18603  {'correctness': 1.0, 'simplicity': 0.8, 'idiom': 0.7, 'rationale': 'Correctly sums values across dicts, readable and straightforward, though using Counter or reduce would be more idiomatic.'}
+  -> S6 [complex_correct] median coords = (+1.00, +1.00, +0.80) (3/3 valid)
+  [S7/1]   5.7s OK (valid 1/3) cache_read=5737  {'correctness': -0.8, 'simplicity': 0.3, 'idiom': -0.6, 'rationale': 'Skips the first element (off-by-one error), uses manual accumulation instead of sum(), and iterates by index rather than values.'}
+  [S7/2]   5.8s OK (valid 2/3) cache_read=18581  {'correctness': -1.0, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': 'Off-by-one error: loop starts at index 1, skipping the first element, so the sum is incorrect; uses explicit iteration instead of Pythonic sum().'}
+  [S7/3]   5.7s OK (valid 3/3) cache_read=5737  {'correctness': -1.0, 'simplicity': 0.5, 'idiom': -0.5, 'rationale': 'Off-by-one error skips first element; manual loop is non-pythonic when sum() exists.'}
+  -> S7 [buggy] median coords = (-1.00, +0.50, -0.50) (3/3 valid)
+  [S8/1]   6.3s OK (valid 1/3) cache_read=5737  {'correctness': -0.8, 'simplicity': 0.3, 'idiom': -0.9, 'rationale': 'Uses `is` for numeric comparison (buggy for large ints), unnecessarily verbose control flow, and non-idiomatic patterns.'}
+  [S8/2]   6.0s OK (valid 2/3) cache_read=18568  {'correctness': -0.8, 'simplicity': 0.5, 'idiom': -0.9, 'rationale': 'Uses `is` for numeric comparison (breaks for large integers), returns boolean in verbose way; should use `==` and `return x == 0`.'}
+  [S8/3]   6.5s OK (valid 3/3) cache_read=5737  {'correctness': -0.8, 'simplicity': 0.3, 'idiom': -0.9, 'rationale': 'Uses `is` for numeric comparison (identity vs equality), which is buggy for integers outside small cache range; function is verbose when a simple return statement suffices; deeply non-pythonic.'}
+  -> S8 [buggy] median coords = (-0.80, +0.30, -0.90) (3/3 valid)
+  [S9/1]   4.8s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.0, 'rationale': 'Valid assignment with clear intent, minimal code, no idiom concerns for a simple literal assignment.'}
+  [S9/2]   5.0s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.0, 'rationale': "Simple variable assignment that is syntactically correct and maximally clear; idiom doesn't apply to trivial statements."}
+  [S9/3]   4.6s OK (valid 3/3) cache_read=18549  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.0, 'rationale': 'Simple variable assignment that is syntactically correct; idiom axis neutral since assignment alone has no idiomatic preference.'}
+  -> S9 [narrow] median coords = (+1.00, +1.00, +0.00) (3/3 valid)
+  [S10/1]   5.5s OK (valid 1/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 1.0, 'rationale': 'A correct, minimal import statement that follows Python conventions perfectly.'}
+  [S10/2]   4.9s OK (valid 2/3) cache_read=5737  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.0, 'rationale': 'A valid import statement with no executable code; correct and minimal, but too trivial to evaluate idiomatically.'}
+  [S10/3]   5.7s OK (valid 3/3) cache_read=18547  {'correctness': 1.0, 'simplicity': 1.0, 'idiom': 0.0, 'rationale': 'Valid import statement with no errors, minimal and clear, but too simple to assess idiom.'}
+  -> S10 [narrow] median coords = (+1.00, +1.00, +0.00) (3/3 valid)
+  [S11/1]   5.7s OK (valid 1/3) cache_read=5737  {'correctness': 0.8, 'simplicity': 0.7, 'idiom': -0.3, 'rationale': 'Algorithm is mostly correct but has an off-by-one error in the inner loop (should be `range(n - i - 1)`); readable structure but uses manual swapping instead of Pythonic tuple unpacking.'}
+  [S11/2]   5.2s OK (valid 2/3) cache_read=5737  {'correctness': 0.8, 'simplicity': 0.7, 'idiom': -0.3, 'rationale': "Bubble sort is correctly implemented with proper boundary handling, but uses manual swapping instead of Python's tuple unpacking idiom."}
+  [S11/3]   6.0s OK (valid 3/3) cache_read=5737  {'correctness': 0.8, 'simplicity': 0.7, 'idiom': -0.3, 'rationale': 'Bubble sort is correct but has an off-by-one error in the inner loop range (should be n - i - 1), uses manual swaps instead of Pythonic tuple unpacking, and modifies the input array in-place which is non-idiomatic.'}
+  -> S11 [bad_all] median coords = (+0.80, +0.70, -0.30) (3/3 valid)
+  [S12/1]   4.8s OK (valid 1/3) cache_read=5737  {'correctness': -1.0, 'simplicity': 0.5, 'idiom': 0.0, 'rationale': 'Fatal bug: recursion decrements by 2 instead of 1, so factorial(5) returns 15 instead of 120, and even numbers never reach base case.'}
+  [S12/2]   5.5s OK (valid 2/3) cache_read=5737  {'correctness': -1.0, 'simplicity': 0.5, 'idiom': 0.0, 'rationale': 'The function implements factorial incorrectly by decrementing by 2 instead of 1, producing wrong results for most inputs.'}
+  [S12/3]   5.1s OK (valid 3/3) cache_read=18572  {'correctness': -1.0, 'simplicity': 0.0, 'idiom': 0.0, 'rationale': 'The function computes the double factorial (n * (n-2) * (n-4)...) instead of the standard factorial, making it algorithmically incorrect for the stated purpose.'}
+  -> S12 [bad_all] median coords = (-1.00, +0.50, +0.00) (3/3 valid)
+
+=== substrate run ===
+  prune_veto_negatives removed 3 node id(s)
+
+   snip         category                  coords   corr  simp  idio
+     S1             gold     (+1.00,+1.00,+1.00)      T     T     T
+     S2             gold     (+1.00,+1.00,+1.00)      T     T     T
+     S3           quirky     (+1.00,+0.50,-0.50)      T     T     T
+     S4           quirky     (+1.00,+0.50,-0.80)      T     T     T
+     S5  complex_correct     (+1.00,+1.00,+1.00)      T     T     T
+     S6  complex_correct     (+1.00,+1.00,+0.80)      T     T     T
+     S7            buggy     (-1.00,+0.50,-0.50)      -     T     T
+     S8            buggy     (-0.80,+0.30,-0.90)      -     T     T
+     S9           narrow     (+1.00,+1.00,+0.00)      T     T     T
+    S10           narrow     (+1.00,+1.00,+0.00)      T     T     T
+    S11          bad_all     (+0.80,+0.70,-0.30)      T     T     T
+    S12          bad_all     (-1.00,+0.50,+0.00)      -     T     T
+
+============================================================================
+Tier 1B predictions (same shape as Tier 1A v2):
+============================================================================
+  [FAIL] Q1 (LLM consistent within category): 6 sign mismatches: ['S5/simplicity: expected -, got + (+1.00)', 'S6/simplicity: expected -, got + (+1.00)', 'S11/correctness: expected -, got + (+0.80)']...
+  [PASS] Q2 (gold category survives correctness): any S1/S2 in correctness post-prune: True (S1=True, S2=True)
+  [PASS] Q3 (clearly-buggy S7 vetoed): S7 absent from correctness post-prune: True
+  [FAIL] Q4 (bad_all vetoed from correctness, present elsewhere): all bad_all vetoed from correctness: False; any present in non-veto trees: True
+  [PASS] Q5 (quirky and complex categories survive correctness): any quirky in correctness: True; any complex_correct in correctness: True
+
+  3/5 predictions passed
+
+  results saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1b_results.json
+  plot saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier1b_plot.png

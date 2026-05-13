@@ -1,0 +1,28 @@
+{
+  "n_tendencies": 6,
+  "active_tendencies": [
+    "correctness",
+    "simplicity",
+    "robustness",
+    "purity",
+    "laziness",
+    "composability"
+  ],
+  "n_train": 93,
+  "n_total_nodes": 2226,
+  "n_subclaims_emitted": 277,
+  "n_subclaims_in_cache": 1507,
+  "per_axis_emitted": {
+    "correctness": 277,
+    "simplicity": 0,
+    "robustness": 0,
+    "purity": 0,
+    "laziness": 0,
+    "composability": 0
+  },
+  "n_work_items_multi_tendency": 2220,
+  "multi_count_distribution": {
+    "6": 2220
+  },
+  "elapsed_s": 2840.2962481975555
+}

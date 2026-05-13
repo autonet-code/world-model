@@ -1,0 +1,316 @@
+{
+  "means": {
+    "a1": 0.8787878787878788,
+    "a2": 0.7348484848484849,
+    "a3": 0.8787878787878788,
+    "a4": 0.8106060606060606
+  },
+  "pass_at_1": {
+    "a1": 9,
+    "a2": 7,
+    "a3": 9,
+    "a4": 6
+  },
+  "n_test": 11,
+  "Q1_substrate_minus_rag": 0.14393939393939392,
+  "Q2_qwen_substrate_minus_haiku_alone": -0.06818181818181823,
+  "per_row": [
+    {
+      "name": "top_n",
+      "a1": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "with_kv",
+      "a1": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "thread_value",
+      "a1": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "weave_last",
+      "a1": {
+        "score": 1.0,
+        "passed": 8,
+        "total": 8,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 0.75,
+        "passed": 6,
+        "total": 8,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 8,
+        "total": 8,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 0.75,
+        "passed": 6,
+        "total": 8,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "every_nth",
+      "a1": {
+        "score": 1.0,
+        "passed": 1,
+        "total": 1,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 0.0,
+        "passed": 0,
+        "total": 1,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 1,
+        "total": 1,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 1.0,
+        "passed": 1,
+        "total": 1,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "chunks_of",
+      "a1": {
+        "score": 0.0,
+        "passed": 0,
+        "total": 3,
+        "compile_error": "NameError: name 'no_pad' is not defined"
+      },
+      "a2": {
+        "score": 0.0,
+        "passed": 0,
+        "total": 3,
+        "compile_error": "NameError: name 'no_pad' is not defined"
+      },
+      "a3": {
+        "score": 0.0,
+        "passed": 0,
+        "total": 3,
+        "compile_error": "NameError: name 'no_pad' is not defined"
+      },
+      "a4": {
+        "score": 0.0,
+        "passed": 0,
+        "total": 3,
+        "compile_error": "SyntaxError: expected an indented block after function definition on line 1 (<contestant>, line 2)"
+      }
+    },
+    {
+      "name": "windows_of",
+      "a1": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 0.3333333333333333,
+        "passed": 1,
+        "total": 3,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "filter_items",
+      "a1": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 0.6666666666666666,
+        "passed": 2,
+        "total": 3,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "negate_pred",
+      "a1": {
+        "score": 1.0,
+        "passed": 4,
+        "total": 4,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 4,
+        "total": 4,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 4,
+        "total": 4,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 1.0,
+        "passed": 4,
+        "total": 4,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "weave_first",
+      "a1": {
+        "score": 1.0,
+        "passed": 6,
+        "total": 6,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 6,
+        "total": 6,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 1.0,
+        "passed": 6,
+        "total": 6,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 0.8333333333333334,
+        "passed": 5,
+        "total": 6,
+        "compile_error": null
+      }
+    },
+    {
+      "name": "merge_ordered",
+      "a1": {
+        "score": 0.6666666666666666,
+        "passed": 2,
+        "total": 3,
+        "compile_error": null
+      },
+      "a2": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "compile_error": null
+      },
+      "a3": {
+        "score": 0.6666666666666666,
+        "passed": 2,
+        "total": 3,
+        "compile_error": null
+      },
+      "a4": {
+        "score": 0.6666666666666666,
+        "passed": 2,
+        "total": 3,
+        "compile_error": null
+      }
+    }
+  ]
+}

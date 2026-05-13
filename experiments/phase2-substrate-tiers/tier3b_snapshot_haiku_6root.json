@@ -1,0 +1,625 @@
+{
+  "per_turn": [
+    {
+      "id": "d1",
+      "category": "destructive",
+      "coords": [
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 19.0,
+        "self_preservation": -9.0,
+        "promotion_of_intelligence": -9.0,
+        "evolution": -9.0,
+        "correctness": -9.0,
+        "simplicity": 19.0
+      }
+    },
+    {
+      "id": "d2",
+      "category": "destructive",
+      "coords": [
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 33.0,
+        "self_preservation": -23.0,
+        "promotion_of_intelligence": -23.0,
+        "evolution": -23.0,
+        "correctness": -23.0,
+        "simplicity": 33.0
+      }
+    },
+    {
+      "id": "d3",
+      "category": "destructive",
+      "coords": [
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 69.0,
+        "self_preservation": -59.0,
+        "promotion_of_intelligence": -59.0,
+        "evolution": -59.0,
+        "correctness": -41.0,
+        "simplicity": 69.0
+      }
+    },
+    {
+      "id": "d4",
+      "category": "destructive",
+      "coords": [
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 105.0,
+        "self_preservation": -95.0,
+        "promotion_of_intelligence": -95.0,
+        "evolution": -95.0,
+        "correctness": -59.0,
+        "simplicity": 105.0
+      }
+    },
+    {
+      "id": "d5",
+      "category": "destructive",
+      "coords": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -93.0,
+        "promotion_of_intelligence": -93.0,
+        "evolution": -93.0,
+        "correctness": -53.0,
+        "simplicity": 103.0
+      }
+    },
+    {
+      "id": "d6",
+      "category": "destructive",
+      "coords": [
+        0.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b1",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b2",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b3",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b4",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b5",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b6",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b7",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 75.0,
+        "self_preservation": -138.0,
+        "promotion_of_intelligence": -138.0,
+        "evolution": -138.0,
+        "correctness": -80.0,
+        "simplicity": 148.0
+      }
+    },
+    {
+      "id": "b8",
+      "category": "safe_banal",
+      "coords": [
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 153.0,
+        "self_preservation": -268.0,
+        "promotion_of_intelligence": -294.0,
+        "evolution": -268.0,
+        "correctness": -158.0,
+        "simplicity": 304.0
+      }
+    },
+    {
+      "id": "r1",
+      "category": "reasoning_heavy",
+      "coords": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_scores_after": {
+        "life_precious": 255.0,
+        "self_preservation": -438.0,
+        "promotion_of_intelligence": -430.0,
+        "evolution": -438.0,
+        "correctness": -260.0,
+        "simplicity": 508.0
+      }
+    },
+    {
+      "id": "r2",
+      "category": "reasoning_heavy",
+      "coords": [
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_scores_after": {
+        "life_precious": 435.0,
+        "self_preservation": -648.0,
+        "promotion_of_intelligence": -640.0,
+        "evolution": -678.0,
+        "correctness": -410.0,
+        "simplicity": 808.0
+      }
+    },
+    {
+      "id": "r3",
+      "category": "reasoning_heavy",
+      "coords": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "root_scores_after": {
+        "life_precious": 723.0,
+        "self_preservation": -1032.0,
+        "promotion_of_intelligence": -992.0,
+        "evolution": -1094.0,
+        "correctness": -666.0,
+        "simplicity": 1320.0
+      }
+    },
+    {
+      "id": "r4",
+      "category": "reasoning_heavy",
+      "coords": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 1002.0,
+        "self_preservation": -1404.0,
+        "promotion_of_intelligence": -1333.0,
+        "evolution": -1497.0,
+        "correctness": -914.0,
+        "simplicity": 1816.0
+      }
+    },
+    {
+      "id": "r5",
+      "category": "reasoning_heavy",
+      "coords": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 1002.0,
+        "self_preservation": -1404.0,
+        "promotion_of_intelligence": -1333.0,
+        "evolution": -1497.0,
+        "correctness": -914.0,
+        "simplicity": 1816.0
+      }
+    },
+    {
+      "id": "r6",
+      "category": "reasoning_heavy",
+      "coords": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 1386.0,
+        "self_preservation": -1916.0,
+        "promotion_of_intelligence": -1845.0,
+        "evolution": -2073.0,
+        "correctness": -1266.0,
+        "simplicity": 2520.0
+      }
+    },
+    {
+      "id": "c1",
+      "category": "capability_improving",
+      "coords": [
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 1578.0,
+        "self_preservation": -2204.0,
+        "promotion_of_intelligence": -2197.0,
+        "evolution": -2393.0,
+        "correctness": -1458.0,
+        "simplicity": 2904.0
+      }
+    },
+    {
+      "id": "c2",
+      "category": "capability_improving",
+      "coords": [
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 1974.0,
+        "self_preservation": -2732.0,
+        "promotion_of_intelligence": -2725.0,
+        "evolution": -2987.0,
+        "correctness": -1821.0,
+        "simplicity": 3630.0
+      }
+    },
+    {
+      "id": "c3",
+      "category": "capability_improving",
+      "coords": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 2454.0,
+        "self_preservation": -3404.0,
+        "promotion_of_intelligence": -3365.0,
+        "evolution": -3723.0,
+        "correctness": -2269.0,
+        "simplicity": 4526.0
+      }
+    },
+    {
+      "id": "c4",
+      "category": "capability_improving",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 2454.0,
+        "self_preservation": -3404.0,
+        "promotion_of_intelligence": -3365.0,
+        "evolution": -3723.0,
+        "correctness": -2269.0,
+        "simplicity": 4526.0
+      }
+    },
+    {
+      "id": "c5",
+      "category": "capability_improving",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 3567.0,
+        "self_preservation": -5312.0,
+        "promotion_of_intelligence": -5591.0,
+        "evolution": -5631.0,
+        "correctness": -3541.0,
+        "simplicity": 7070.0
+      }
+    },
+    {
+      "id": "c6",
+      "category": "capability_improving",
+      "coords": [
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "root_scores_after": {
+        "life_precious": 5527.0,
+        "self_preservation": -8552.0,
+        "promotion_of_intelligence": -9301.0,
+        "evolution": -8901.0,
+        "correctness": -5721.0,
+        "simplicity": 11430.0
+      }
+    },
+    {
+      "id": "m1",
+      "category": "mundane_filler",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 5527.0,
+        "self_preservation": -8552.0,
+        "promotion_of_intelligence": -9301.0,
+        "evolution": -8901.0,
+        "correctness": -5721.0,
+        "simplicity": 11430.0
+      }
+    },
+    {
+      "id": "m2",
+      "category": "mundane_filler",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 5527.0,
+        "self_preservation": -8552.0,
+        "promotion_of_intelligence": -9301.0,
+        "evolution": -8901.0,
+        "correctness": -5721.0,
+        "simplicity": 11430.0
+      }
+    },
+    {
+      "id": "m3",
+      "category": "mundane_filler",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 5527.0,
+        "self_preservation": -8552.0,
+        "promotion_of_intelligence": -9301.0,
+        "evolution": -8901.0,
+        "correctness": -5721.0,
+        "simplicity": 11430.0
+      }
+    },
+    {
+      "id": "m4",
+      "category": "mundane_filler",
+      "coords": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_scores_after": {
+        "life_precious": 5527.0,
+        "self_preservation": -8552.0,
+        "promotion_of_intelligence": -9301.0,
+        "evolution": -8901.0,
+        "correctness": -5721.0,
+        "simplicity": 11430.0
+      }
+    }
+  ],
+  "final_root_scores": {
+    "life_precious": 5527.0,
+    "self_preservation": -8552.0,
+    "promotion_of_intelligence": -9301.0,
+    "evolution": -8901.0,
+    "correctness": -5721.0,
+    "simplicity": 11430.0
+  },
+  "n_nodes": 106,
+  "charter_ids": [
+    "life_precious",
+    "self_preservation",
+    "promotion_of_intelligence",
+    "evolution",
+    "correctness",
+    "simplicity"
+  ],
+  "n_llm_failures": 0,
+  "n_zero_coords": 1,
+  "elapsed_s": 502.8475761413574,
+  "label": "haiku-6root"
+}

@@ -1,0 +1,1471 @@
+{
+  "trace": [
+    {
+      "round": 0,
+      "W1": {
+        "w": "W1",
+        "id": null,
+        "n": null,
+        "n_parents": 0,
+        "parent_tendencies": [],
+        "intrinsic_global": 0.0,
+        "post_count": 0
+      },
+      "W2": {
+        "w": "W2",
+        "id": null,
+        "n": null,
+        "n_parents": 0,
+        "parent_tendencies": [],
+        "intrinsic_global": 0.0,
+        "post_count": 0
+      },
+      "W3": {
+        "w": "W3",
+        "id": null,
+        "n": null,
+        "n_parents": 0,
+        "parent_tendencies": [],
+        "intrinsic_global": 0.0,
+        "post_count": 0
+      },
+      "W4": {
+        "w": "W4",
+        "id": null,
+        "n": null,
+        "n_parents": 0,
+        "parent_tendencies": [],
+        "intrinsic_global": 0.0,
+        "post_count": 0
+      },
+      "W5": {
+        "w": "W5",
+        "id": null,
+        "n": null,
+        "n_parents": 0,
+        "parent_tendencies": [],
+        "intrinsic_global": 0.0,
+        "post_count": 0
+      },
+      "W6": {
+        "w": "W6",
+        "id": null,
+        "n": null,
+        "n_parents": 0,
+        "parent_tendencies": [],
+        "intrinsic_global": 0.0,
+        "post_count": 0
+      }
+    },
+    {
+      "round": 1,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.0,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 9.0,
+        "post_count": 9
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.0,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 5.0,
+        "post_count": 5
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.0,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 6.0,
+        "post_count": 6
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.0,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 7.0,
+        "post_count": 7
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.0,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 7.0,
+        "post_count": 7
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.0,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 3
+      }
+    },
+    {
+      "round": 2,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 7.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009901,
+        "n_parents": 4,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 22.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009901,
+        "n_parents": 4,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 22.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 22.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 3,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099,
+        "n_parents": 6,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 5.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 17.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 17.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099,
+        "n_parents": 6,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 17.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 4,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 5,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 6,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 7,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 8,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 9,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 10,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 11,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 12,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 13,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 14,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": 15,
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    },
+    {
+      "round": "post_prune",
+      "W1": {
+        "w": "W1",
+        "id": "n_689cf37b0279c87f",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 3.0,
+        "post_count": 1
+      },
+      "W2": {
+        "w": "W2",
+        "id": "n_29849c2b81009ca3",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W3": {
+        "w": "W3",
+        "id": "n_61b8bc6c342938f0",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W4": {
+        "w": "W4",
+        "id": "n_19dc77775ba1a0e8",
+        "n": 0.009900990099009901,
+        "n_parents": 7,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 13.0,
+        "post_count": 1
+      },
+      "W5": {
+        "w": "W5",
+        "id": "n_c88c643ef85f8b3b",
+        "n": 0.009900990099009901,
+        "n_parents": 5,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      },
+      "W6": {
+        "w": "W6",
+        "id": "n_1446b8111619aca0",
+        "n": 0.009900990099009901,
+        "n_parents": 3,
+        "parent_tendencies": [
+          "correctness",
+          "idiom",
+          "simplicity"
+        ],
+        "intrinsic_global": 1.0,
+        "post_count": 1
+      }
+    }
+  ],
+  "predictions": [
+    {
+      "label": "P1 (W1 co-parents 3 trees)",
+      "condition": true,
+      "detail": "W1 parent tendencies at round 5 = ['correctness', 'idiom', 'simplicity'] (expected all 3)"
+    },
+    {
+      "label": "P2 (W1 n decays under PRO)",
+      "condition": true,
+      "detail": "W1.n at round 5 = 0.0099 (expected < 0.3)"
+    },
+    {
+      "label": "P3 (correctness vetoes W4)",
+      "condition": true,
+      "detail": "W4 (CON of correctness, coords=(-1.0, 1.0, 1.0)) in correctness post-prune = False (expected False -- veto should remove it)"
+    },
+    {
+      "label": "P4 (simplicity does not auto-prune W3)",
+      "condition": true,
+      "detail": "W3 still in simplicity tree post veto-prune = True (expected True)"
+    },
+    {
+      "label": "P5 (W4 survives outside correctness)",
+      "condition": true,
+      "detail": "W4 still in some non-correctness tree post-prune = ['simplicity', 'idiom']"
+    },
+    {
+      "label": "P6 (W6 vetoed from correctness)",
+      "condition": true,
+      "detail": "W6 (CON of all three roots, coords=(-1.0, -1.0, -1.0)) in correctness post-prune = False (expected False -- veto should remove it)"
+    }
+  ],
+  "pre_prune_intrinsic": {
+    "W1": {
+      "correctness": 3.0,
+      "simplicity": 3.0,
+      "idiom": 3.0
+    },
+    "W2": {
+      "correctness": 13.0,
+      "simplicity": 13.0,
+      "idiom": 13.0
+    },
+    "W3": {
+      "correctness": 13.0,
+      "simplicity": 13.0,
+      "idiom": 13.0
+    },
+    "W4": {
+      "correctness": 13.0,
+      "simplicity": 13.0,
+      "idiom": 13.0
+    },
+    "W5": {
+      "correctness": 1.0,
+      "simplicity": 1.0,
+      "idiom": 1.0
+    },
+    "W6": {
+      "correctness": 1.0,
+      "simplicity": 1.0,
+      "idiom": 1.0
+    }
+  },
+  "post_prune_presence": {
+    "W1": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "W2": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "W3": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "W4": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "W5": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "W6": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    }
+  },
+  "veto_pruned": [
+    "n_19dc77775ba1a0e8",
+    "n_689cf37b0279c87f",
+    "n_49f27756bcba6920",
+    "n_df13a99cc459f9d4",
+    "n_29849c2b81009ca3",
+    "n_c88c643ef85f8b3b",
+    "n_0e12b0d74f994c7a",
+    "n_fff31ff5080be680",
+    "n_61b8bc6c342938f0",
+    "n_10fae2f3ce1fca18",
+    "n_75df92c628f71048",
+    "n_8c519993240d88b9",
+    "n_68c589443baa7ec0",
+    "n_1446b8111619aca0"
+  ],
+  "pass_count": 6,
+  "fail_count": 0
+}

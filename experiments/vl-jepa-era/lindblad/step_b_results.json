@@ -1,0 +1,103 @@
+{
+  "pred1_beats": {
+    "test": "damped_beats",
+    "omega": 0.0,
+    "zeta": 3.0,
+    "monotonic": false,
+    "alpha_range": [
+      0.0,
+      0.9474335593930989
+    ]
+  },
+  "pred2_steady": [
+    {
+      "label": "omega only, no obs (pure unitary, no steady state)",
+      "omega": 1.0,
+      "zeta": 0.0,
+      "gamma_plus": 0.0,
+      "gamma_minus": 0.0,
+      "alpha_ground": 1.0,
+      "alpha_classical": NaN,
+      "alpha_steady": 0.5
+    },
+    {
+      "label": "omega > zeta, asymmetric CON-favoring obs",
+      "omega": 1.0,
+      "zeta": 0.5,
+      "gamma_plus": 0.1,
+      "gamma_minus": 0.4,
+      "alpha_ground": 0.9472135954999579,
+      "alpha_classical": 0.2,
+      "alpha_steady": 0.23287671232763354
+    },
+    {
+      "label": "zeta > omega, asymmetric CON-favoring obs",
+      "omega": 0.5,
+      "zeta": 1.0,
+      "gamma_plus": 0.1,
+      "gamma_minus": 0.4,
+      "alpha_ground": 0.7236067977499789,
+      "alpha_classical": 0.2,
+      "alpha_steady": 0.3959183673506829
+    },
+    {
+      "label": "omega = zeta, asymmetric CON-favoring obs",
+      "omega": 1.0,
+      "zeta": 1.0,
+      "gamma_plus": 0.1,
+      "gamma_minus": 0.4,
+      "alpha_ground": 0.8535533905932737,
+      "alpha_classical": 0.2,
+      "alpha_steady": 0.29896907216503993
+    },
+    {
+      "label": "strong PRO bias, CON-favoring obs",
+      "omega": 2.0,
+      "zeta": 0.5,
+      "gamma_plus": 0.1,
+      "gamma_minus": 0.4,
+      "alpha_ground": 0.9850712500726659,
+      "alpha_classical": 0.2,
+      "alpha_steady": 0.209056603773586
+    },
+    {
+      "label": "no bias, only tension, asymmetric obs",
+      "omega": 0.0,
+      "zeta": 1.0,
+      "gamma_plus": 0.1,
+      "gamma_minus": 0.4,
+      "alpha_ground": 0.5,
+      "alpha_classical": 0.2,
+      "alpha_steady": 0.4909090909090946
+    },
+    {
+      "label": "no H (pure classical), asymmetric obs",
+      "omega": 0.0,
+      "zeta": 0.0,
+      "gamma_plus": 0.1,
+      "gamma_minus": 0.4,
+      "alpha_ground": 0.5,
+      "alpha_classical": 0.2,
+      "alpha_steady": 0.20000000000002777
+    }
+  ],
+  "pred3_entanglement": [
+    {
+      "label": "J=0 baseline",
+      "J": 0.0,
+      "alpha_a_final": 0.26977111938826487,
+      "alpha_b_final": 0.7590288108671589,
+      "alpha_b_excursion": 0.6666656893355406
+    },
+    {
+      "label": "J=0.245 coupling",
+      "J": 0.2450496683266888,
+      "alpha_a_final": 0.28410446059459415,
+      "alpha_b_final": 0.6387369796010345,
+      "alpha_b_excursion": 0.723371307749274
+    }
+  ],
+  "pred4_reversibility": {
+    "reversibility_error": 1.247731250254119e-14
+  }
+}

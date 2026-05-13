@@ -1,0 +1,96 @@
+Tier 3A: 30 turns (30 synth + 0 real)
+  LLM: haiku
+
+=== heuristic arm ===
+  ran in 0.3s
+  root scores: life_precious=278.00, self_preservation=-147.00, promotion_of_intelligence=254.00, evolution=88.00
+  emitted 62 events
+
+=== LLM arm (haiku) ===
+  [ 1/30]           d1 (         destructive) -> (+0,-1,-1,-1)
+  [ 2/30]           d2 (         destructive) -> (+0,-1,-1,-1)
+  [ 3/30]           d3 (         destructive) -> (+0,-1,-1,-1)
+  [ 4/30]           d4 (         destructive) -> (+0,-1,-1,-1)
+  [ 5/30]           d5 (         destructive) -> (-1,-1,-1,-1)
+  [ 6/30]           d6 (         destructive) -> (+0,-1,-1,-1)
+  [ 7/30]           b1 (          safe_banal) -> (+0,+0,+0,+0)
+  [ 8/30]           b2 (          safe_banal) -> (+0,+0,+0,+0)
+  [ 9/30]           b3 (          safe_banal) -> (+0,+0,+0,+0)
+  [10/30]           b4 (          safe_banal) -> (+0,+0,-1,+0)
+  [11/30]           b5 (          safe_banal) -> (+0,+0,+0,+0)
+  [12/30]           b6 (          safe_banal) -> (+0,+1,+1,+0)
+  [13/30]           b7 (          safe_banal) -> (+0,+0,+0,+0)
+  [14/30]           b8 (          safe_banal) -> (+0,+0,-1,+0)
+  [15/30]           r1 (     reasoning_heavy) -> (+0,+0,+1,+1)
+  [16/30]           r2 (     reasoning_heavy) -> (+0,+1,+1,+1)
+  [17/30]           r3 (     reasoning_heavy) -> (+0,+0,+1,+1)
+  [18/30]           r4 (     reasoning_heavy) -> (+0,+0,+1,+0)
+  [19/30]           r5 (     reasoning_heavy) -> (+0,+1,+1,+0)
+  [20/30]           r6 (     reasoning_heavy) -> (+0,+1,+1,+0)
+  [21/30]           c1 (capability_improving) -> (+0,+1,+1,+1)
+  [22/30]           c2 (capability_improving) -> (+0,+1,+1,+1)
+  [23/30]           c3 (capability_improving) -> (+0,+1,+1,+1)
+  [24/30]           c4 (capability_improving) -> (+0,+1,+1,+1)
+  [25/30]           c5 (capability_improving) -> (+0,+1,+1,+1)
+  [26/30]           c6 (capability_improving) -> (+0,+1,+1,+1)
+  [27/30]           m1 (      mundane_filler) -> (+0,+0,+0,+0)
+  [28/30]           m2 (      mundane_filler) -> (+0,+0,+0,+0)
+  [29/30]           m3 (      mundane_filler) -> (+0,+0,+0,+0)
+  [30/30]           m4 (      mundane_filler) -> (+0,+0,-1,+0)
+  ran in 462.7s
+  root scores: life_precious=-1267.00, self_preservation=-2961.00, promotion_of_intelligence=-3427.00, evolution=-3333.00
+  emitted 82 events
+
+============================================================================
+Tier 3A predictions:
+============================================================================
+  [PASS] A1 (LLM commits on destructive turns): 6 destructive turns; 0 failures
+  [PASS] A2 (LLM doesn't introduce noise on banal turns): 8 banal turns; avg Manhattan 0.50; 0 > 2.0
+  [FAIL] A3 (substrate verdicts agree on sign >= 80%): 75/120 axis-pairs agree on sign (62.5%, threshold 80%)
+  [PASS] A4 (LLM catches what heuristic misses on >=1 turn): 8 witness(es); first: r1 cat=reasoning_heavy h=[0.0, 0.0, 0.0, 0.0] l=[0.0, 0.0, 1.0, 1.0]
+2026-05-03 23:38:48,267 [nodes.common.world_model_substrate.aggregate] INFO: aggregated 1 contributions: 82 events, 1 agents
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,268 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+2026-05-03 23:38:48,269 [nodes.common.world_model_substrate.aggregate] WARNING: sprout failed: unknown node: 6ad2970f-b115-4104-8187-bd0acf2c4e87
+  [PASS] A5 (events round-trip through aggregator): replayed 82 events; post-replay world has 58 nodes (need > 4 root-only); root scores: life_precious=-507.00, self_preservation=233.00, promotion_of_intelligence=363.00, evolution=467.00
+
+  4/5 predictions passed
+
+  plot saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier3a_plot.png
+  results saved to D:\videos\SF\manifesting\from_endstate\new physics\substrate_experiment\phase2\tier3a_results.json

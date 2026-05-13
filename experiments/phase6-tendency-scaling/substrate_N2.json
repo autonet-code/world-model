@@ -1,0 +1,20 @@
+{
+  "n_tendencies": 2,
+  "active_tendencies": [
+    "correctness",
+    "simplicity"
+  ],
+  "n_train": 93,
+  "n_total_nodes": 742,
+  "n_subclaims_emitted": 277,
+  "n_subclaims_in_cache": 518,
+  "per_axis_emitted": {
+    "correctness": 277,
+    "simplicity": 0
+  },
+  "n_work_items_multi_tendency": 740,
+  "multi_count_distribution": {
+    "2": 740
+  },
+  "elapsed_s": 1205.0633654594421
+}

@@ -1,0 +1,582 @@
+{
+  "trace": [
+    {
+      "round": 0,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 1,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        },
+        {
+          "region": "C",
+          "kind": "PRO"
+        },
+        {
+          "region": "D",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 2,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        },
+        {
+          "region": "C",
+          "kind": "PRO"
+        },
+        {
+          "region": "D",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 3,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        },
+        {
+          "region": "C",
+          "kind": "PRO"
+        },
+        {
+          "region": "D",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 4,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        },
+        {
+          "region": "C",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 5,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        },
+        {
+          "region": "C",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 6,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 7,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 8,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 9,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 10,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "PRO"
+        },
+        {
+          "region": "B",
+          "kind": "PRO"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 11,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 12,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 13,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 14,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 15,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 16,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 17,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 18,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 19,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 20,
+      "schedule": [
+        {
+          "region": "A",
+          "kind": "CON"
+        }
+      ],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 21,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 22,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 23,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 24,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 25,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 26,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 27,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 28,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 29,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    },
+    {
+      "round": 30,
+      "schedule": [],
+      "n_A": 1.0,
+      "score_A": 0,
+      "n_B": 1.0,
+      "score_B": 0,
+      "n_C": 1.0,
+      "score_C": 0,
+      "n_D": 1.0,
+      "score_D": 0
+    }
+  ],
+  "predictions": [
+    {
+      "label": "P1",
+      "condition": false,
+      "detail": "n_A after round 10 = 1.0000 (expected < 0.6)"
+    },
+    {
+      "label": "P2",
+      "condition": false,
+      "detail": "n_B=1.0000, |n_A-n_B|=0.0000 (expected n_B<0.6 and |n_A-n_B|<0.1)"
+    },
+    {
+      "label": "P3",
+      "condition": false,
+      "detail": "n_A-n_B after round 20 = +0.0000 (expected > 0.1; A re-surprised, B settled)"
+    },
+    {
+      "label": "P4",
+      "condition": false,
+      "detail": "n_C(round 5)=1.0000, n_C(round 30)=1.0000 (expected drift back up after settling)"
+    },
+    {
+      "label": "P5",
+      "condition": true,
+      "detail": "n_D min across all rounds = 1.0000 (expected > 0.7)"
+    },
+    {
+      "label": "P6",
+      "condition": false,
+      "detail": "n_A trajectory has interior min at round 0 (value 1.0000); start=1.0000, end=1.0000 (expected resist-then-yield shape)"
+    }
+  ],
+  "pass_count": 1,
+  "fail_count": 5
+}

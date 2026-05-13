@@ -1,0 +1,17 @@
+{
+  "phase": "complete",
+  "n_entries": 93,
+  "current": 93,
+  "n_calls": 93,
+  "n_hits": 0,
+  "n_parse_fail": 1,
+  "axis_coverage_recent": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "last_update": 1778610259.9339259,
+  "current_name": "indices_of"
+}

@@ -1,0 +1,48 @@
+{"id": "S1", "sample": 1, "elapsed_s": 74.59402990341187, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S1", "sample": 2, "elapsed_s": 20.877355575561523, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S1", "sample": 3, "elapsed_s": 17.902890920639038, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S2", "sample": 1, "elapsed_s": 20.222538232803345, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S2", "sample": 2, "elapsed_s": 23.924134016036987, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S2", "sample": 3, "elapsed_s": 18.313980102539062, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S3", "sample": 1, "elapsed_s": 113.628413438797, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S3", "sample": 2, "elapsed_s": 113.58380818367004, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S3", "sample": 3, "elapsed_s": 133.36069416999817, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S3", "sample": 4, "elapsed_s": 48.379624366760254, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": -1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": -1, "idiom": -1}}
+{"id": "S3", "sample": 5, "elapsed_s": 136.66209244728088, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S4", "sample": 1, "elapsed_s": 99.70054340362549, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": -1}}
+{"id": "S4", "sample": 2, "elapsed_s": 90.66779971122742, "raw_response": "{\n  \"Correctness\": 1,\n  \"Simplicity\": -1,\n  \"Idiom\": -1\n}", "usage": {}, "parsed": {"Correctness": 1, "Simplicity": -1, "Idiom": -1}}
+{"id": "S4", "sample": 3, "elapsed_s": 96.58576226234436, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": -1}}
+{"id": "S4", "sample": 4, "elapsed_s": 138.81427216529846, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": -1}}
+{"id": "S5", "sample": 1, "elapsed_s": 144.30231165885925, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S5", "sample": 2, "elapsed_s": 109.46828198432922, "raw_response": "{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S5", "sample": 3, "elapsed_s": 15.982521057128906, "raw_response": "```json\n{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}\n```", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S6", "sample": 1, "elapsed_s": 147.8588330745697, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S6", "sample": 2, "elapsed_s": 14.652087926864624, "raw_response": "```json\n{\n  \"correctness\": 1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}\n```", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S6", "sample": 3, "elapsed_s": 120.0729649066925, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S7", "sample": 1, "elapsed_s": 137.7977786064148, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": -1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": -1, "idiom": -1}}
+{"id": "S7", "sample": 2, "elapsed_s": 137.82247948646545, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": +1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": null}
+{"id": "S7", "sample": 3, "elapsed_s": 36.75644087791443, "raw_response": "{\"correctness\": -1, \"simplicity\": -1, \"idiom\": -1}", "usage": {}, "parsed": {"correctness": -1, "simplicity": -1, "idiom": -1}}
+{"id": "S7", "sample": 4, "elapsed_s": 45.20340418815613, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": -1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": -1, "idiom": -1}}
+{"id": "S8", "sample": 1, "elapsed_s": 71.67447352409363, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": -1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": -1, "idiom": -1}}
+{"id": "S8", "sample": 2, "elapsed_s": 111.7057831287384, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S8", "sample": 3, "elapsed_s": 57.888049602508545, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": -1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": -1, "idiom": -1}}
+{"id": "S8", "sample": 4, "elapsed_s": 111.50103235244751, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S8", "sample": 5, "elapsed_s": 76.6912112236023, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": -1,\n  \"idiom\": -1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": -1, "idiom": -1}}
+{"id": "S9", "sample": 1, "elapsed_s": 111.50743818283081, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S9", "sample": 2, "elapsed_s": 114.57325410842896, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S9", "sample": 3, "elapsed_s": 111.96504926681519, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S9", "sample": 4, "elapsed_s": 67.27349996566772, "raw_response": "{\"correctness\": 0, \"simplicity\": 0, \"idiom\": 0}", "usage": {}, "parsed": {"correctness": 0, "simplicity": 0, "idiom": 0}}
+{"id": "S9", "sample": 5, "elapsed_s": 114.89828324317932, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S10", "sample": 1, "elapsed_s": 73.52851486206055, "raw_response": "{\n  \"correctness\": 0,\n  \"simplicity\": 0,\n  \"idiom\": 0\n}", "usage": {}, "parsed": {"correctness": 0, "simplicity": 0, "idiom": 0}}
+{"id": "S10", "sample": 2, "elapsed_s": 111.56750750541687, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S10", "sample": 3, "elapsed_s": 63.68169665336609, "raw_response": "{\n  \"correctness\": 0,\n  \"simplicity\": 0,\n  \"idiom\": 0\n}", "usage": {}, "parsed": {"correctness": 0, "simplicity": 0, "idiom": 0}}
+{"id": "S10", "sample": 4, "elapsed_s": 73.55867195129395, "raw_response": "{\"correctness\": 1, \"simplicity\": 1, \"idiom\": 1}", "usage": {}, "parsed": {"correctness": 1, "simplicity": 1, "idiom": 1}}
+{"id": "S11", "sample": 1, "elapsed_s": 113.33467984199524, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S11", "sample": 2, "elapsed_s": 113.99091529846191, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S11", "sample": 3, "elapsed_s": 113.77037811279297, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S11", "sample": 4, "elapsed_s": 115.57964587211609, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S11", "sample": 5, "elapsed_s": 114.00252890586853, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S12", "sample": 1, "elapsed_s": 62.572413206100464, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": 1, "idiom": 1}}
+{"id": "S12", "sample": 2, "elapsed_s": 82.84461808204651, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": 1, "idiom": 1}}
+{"id": "S12", "sample": 3, "elapsed_s": 111.71828961372375, "raw_response": "", "usage": {}, "parsed": null}
+{"id": "S12", "sample": 4, "elapsed_s": 67.73421311378479, "raw_response": "{\n  \"correctness\": -1,\n  \"simplicity\": 1,\n  \"idiom\": 1\n}", "usage": {}, "parsed": {"correctness": -1, "simplicity": 1, "idiom": 1}}

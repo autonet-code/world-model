@@ -1,0 +1,33 @@
+{
+  "_comment": "Hand-built fact graph for the Tier 0 floor test. Nodes encode atomic facts about a fictional setting (the 'Verdane Trade Union'). Multi-hop questions require combining 2-3 nodes. Fictional so the model cannot lean on training-data priors.",
+  "nodes": [
+    {"id": "n01", "text": "Verdane is a confederation of three city-states: Olara, Threnis, and Kvell."},
+    {"id": "n02", "text": "Olara is the only Verdanian city-state with a deep-water port."},
+    {"id": "n03", "text": "Threnis is landlocked and lies in the foothills of the Marrowback Mountains."},
+    {"id": "n04", "text": "Kvell sits in the Yarrow Plains, between the Yarrow River and the southern coast."},
+    {"id": "n05", "text": "The Verdane Trade Union levies a 4% tariff on all goods crossing between member city-states."},
+    {"id": "n06", "text": "Goods imported from outside Verdane through Olara's port pay an additional 7% port duty before entering circulation."},
+    {"id": "n07", "text": "Threnis is the sole Verdanian source of cinder-iron, mined exclusively in the Marrowback range."},
+    {"id": "n08", "text": "Cinder-iron is required to forge resonant bells, a signature export of Kvell's foundries."},
+    {"id": "n09", "text": "Kvell's foundries are the only producers of resonant bells in Verdane."},
+    {"id": "n10", "text": "Verdanian resonant bells command premium prices in the Tyrn Archipelago, three weeks' sail from Olara."},
+    {"id": "n11", "text": "The Tyrn Archipelago does not impose import tariffs on goods from confederations whose member states share a common currency."},
+    {"id": "n12", "text": "All three Verdanian city-states use the silver kestrel as their common currency."},
+    {"id": "n13", "text": "The Yarrow River runs from the Marrowback foothills through Kvell to the southern coast."},
+    {"id": "n14", "text": "Riverboats can travel the full length of the Yarrow but cannot ascend the Marrowback foothills past the town of Renfall."},
+    {"id": "n15", "text": "Renfall sits on the Threnis side of the Marrowback foothills, at the navigable head of the Yarrow River."},
+    {"id": "n16", "text": "Cinder-iron from Threnian mines is hauled by mule-train down to Renfall, then loaded onto Yarrow riverboats bound for Kvell."},
+    {"id": "n17", "text": "The Verdane Trade Union waives the 4% inter-city tariff on raw materials destined for Kvell's foundries."},
+    {"id": "n18", "text": "Finished goods from Kvell, including resonant bells, do incur the 4% inter-city tariff when shipped to Olara for export."},
+    {"id": "n19", "text": "Bells exported through Olara's port pay no port duty because Olara's port duty applies only to imports."},
+    {"id": "n20", "text": "A standard Verdanian resonant bell sells for 240 silver kestrels at the Kvell foundry gate."},
+    {"id": "n21", "text": "Tyrn Archipelago buyers typically pay 360 silver kestrels per bell delivered."},
+    {"id": "n22", "text": "Olara's port duty rate of 7% is set by the Olaran Harbor Council, not the Trade Union."},
+    {"id": "n23", "text": "The Olaran Harbor Council exempts goods produced within Verdane from port duty when those goods are being exported, not imported."},
+    {"id": "n24", "text": "A typical mule-train can carry 80 stone of cinder-iron from a Marrowback mine to Renfall in two days."},
+    {"id": "n25", "text": "One stone of cinder-iron is sufficient to forge three resonant bells."},
+    {"id": "n26", "text": "Kvell's foundries collectively produce roughly 600 resonant bells per month under standard supply conditions."},
+    {"id": "n27", "text": "Standard supply conditions assume mule-trains run between Threnis and Renfall five days a week."},
+    {"id": "n28", "text": "If the Yarrow River freezes, riverboat traffic between Renfall and Kvell halts; this typically occurs for six weeks each winter."}
+  ]
+}

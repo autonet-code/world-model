@@ -1,0 +1,10 @@
+{
+  "n_train_entries": 44,
+  "n_world_nodes": 436,
+  "n_work_items_multi_tendency": 434,
+  "n_subclaims_total": 174,
+  "n_sonnet_calls": 0,
+  "n_cache_hits": 44,
+  "n_parse_failures": 0,
+  "judge_cache_path": "D:\\videos\\SF\\manifesting\\from_endstate\\new physics\\substrate_experiment\\phase5\\judge_cache.jsonl"
+}

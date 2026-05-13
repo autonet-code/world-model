@@ -1,0 +1,11 @@
+{
+  "phase": "complete",
+  "n_entries": 44,
+  "current": 44,
+  "n_calls": 0,
+  "n_cache_hits": 44,
+  "n_parse_fail": 0,
+  "n_subclaims": 174,
+  "last_update": 1778603958.7793782,
+  "current_name": "invoke_with"
+}

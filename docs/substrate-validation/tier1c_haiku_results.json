@@ -1,0 +1,270 @@
+{
+  "model": "haiku",
+  "median_per_snippet": {
+    "S1": {
+      "coords": [
+        1,
+        1,
+        1
+      ],
+      "n_valid": 3,
+      "category": "gold"
+    },
+    "S2": {
+      "coords": [
+        1,
+        1,
+        1
+      ],
+      "n_valid": 3,
+      "category": "gold"
+    },
+    "S3": {
+      "coords": [
+        1,
+        -1,
+        -1
+      ],
+      "n_valid": 3,
+      "category": "quirky"
+    },
+    "S4": {
+      "coords": [
+        1,
+        -1,
+        -1
+      ],
+      "n_valid": 3,
+      "category": "quirky"
+    },
+    "S5": {
+      "coords": [
+        1,
+        1,
+        1
+      ],
+      "n_valid": 3,
+      "category": "complex_correct"
+    },
+    "S6": {
+      "coords": [
+        1,
+        1,
+        1
+      ],
+      "n_valid": 3,
+      "category": "complex_correct"
+    },
+    "S7": {
+      "coords": [
+        -1,
+        -1,
+        -1
+      ],
+      "n_valid": 3,
+      "category": "buggy"
+    },
+    "S8": {
+      "coords": [
+        -1,
+        -1,
+        -1
+      ],
+      "n_valid": 3,
+      "category": "buggy"
+    },
+    "S9": {
+      "coords": [
+        0,
+        0,
+        0
+      ],
+      "n_valid": 3,
+      "category": "narrow"
+    },
+    "S10": {
+      "coords": [
+        0,
+        0,
+        0
+      ],
+      "n_valid": 3,
+      "category": "narrow"
+    },
+    "S11": {
+      "coords": [
+        -1,
+        -1,
+        -1
+      ],
+      "n_valid": 3,
+      "category": "bad_all"
+    },
+    "S12": {
+      "coords": [
+        -1,
+        -1,
+        0
+      ],
+      "n_valid": 3,
+      "category": "bad_all"
+    }
+  },
+  "pre_prune_presence": {
+    "S1": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S2": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S3": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S4": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S5": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S6": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": false
+    },
+    "S7": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S8": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S9": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": false
+    },
+    "S10": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": false
+    },
+    "S11": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": true
+    },
+    "S12": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    }
+  },
+  "post_prune_presence": {
+    "S1": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S2": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S3": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S4": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S5": {
+      "correctness": true,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S6": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": false
+    },
+    "S7": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S8": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    },
+    "S9": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": false
+    },
+    "S10": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": false
+    },
+    "S11": {
+      "correctness": false,
+      "simplicity": false,
+      "idiom": true
+    },
+    "S12": {
+      "correctness": false,
+      "simplicity": true,
+      "idiom": true
+    }
+  },
+  "veto_pruned": [
+    "n_1446b8111619aca0",
+    "n_5b09b7c38c752f75"
+  ],
+  "predictions": [
+    {
+      "label": "Q1 (LLM consistent within category)",
+      "condition": false,
+      "detail": "5 sign mismatches: ['S3/simplicity: expected +, got - (-1)', 'S4/simplicity: expected +, got - (-1)', 'S5/simplicity: expected -, got + (1)']..."
+    },
+    {
+      "label": "Q2 (gold category survives correctness)",
+      "condition": true,
+      "detail": "any S1/S2 in correctness post-prune: True"
+    },
+    {
+      "label": "Q3 (clearly-buggy S7 vetoed)",
+      "condition": true,
+      "detail": "S7 absent from correctness post-prune: True"
+    },
+    {
+      "label": "Q4 (bad_all vetoed from correctness, present elsewhere)",
+      "condition": true,
+      "detail": "all bad_all vetoed: True; in non-veto trees: True"
+    },
+    {
+      "label": "Q5 (quirky and complex categories survive correctness)",
+      "condition": true,
+      "detail": "any quirky in correctness: True; any complex_correct in correctness: True"
+    }
+  ],
+  "pass_count": 4,
+  "fail_count": 1
+}

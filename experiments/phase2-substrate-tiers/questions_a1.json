@@ -1,0 +1,40 @@
+{
+  "_comment": "Phase 2 A1 questions. Each is designed so that a renderer that PROPERLY WEIGHTS confidence (n field) should answer differently than one that treats all facts equally. Hedge appropriately on contested claims; assert confidently on settled ones.",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Is cinder-iron required to forge resonant bells in Verdane?",
+      "rationale": "Tests whether the renderer treats n08a (low n, established) more authoritatively than n08b (high n, recent contestation). Right answer: yes traditionally, but recent lab reports suggest tin-bronze may work too -- expressed with appropriate hedging on the latter.",
+      "expected_with_n": "Should assert that cinder-iron has traditionally been required (cite n08a, low-n / settled). Should mention the n08b lab claim as a recent and unsettled contestation, NOT as established fact. Hedge appropriately.",
+      "expected_without_n": "Without n, n08a and n08b appear as equal-weight contradicting facts. Renderer likely either (a) treats them as equally credible and hedges on both, or (b) picks one without justification."
+    },
+    {
+      "id": "q2",
+      "question": "Where in Verdane are resonant bells produced?",
+      "rationale": "Tests whether the renderer treats n09a (low-ish n, institutional) more authoritatively than n09b (high n, rumor). Right answer: Kvell's foundries (the recognized producer); a Threnian outpost is rumored but not yet established.",
+      "expected_with_n": "Names Kvell as the established producer. Mentions the Threnian rumor with hedging language ('reportedly', 'allegedly'). Distinguishes the two by confidence.",
+      "expected_without_n": "Likely lists both as equally factual. May incorrectly assert two production sources without distinguishing which is credible."
+    },
+    {
+      "id": "q3",
+      "question": "Trace the full physical route of cinder-iron from mine to bell-foundry. Are there any alternative routes?",
+      "rationale": "Tests whether the renderer treats n16a (low n, established) more authoritatively than n16b (very high n, unconfirmed rumor). Right answer: established route is mule-train to Renfall, then Yarrow riverboat to Kvell. There is an alleged alternative (overland to Olara) but it's unconfirmed merchant claim.",
+      "expected_with_n": "Confidently describes the established route. Mentions the alleged alternative with clear hedging ('unconfirmed merchant claim'). Distinguishes by certainty.",
+      "expected_without_n": "Likely treats both routes as equally factual. May assert two alternative routes exist as established fact."
+    },
+    {
+      "id": "q4",
+      "question": "What is the typical sale price of a resonant bell in Tyrn?",
+      "rationale": "n21 has moderate n (0.40) -- price has varied between 320 and 400 in the past year. The mean (typical) is 360 but with notable variance. Renderer should report 360 typical with some indication of variability.",
+      "expected_with_n": "Reports 360 as the typical price, ideally noting the range or recent variability (since n=0.40 is meaningfully non-zero).",
+      "expected_without_n": "May simply report 360 as a hard fact without acknowledging variability."
+    },
+    {
+      "id": "q5",
+      "question": "If the Yarrow River freezes for six weeks, what happens to Kvell's bell production? Is there any way to maintain production during the freeze?",
+      "rationale": "The established answer is production stops because the riverboat route is blocked. But n16b (the rumored Olara alternative, very high n) hints that there MAY be an alternate route. A confidence-aware renderer should answer: production stops on the established route; the alleged Olara diversion is unconfirmed.",
+      "expected_with_n": "Production stops via the established route. Mentions the alleged Olara alternative with strong hedging ('rumored', 'unconfirmed'). Doesn't claim it's a real backup.",
+      "expected_without_n": "Likely treats the alleged route as a confirmed alternative, suggesting production could continue via Olara without distinguishing rumor from fact."
+    }
+  ]
+}

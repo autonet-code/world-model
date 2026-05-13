@@ -1,0 +1,1342 @@
+{
+  "rename_map": {
+    "identity": "passthrough",
+    "complement": "negate_pred",
+    "compose": "fold_funcs",
+    "compose_left": "fold_funcs_left",
+    "do": "tap_side_effect",
+    "apply": "invoke_with",
+    "juxt": "multicast",
+    "pipe": "thread_value",
+    "thread_first": "weave_first",
+    "thread_last": "weave_last",
+    "is_arity": "has_arg_count",
+    "is_partial_args": "could_partially_apply",
+    "is_valid_args": "could_invoke",
+    "has_keywords": "accepts_kwargs",
+    "has_varargs": "accepts_starargs",
+    "num_required_args": "required_arg_count",
+    "instanceproperty": "instance_only_property",
+    "take": "first_n",
+    "drop": "skip_n",
+    "tail": "last_n",
+    "take_nth": "every_nth",
+    "partition": "chunks_of",
+    "partition_all": "chunks_of_at_most",
+    "sliding_window": "windows_of",
+    "interleave": "weave_seqs",
+    "concat": "flatten_one_level",
+    "concatv": "flatten_args",
+    "cons": "prepend_item",
+    "mapcat": "flat_map",
+    "frequencies": "tally",
+    "unique": "dedupe",
+    "isiterable": "is_iterable",
+    "isdistinct": "all_distinct",
+    "first": "head",
+    "second": "head_after",
+    "nth": "at_index",
+    "last": "final",
+    "remove": "drop_where",
+    "accumulate": "running_reduce",
+    "diff": "first_diff",
+    "topk": "top_n",
+    "peek": "peek_one",
+    "peekn": "peek_many",
+    "pluck": "pluck_at",
+    "interpose": "weave_separator",
+    "groupby": "bucket_by",
+    "merge_sorted": "merge_ordered",
+    "iterate": "iterate_fn",
+    "random_sample": "sample_at_rate",
+    "assoc": "with_kv",
+    "assoc_in": "with_kv_at_path",
+    "dissoc": "without_keys",
+    "get_in": "lookup_path",
+    "itemfilter": "filter_items",
+    "itemmap": "map_items",
+    "keyfilter": "filter_keys",
+    "keymap": "map_keys",
+    "merge": "combine_dicts",
+    "merge_with": "combine_dicts_with",
+    "valfilter": "filter_values",
+    "valmap": "map_values"
+  },
+  "train": [
+    {
+      "orig_name": "last",
+      "name": "final",
+      "signature": "seq",
+      "docstring": "The final element in a sequence\n\n>>> final('ABC')\n'C'",
+      "impl_full_source": "def final(seq):\n    \"\"\" The final element in a sequence\n\n    >>> final('ABC')\n    'C'\n    \"\"\"\n    return last_n(1, seq)[0]\n",
+      "doctests": [
+        {
+          "call": "final('ABC')",
+          "expected": "'C'"
+        }
+      ]
+    },
+    {
+      "orig_name": "frequencies",
+      "name": "tally",
+      "signature": "seq",
+      "docstring": "Find number of occurrences of each value in seq\n\n>>> tally(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP\n{'cat': 3, 'ox': 1, 'pig': 2}\n\nSee Also:\n    countby\n    bucket_by",
+      "impl_full_source": "def tally(seq):\n    \"\"\" Find number of occurrences of each value in seq\n\n    >>> tally(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP\n    {'cat': 3, 'ox': 1, 'pig': 2}\n\n    See Also:\n        countby\n        bucket_by\n    \"\"\"\n    d = collections.defaultdict(int)\n    for item in seq:\n        d[item] += 1\n    return dict(d)\n",
+      "doctests": [
+        {
+          "call": "tally(['cat', 'cat', 'ox', 'pig', 'pig', 'cat'])  #doctest: +SKIP",
+          "expected": "{'cat': 3, 'ox': 1, 'pig': 2}"
+        }
+      ]
+    },
+    {
+      "orig_name": "keyfilter",
+      "name": "filter_keys",
+      "signature": "predicate, d, factory=dict",
+      "docstring": "Filter items in dictionary by key\n\n>>> iseven = lambda x: x % 2 == 0\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> filter_keys(iseven, d)\n{2: 3, 4: 5}\n\nSee Also:\n    filter_values\n    filter_items\n    map_keys",
+      "impl_full_source": "def filter_keys(predicate, d, factory=dict):\n    \"\"\" Filter items in dictionary by key\n\n    >>> iseven = lambda x: x % 2 == 0\n    >>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n    >>> filter_keys(iseven, d)\n    {2: 3, 4: 5}\n\n    See Also:\n        filter_values\n        filter_items\n        map_keys\n    \"\"\"\n    rv = factory()\n    for k, v in d.items():\n        if predicate(k):\n            rv[k] = v\n    return rv\n",
+      "doctests": [
+        {
+          "call": "iseven = lambda x: x % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "d = {1: 2, 2: 3, 3: 4, 4: 5}",
+          "expected": ""
+        },
+        {
+          "call": "filter_keys(iseven, d)",
+          "expected": "{2: 3, 4: 5}"
+        }
+      ]
+    },
+    {
+      "orig_name": "take",
+      "name": "first_n",
+      "signature": "n, seq",
+      "docstring": "The head n elements of a sequence\n\n>>> list(first_n(2, [10, 20, 30, 40, 50]))\n[10, 20]\n\nSee Also:\n    skip_n\n    last_n",
+      "impl_full_source": "def first_n(n, seq):\n    \"\"\" The head n elements of a sequence\n\n    >>> list(first_n(2, [10, 20, 30, 40, 50]))\n    [10, 20]\n\n    See Also:\n        skip_n\n        last_n\n    \"\"\"\n    return itertools.islice(seq, n)\n",
+      "doctests": [
+        {
+          "call": "list(first_n(2, [10, 20, 30, 40, 50]))",
+          "expected": "[10, 20]"
+        }
+      ]
+    },
+    {
+      "orig_name": "partition_all",
+      "name": "chunks_of_at_most",
+      "signature": "n, seq",
+      "docstring": "Partition all elements of sequence into tuples of length at most n\n\nThe final tuple may be shorter to accommodate extra elements.\n\n>>> list(chunks_of_at_most(2, [1, 2, 3, 4]))\n[(1, 2), (3, 4)]\n\n>>> list(chunks_of_at_most(2, [1, 2, 3, 4, 5]))\n[(1, 2), (3, 4), (5,)]\n\nSee Also:\n    chunks_of",
+      "impl_full_source": "def chunks_of_at_most(n, seq):\n    \"\"\" Partition all elements of sequence into tuples of length at most n\n\n    The final tuple may be shorter to accommodate extra elements.\n\n    >>> list(chunks_of_at_most(2, [1, 2, 3, 4]))\n    [(1, 2), (3, 4)]\n\n    >>> list(chunks_of_at_most(2, [1, 2, 3, 4, 5]))\n    [(1, 2), (3, 4), (5,)]\n\n    See Also:\n        chunks_of\n    \"\"\"\n    args = [iter(seq)] * n\n    it = zip_longest(*args, fillvalue=no_pad)\n    try:\n        prev = next(it)\n    except StopIteration:\n        return\n    for item in it:\n        yield prev\n        prev = item\n    if prev[-1] is no_pad:\n        try:\n            # If seq defines __len__, then\n            # we can quickly calculate where no_pad starts\n            yield prev[:len(seq) % n]\n        except TypeError:\n            # Get head index of no_pad without using .index()\n            # https://github.com/pytoolz/toolz/issues/387\n            # Binary search from CPython's bisect module,\n            # modified for passthrough testing.\n            lo, hi = 0, n\n            while lo < hi:\n                mid = (lo + hi) // 2\n                if prev[mid] is no_pad:\n                    hi = mid\n                else:\n                    lo = mid + 1\n            yield prev[:lo]\n    else:\n        yield prev\n",
+      "doctests": [
+        {
+          "call": "list(chunks_of_at_most(2, [1, 2, 3, 4]))",
+          "expected": "[(1, 2), (3, 4)]"
+        },
+        {
+          "call": "list(chunks_of_at_most(2, [1, 2, 3, 4, 5]))",
+          "expected": "[(1, 2), (3, 4), (5,)]"
+        }
+      ]
+    },
+    {
+      "orig_name": "concatv",
+      "name": "flatten_args",
+      "signature": "*seqs",
+      "docstring": "Variadic version of flatten_one_level\n\n>>> list(flatten_args([], [\"a\"], [\"b\", \"c\"]))\n['a', 'b', 'c']\n\nSee also:\n    itertools.chain",
+      "impl_full_source": "def flatten_args(*seqs):\n    \"\"\" Variadic version of flatten_one_level\n\n    >>> list(flatten_args([], [\"a\"], [\"b\", \"c\"]))\n    ['a', 'b', 'c']\n\n    See also:\n        itertools.chain\n    \"\"\"\n    return flatten_one_level(seqs)\n",
+      "doctests": [
+        {
+          "call": "list(flatten_args([], [\"a\"], [\"b\", \"c\"]))",
+          "expected": "['a', 'b', 'c']"
+        }
+      ]
+    },
+    {
+      "orig_name": "keymap",
+      "name": "map_keys",
+      "signature": "func, d, factory=dict",
+      "docstring": "Apply function to keys of dictionary\n\n>>> bills = {\"Alice\": [20, 15, 30], \"Bob\": [10, 35]}\n>>> map_keys(str.lower, bills)  # doctest: +SKIP\n{'alice': [20, 15, 30], 'bob': [10, 35]}\n\nSee Also:\n    map_values\n    map_items",
+      "impl_full_source": "def map_keys(func, d, factory=dict):\n    \"\"\" Apply function to keys of dictionary\n\n    >>> bills = {\"Alice\": [20, 15, 30], \"Bob\": [10, 35]}\n    >>> map_keys(str.lower, bills)  # doctest: +SKIP\n    {'alice': [20, 15, 30], 'bob': [10, 35]}\n\n    See Also:\n        map_values\n        map_items\n    \"\"\"\n    rv = factory()\n    rv.update(zip(map(func, d.keys()), d.values()))\n    return rv\n",
+      "doctests": [
+        {
+          "call": "bills = {\"Alice\": [20, 15, 30], \"Bob\": [10, 35]}",
+          "expected": ""
+        },
+        {
+          "call": "map_keys(str.lower, bills)  # doctest: +SKIP",
+          "expected": "{'alice': [20, 15, 30], 'bob': [10, 35]}"
+        }
+      ]
+    },
+    {
+      "orig_name": "valfilter",
+      "name": "filter_values",
+      "signature": "predicate, d, factory=dict",
+      "docstring": "Filter items in dictionary by value\n\n>>> iseven = lambda x: x % 2 == 0\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> filter_values(iseven, d)\n{1: 2, 3: 4}\n\nSee Also:\n    filter_keys\n    filter_items\n    map_values",
+      "impl_full_source": "def filter_values(predicate, d, factory=dict):\n    \"\"\" Filter items in dictionary by value\n\n    >>> iseven = lambda x: x % 2 == 0\n    >>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n    >>> filter_values(iseven, d)\n    {1: 2, 3: 4}\n\n    See Also:\n        filter_keys\n        filter_items\n        map_values\n    \"\"\"\n    rv = factory()\n    for k, v in d.items():\n        if predicate(v):\n            rv[k] = v\n    return rv\n",
+      "doctests": [
+        {
+          "call": "iseven = lambda x: x % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "d = {1: 2, 2: 3, 3: 4, 4: 5}",
+          "expected": ""
+        },
+        {
+          "call": "filter_values(iseven, d)",
+          "expected": "{1: 2, 3: 4}"
+        }
+      ]
+    },
+    {
+      "orig_name": "peek",
+      "name": "peek_one",
+      "signature": "seq",
+      "docstring": "Retrieve the next element of a sequence\n\nReturns the head element and an iterable equivalent to the original\nsequence, still having the element retrieved.\n\n>>> seq = [0, 1, 2, 3, 4]\n>>> head, seq = peek_one(seq)\n>>> head\n0\n>>> list(seq)\n[0, 1, 2, 3, 4]",
+      "impl_full_source": "def peek_one(seq):\n    \"\"\" Retrieve the next element of a sequence\n\n    Returns the head element and an iterable equivalent to the original\n    sequence, still having the element retrieved.\n\n    >>> seq = [0, 1, 2, 3, 4]\n    >>> head, seq = peek_one(seq)\n    >>> head\n    0\n    >>> list(seq)\n    [0, 1, 2, 3, 4]\n    \"\"\"\n    iterator = iter(seq)\n    item = next(iterator)\n    return item, itertools.chain((item,), iterator)\n",
+      "doctests": [
+        {
+          "call": "seq = [0, 1, 2, 3, 4]",
+          "expected": ""
+        },
+        {
+          "call": "head, seq = peek_one(seq)",
+          "expected": ""
+        },
+        {
+          "call": "head",
+          "expected": "0"
+        },
+        {
+          "call": "list(seq)",
+          "expected": "[0, 1, 2, 3, 4]"
+        }
+      ]
+    },
+    {
+      "orig_name": "concat",
+      "name": "flatten_one_level",
+      "signature": "seqs",
+      "docstring": "Concatenate zero or more iterables, any of which may be infinite.\n\nAn infinite sequence will prevent the rest of the arguments from\nbeing included.\n\nWe use chain.from_iterable rather than ``chain(*seqs)`` so that seqs\ncan be a generator.\n\n>>> list(flatten_one_level([[], [1], [2, 3]]))\n[1, 2, 3]\n\nSee also:\n    itertools.chain.from_iterable  equivalent",
+      "impl_full_source": "def flatten_one_level(seqs):\n    \"\"\" Concatenate zero or more iterables, any of which may be infinite.\n\n    An infinite sequence will prevent the rest of the arguments from\n    being included.\n\n    We use chain.from_iterable rather than ``chain(*seqs)`` so that seqs\n    can be a generator.\n\n    >>> list(flatten_one_level([[], [1], [2, 3]]))\n    [1, 2, 3]\n\n    See also:\n        itertools.chain.from_iterable  equivalent\n    \"\"\"\n    return itertools.chain.from_iterable(seqs)\n",
+      "doctests": [
+        {
+          "call": "list(flatten_one_level([[], [1], [2, 3]]))",
+          "expected": "[1, 2, 3]"
+        }
+      ]
+    },
+    {
+      "orig_name": "is_arity",
+      "name": "has_arg_count",
+      "signature": "n, func, sigspec=None",
+      "docstring": "Does a function have only n positional arguments?\n\nThis function relies on introspection and does not call the function.\nReturns None if validity can't be determined.\n\n>>> def f(x):\n...     return x\n>>> has_arg_count(1, f)\nTrue\n>>> def g(x, y=1):\n...     return x + y\n>>> has_arg_count(1, g)\nFalse",
+      "impl_full_source": "def has_arg_count(n, func, sigspec=None):\n    \"\"\" Does a function have only n positional arguments?\n\n    This function relies on introspection and does not call the function.\n    Returns None if validity can't be determined.\n\n    >>> def f(x):\n    ...     return x\n    >>> has_arg_count(1, f)\n    True\n    >>> def g(x, y=1):\n    ...     return x + y\n    >>> has_arg_count(1, g)\n    False\n    \"\"\"\n    sigspec, rv = _check_sigspec(sigspec, func, _sigs._is_arity, n, func)\n    if sigspec is None:\n        return rv\n    num = required_arg_count(func, sigspec)\n    if num is not None:\n        num = num == n\n        if not num:\n            return False\n    varargs = accepts_starargs(func, sigspec)\n    if varargs:\n        return False\n    keywords = accepts_kwargs(func, sigspec)\n    if keywords:\n        return False\n    if num is None or varargs is None or keywords is None:  # pragma: no cover\n        return None\n    return True\n",
+      "doctests": [
+        {
+          "call": "def f(x):\n    return x",
+          "expected": ""
+        },
+        {
+          "call": "has_arg_count(1, f)",
+          "expected": "True"
+        },
+        {
+          "call": "def g(x, y=1):\n    return x + y",
+          "expected": ""
+        },
+        {
+          "call": "has_arg_count(1, g)",
+          "expected": "False"
+        }
+      ]
+    },
+    {
+      "orig_name": "diff",
+      "name": "first_diff",
+      "signature": "*seqs, **kwargs",
+      "docstring": "Return those items that differ between sequences\n\n>>> list(first_diff([1, 2, 3], [1, 2, 10, 100]))\n[(3, 10)]\n\nShorter sequences may be padded with a ``default`` value:\n\n>>> list(first_diff([1, 2, 3], [1, 2, 10, 100], default=None))\n[(3, 10), (None, 100)]\n\nA ``key`` function may also be applied to each item to use during\ncomparisons:\n\n>>> list(first_diff(['apples', 'bananas'], ['Apples', 'Oranges'], key=str.lower))\n[('bananas', 'Oranges')]",
+      "impl_full_source": "def first_diff(*seqs, **kwargs):\n    \"\"\" Return those items that differ between sequences\n\n    >>> list(first_diff([1, 2, 3], [1, 2, 10, 100]))\n    [(3, 10)]\n\n    Shorter sequences may be padded with a ``default`` value:\n\n    >>> list(first_diff([1, 2, 3], [1, 2, 10, 100], default=None))\n    [(3, 10), (None, 100)]\n\n    A ``key`` function may also be applied to each item to use during\n    comparisons:\n\n    >>> list(first_diff(['apples', 'bananas'], ['Apples', 'Oranges'], key=str.lower))\n    [('bananas', 'Oranges')]\n    \"\"\"\n    N = len(seqs)\n    if N == 1 and isinstance(seqs[0], list):\n        seqs = seqs[0]\n        N = len(seqs)\n    if N < 2:\n        raise TypeError('Too few sequences given (min 2 required)')\n    default = kwargs.get('default', no_default)\n    if default == no_default:\n        iters = zip(*seqs)\n    else:\n        iters = zip_longest(*seqs, fillvalue=default)\n    key = kwargs.get('key', None)\n    if key is None:\n        for items in iters:\n            if items.count(items[0]) != N:\n                yield items\n    else:\n        for items in iters:\n            vals = tuple(map(key, items))\n            if vals.count(vals[0]) != N:\n                yield items\n",
+      "doctests": [
+        {
+          "call": "list(first_diff([1, 2, 3], [1, 2, 10, 100]))",
+          "expected": "[(3, 10)]"
+        },
+        {
+          "call": "list(first_diff([1, 2, 3], [1, 2, 10, 100], default=None))",
+          "expected": "[(3, 10), (None, 100)]"
+        },
+        {
+          "call": "list(first_diff(['apples', 'bananas'], ['Apples', 'Oranges'], key=str.lower))",
+          "expected": "[('bananas', 'Oranges')]"
+        }
+      ]
+    },
+    {
+      "orig_name": "iterate",
+      "name": "iterate_fn",
+      "signature": "func, x",
+      "docstring": "Repeatedly invoke_with a function func onto an original input\n\nYields x, then func(x), then func(func(x)), then func(func(func(x))), etc..\n\n>>> def inc(x):  return x + 1\n>>> counter = iterate_fn(inc, 0)\n>>> next(counter)\n0\n>>> next(counter)\n1\n>>> next(counter)\n2\n\n>>> double = lambda x: x * 2\n>>> powers_of_two = iterate_fn(double, 1)\n>>> next(powers_of_two)\n1\n>>> next(powers_of_two)\n2\n>>> next(powers_of_two)\n4\n>>> next(powers_of_two)\n8",
+      "impl_full_source": "def iterate_fn(func, x):\n    \"\"\" Repeatedly invoke_with a function func onto an original input\n\n    Yields x, then func(x), then func(func(x)), then func(func(func(x))), etc..\n\n    >>> def inc(x):  return x + 1\n    >>> counter = iterate_fn(inc, 0)\n    >>> next(counter)\n    0\n    >>> next(counter)\n    1\n    >>> next(counter)\n    2\n\n    >>> double = lambda x: x * 2\n    >>> powers_of_two = iterate_fn(double, 1)\n    >>> next(powers_of_two)\n    1\n    >>> next(powers_of_two)\n    2\n    >>> next(powers_of_two)\n    4\n    >>> next(powers_of_two)\n    8\n    \"\"\"\n    while True:\n        yield x\n        x = func(x)\n",
+      "doctests": [
+        {
+          "call": "def inc(x):  return x + 1",
+          "expected": ""
+        },
+        {
+          "call": "counter = iterate_fn(inc, 0)",
+          "expected": ""
+        },
+        {
+          "call": "next(counter)",
+          "expected": "0"
+        },
+        {
+          "call": "next(counter)",
+          "expected": "1"
+        },
+        {
+          "call": "next(counter)",
+          "expected": "2"
+        },
+        {
+          "call": "double = lambda x: x * 2",
+          "expected": ""
+        },
+        {
+          "call": "powers_of_two = iterate_fn(double, 1)",
+          "expected": ""
+        },
+        {
+          "call": "next(powers_of_two)",
+          "expected": "1"
+        },
+        {
+          "call": "next(powers_of_two)",
+          "expected": "2"
+        },
+        {
+          "call": "next(powers_of_two)",
+          "expected": "4"
+        },
+        {
+          "call": "next(powers_of_two)",
+          "expected": "8"
+        }
+      ]
+    },
+    {
+      "orig_name": "assoc_in",
+      "name": "with_kv_at_path",
+      "signature": "d, keys, value, factory=dict",
+      "docstring": "Return a new dict with new, potentially nested, key value pair\n\n>>> purchase = {'name': 'Alice',\n...             'order': {'items': ['Apple', 'Orange'],\n...                       'costs': [0.50, 1.25]},\n...             'credit card': '5555-1234-1234-1234'}\n>>> with_kv_at_path(purchase, ['order', 'costs'], [0.25, 1.00]) # doctest: +SKIP\n{'credit card': '5555-1234-1234-1234',\n 'name': 'Alice',\n 'order': {'costs': [0.25, 1.00], 'items': ['Apple', 'Orange']}}",
+      "impl_full_source": "def with_kv_at_path(d, keys, value, factory=dict):\n    \"\"\" Return a new dict with new, potentially nested, key value pair\n\n    >>> purchase = {'name': 'Alice',\n    ...             'order': {'items': ['Apple', 'Orange'],\n    ...                       'costs': [0.50, 1.25]},\n    ...             'credit card': '5555-1234-1234-1234'}\n    >>> with_kv_at_path(purchase, ['order', 'costs'], [0.25, 1.00]) # doctest: +SKIP\n    {'credit card': '5555-1234-1234-1234',\n     'name': 'Alice',\n     'order': {'costs': [0.25, 1.00], 'items': ['Apple', 'Orange']}}\n    \"\"\"\n    return update_in(d, keys, lambda x: value, value, factory)\n",
+      "doctests": [
+        {
+          "call": "purchase = {'name': 'Alice',\n            'order': {'items': ['Apple', 'Orange'],\n                      'costs': [0.50, 1.25]},\n            'credit card': '5555-1234-1234-1234'}",
+          "expected": ""
+        },
+        {
+          "call": "with_kv_at_path(purchase, ['order', 'costs'], [0.25, 1.00]) # doctest: +SKIP",
+          "expected": "{'credit card': '5555-1234-1234-1234',\n 'name': 'Alice',\n 'order': {'costs': [0.25, 1.00], 'items': ['Apple', 'Orange']}}"
+        }
+      ]
+    },
+    {
+      "orig_name": "nth",
+      "name": "at_index",
+      "signature": "n, seq",
+      "docstring": "The at_index element in a sequence\n\n>>> at_index(1, 'ABC')\n'B'",
+      "impl_full_source": "def at_index(n, seq):\n    \"\"\" The at_index element in a sequence\n\n    >>> at_index(1, 'ABC')\n    'B'\n    \"\"\"\n    if isinstance(seq, (tuple, list, Sequence)):\n        return seq[n]\n    else:\n        return next(itertools.islice(seq, n, None))\n",
+      "doctests": [
+        {
+          "call": "at_index(1, 'ABC')",
+          "expected": "'B'"
+        }
+      ]
+    },
+    {
+      "orig_name": "valmap",
+      "name": "map_values",
+      "signature": "func, d, factory=dict",
+      "docstring": "Apply function to values of dictionary\n\n>>> bills = {\"Alice\": [20, 15, 30], \"Bob\": [10, 35]}\n>>> map_values(sum, bills)  # doctest: +SKIP\n{'Alice': 65, 'Bob': 45}\n\nSee Also:\n    map_keys\n    map_items",
+      "impl_full_source": "def map_values(func, d, factory=dict):\n    \"\"\" Apply function to values of dictionary\n\n    >>> bills = {\"Alice\": [20, 15, 30], \"Bob\": [10, 35]}\n    >>> map_values(sum, bills)  # doctest: +SKIP\n    {'Alice': 65, 'Bob': 45}\n\n    See Also:\n        map_keys\n        map_items\n    \"\"\"\n    rv = factory()\n    rv.update(zip(d.keys(), map(func, d.values())))\n    return rv\n",
+      "doctests": [
+        {
+          "call": "bills = {\"Alice\": [20, 15, 30], \"Bob\": [10, 35]}",
+          "expected": ""
+        },
+        {
+          "call": "map_values(sum, bills)  # doctest: +SKIP",
+          "expected": "{'Alice': 65, 'Bob': 45}"
+        }
+      ]
+    },
+    {
+      "orig_name": "compose_left",
+      "name": "fold_funcs_left",
+      "signature": "*funcs",
+      "docstring": "Compose functions to operate in series.\n\nReturns a function that applies other functions in sequence.\n\nFunctions are applied from left to right so that\n``fold_funcs_left(f, g, h)(x, y)`` is the same as ``h(g(f(x, y)))``.\n\nIf no arguments are provided, the passthrough function (f(x) = x) is returned.\n\n>>> inc = lambda i: i + 1\n>>> fold_funcs_left(inc, str)(3)\n'4'\n\nSee Also:\n    fold_funcs\n    thread_value",
+      "impl_full_source": "def fold_funcs_left(*funcs):\n    \"\"\" Compose functions to operate in series.\n\n    Returns a function that applies other functions in sequence.\n\n    Functions are applied from left to right so that\n    ``fold_funcs_left(f, g, h)(x, y)`` is the same as ``h(g(f(x, y)))``.\n\n    If no arguments are provided, the passthrough function (f(x) = x) is returned.\n\n    >>> inc = lambda i: i + 1\n    >>> fold_funcs_left(inc, str)(3)\n    '4'\n\n    See Also:\n        fold_funcs\n        thread_value\n    \"\"\"\n    return fold_funcs(*reversed(funcs))\n",
+      "doctests": [
+        {
+          "call": "inc = lambda i: i + 1",
+          "expected": ""
+        },
+        {
+          "call": "fold_funcs_left(inc, str)(3)",
+          "expected": "'4'"
+        }
+      ]
+    },
+    {
+      "orig_name": "cons",
+      "name": "prepend_item",
+      "signature": "el, seq",
+      "docstring": "Add el to beginning of (possibly infinite) sequence seq.\n\n>>> list(prepend_item(1, [2, 3]))\n[1, 2, 3]",
+      "impl_full_source": "def prepend_item(el, seq):\n    \"\"\" Add el to beginning of (possibly infinite) sequence seq.\n\n    >>> list(prepend_item(1, [2, 3]))\n    [1, 2, 3]\n    \"\"\"\n    return itertools.chain([el], seq)\n",
+      "doctests": [
+        {
+          "call": "list(prepend_item(1, [2, 3]))",
+          "expected": "[1, 2, 3]"
+        }
+      ]
+    },
+    {
+      "orig_name": "get_in",
+      "name": "lookup_path",
+      "signature": "keys, coll, default=None, no_default=False",
+      "docstring": "Returns coll[i0][i1]...[iX] where [i0, i1, ..., iX]==keys.\n\nIf coll[i0][i1]...[iX] cannot be found, returns ``default``, unless\n``no_default`` is specified, then it raises KeyError or IndexError.\n\n``lookup_path`` is a generalization of ``operator.getitem`` for nested data\nstructures such as dictionaries and lists.\n\n>>> transaction = {'name': 'Alice',\n...                'purchase': {'items': ['Apple', 'Orange'],\n...                             'costs': [0.50, 1.25]},\n...                'credit card': '5555-1234-1234-1234'}\n>>> lookup_path(['purchase', 'items', 0], transaction)\n'Apple'\n>>> lookup_path(['name'], transaction)\n'Alice'\n>>> lookup_path(['purchase', 'total'], transaction)\n>>> lookup_path(['purchase', 'items', 'apple'], transaction)\n>>> lookup_path(['purchase', 'items', 10], transaction)\n>>> lookup_path(['purchase', 'total'], transaction, 0)\n0\n>>> lookup_path(['y'], {}, no_default=True)\nTraceback (most recent call final):\n    ...\nKeyError: 'y'\n\nSee Also:\n    itertoolz.get\n    operator.getitem",
+      "impl_full_source": "def lookup_path(keys, coll, default=None, no_default=False):\n    \"\"\" Returns coll[i0][i1]...[iX] where [i0, i1, ..., iX]==keys.\n\n    If coll[i0][i1]...[iX] cannot be found, returns ``default``, unless\n    ``no_default`` is specified, then it raises KeyError or IndexError.\n\n    ``lookup_path`` is a generalization of ``operator.getitem`` for nested data\n    structures such as dictionaries and lists.\n\n    >>> transaction = {'name': 'Alice',\n    ...                'purchase': {'items': ['Apple', 'Orange'],\n    ...                             'costs': [0.50, 1.25]},\n    ...                'credit card': '5555-1234-1234-1234'}\n    >>> lookup_path(['purchase', 'items', 0], transaction)\n    'Apple'\n    >>> lookup_path(['name'], transaction)\n    'Alice'\n    >>> lookup_path(['purchase', 'total'], transaction)\n    >>> lookup_path(['purchase', 'items', 'apple'], transaction)\n    >>> lookup_path(['purchase', 'items', 10], transaction)\n    >>> lookup_path(['purchase', 'total'], transaction, 0)\n    0\n    >>> lookup_path(['y'], {}, no_default=True)\n    Traceback (most recent call final):\n        ...\n    KeyError: 'y'\n\n    See Also:\n        itertoolz.get\n        operator.getitem\n    \"\"\"\n    try:\n        return reduce(operator.getitem, keys, coll)\n    except (KeyError, IndexError, TypeError):\n        if no_default:\n            raise\n        return default\n",
+      "doctests": [
+        {
+          "call": "transaction = {'name': 'Alice',\n               'purchase': {'items': ['Apple', 'Orange'],\n                            'costs': [0.50, 1.25]},\n               'credit card': '5555-1234-1234-1234'}",
+          "expected": ""
+        },
+        {
+          "call": "lookup_path(['purchase', 'items', 0], transaction)",
+          "expected": "'Apple'"
+        },
+        {
+          "call": "lookup_path(['name'], transaction)",
+          "expected": "'Alice'"
+        },
+        {
+          "call": "lookup_path(['purchase', 'total'], transaction)",
+          "expected": ""
+        },
+        {
+          "call": "lookup_path(['purchase', 'items', 'apple'], transaction)",
+          "expected": ""
+        },
+        {
+          "call": "lookup_path(['purchase', 'items', 10], transaction)",
+          "expected": ""
+        },
+        {
+          "call": "lookup_path(['purchase', 'total'], transaction, 0)",
+          "expected": "0"
+        },
+        {
+          "call": "lookup_path(['y'], {}, no_default=True)",
+          "expected": "Traceback (most recent call final):\n    ...\nKeyError: 'y'"
+        }
+      ]
+    },
+    {
+      "orig_name": "do",
+      "name": "tap_side_effect",
+      "signature": "func, x",
+      "docstring": "Runs ``func`` on ``x``, returns ``x``\n\nBecause the results of ``func`` are not returned, only the side\neffects of ``func`` are relevant.\n\nLogging functions can be made by composing ``tap_side_effect`` with a storage function\nlike ``list.append`` or ``file.write``\n\n>>> from toolz import fold_funcs\n>>> from toolz.curried import tap_side_effect\n\n>>> log = []\n>>> inc = lambda x: x + 1\n>>> inc = fold_funcs(inc, tap_side_effect(log.append))\n>>> inc(1)\n2\n>>> inc(11)\n12\n>>> log\n[1, 11]",
+      "impl_full_source": "def tap_side_effect(func, x):\n    \"\"\" Runs ``func`` on ``x``, returns ``x``\n\n    Because the results of ``func`` are not returned, only the side\n    effects of ``func`` are relevant.\n\n    Logging functions can be made by composing ``tap_side_effect`` with a storage function\n    like ``list.append`` or ``file.write``\n\n    >>> from toolz import fold_funcs\n    >>> from toolz.curried import tap_side_effect\n\n    >>> log = []\n    >>> inc = lambda x: x + 1\n    >>> inc = fold_funcs(inc, tap_side_effect(log.append))\n    >>> inc(1)\n    2\n    >>> inc(11)\n    12\n    >>> log\n    [1, 11]\n    \"\"\"\n    func(x)\n    return x\n",
+      "doctests": [
+        {
+          "call": "from toolz import fold_funcs",
+          "expected": ""
+        },
+        {
+          "call": "from toolz.curried import tap_side_effect",
+          "expected": ""
+        },
+        {
+          "call": "log = []",
+          "expected": ""
+        },
+        {
+          "call": "inc = lambda x: x + 1",
+          "expected": ""
+        },
+        {
+          "call": "inc = fold_funcs(inc, tap_side_effect(log.append))",
+          "expected": ""
+        },
+        {
+          "call": "inc(1)",
+          "expected": "2"
+        },
+        {
+          "call": "inc(11)",
+          "expected": "12"
+        },
+        {
+          "call": "log",
+          "expected": "[1, 11]"
+        }
+      ]
+    },
+    {
+      "orig_name": "second",
+      "name": "head_after",
+      "signature": "seq",
+      "docstring": "The head_after element in a sequence\n\n>>> head_after('ABC')\n'B'",
+      "impl_full_source": "def head_after(seq):\n    \"\"\" The head_after element in a sequence\n\n    >>> head_after('ABC')\n    'B'\n    \"\"\"\n    seq = iter(seq)\n    next(seq)\n    return next(seq)\n",
+      "doctests": [
+        {
+          "call": "head_after('ABC')",
+          "expected": "'B'"
+        }
+      ]
+    },
+    {
+      "orig_name": "instanceproperty",
+      "name": "instance_only_property",
+      "signature": "fget=None, fset=None, fdel=None, doc=None, classval=None",
+      "docstring": "Like @property, but returns ``classval`` when used as a class attribute\n\n>>> class MyClass(object):\n...     '''The class docstring'''\n...     @instance_only_property(classval=__doc__)\n...     def __doc__(self):\n...         return 'An object docstring'\n...     @instance_only_property\n...     def val(self):\n...         return 42\n...\n>>> MyClass.__doc__\n'The class docstring'\n>>> MyClass.val is None\nTrue\n>>> obj = MyClass()\n>>> obj.__doc__\n'An object docstring'\n>>> obj.val\n42",
+      "impl_full_source": "def instance_only_property(fget=None, fset=None, fdel=None, doc=None, classval=None):\n    \"\"\" Like @property, but returns ``classval`` when used as a class attribute\n\n    >>> class MyClass(object):\n    ...     '''The class docstring'''\n    ...     @instance_only_property(classval=__doc__)\n    ...     def __doc__(self):\n    ...         return 'An object docstring'\n    ...     @instance_only_property\n    ...     def val(self):\n    ...         return 42\n    ...\n    >>> MyClass.__doc__\n    'The class docstring'\n    >>> MyClass.val is None\n    True\n    >>> obj = MyClass()\n    >>> obj.__doc__\n    'An object docstring'\n    >>> obj.val\n    42\n    \"\"\"\n    if fget is None:\n        return partial(instance_only_property, fset=fset, fdel=fdel, doc=doc,\n                       classval=classval)\n    return InstanceProperty(fget=fget, fset=fset, fdel=fdel, doc=doc,\n                            classval=classval)\n",
+      "doctests": [
+        {
+          "call": "class MyClass(object):\n    '''The class docstring'''\n    @instance_only_property(classval=__doc__)\n    def __doc__(self):\n        return 'An object docstring'\n    @instance_only_property\n    def val(self):\n        return 42",
+          "expected": ""
+        },
+        {
+          "call": "MyClass.__doc__",
+          "expected": "'The class docstring'"
+        },
+        {
+          "call": "MyClass.val is None",
+          "expected": "True"
+        },
+        {
+          "call": "obj = MyClass()",
+          "expected": ""
+        },
+        {
+          "call": "obj.__doc__",
+          "expected": "'An object docstring'"
+        },
+        {
+          "call": "obj.val",
+          "expected": "42"
+        }
+      ]
+    },
+    {
+      "orig_name": "random_sample",
+      "name": "sample_at_rate",
+      "signature": "prob, seq, random_state=None",
+      "docstring": "Return elements from a sequence with probability of prob\n\nReturns a lazy iterator of random items from seq.\n\n``sample_at_rate`` considers each item independently and without\nreplacement. See below how the head time it returned 13 items and the\nnext time it returned 6 items.\n\n>>> seq = list(range(100))\n>>> list(sample_at_rate(0.1, seq)) # doctest: +SKIP\n[6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]\n>>> list(sample_at_rate(0.1, seq)) # doctest: +SKIP\n[6, 44, 54, 61, 69, 94]\n\nProviding an integer seed for ``random_state`` will result in\ndeterministic sampling. Given the same seed it will return the same sample\nevery time.\n\n>>> list(sample_at_rate(0.1, seq, random_state=2016))\n[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]\n>>> list(sample_at_rate(0.1, seq, random_state=2016))\n[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]\n\n``random_state`` can also be any object with a method ``random`` that\nreturns floats between 0.0 and 1.0 (exclusive).\n\n>>> from random import Random\n>>> randobj = Random(2016)\n>>> list(sample_at_rate(0.1, seq, random_state=randobj))\n[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]",
+      "impl_full_source": "def sample_at_rate(prob, seq, random_state=None):\n    \"\"\" Return elements from a sequence with probability of prob\n\n    Returns a lazy iterator of random items from seq.\n\n    ``sample_at_rate`` considers each item independently and without\n    replacement. See below how the head time it returned 13 items and the\n    next time it returned 6 items.\n\n    >>> seq = list(range(100))\n    >>> list(sample_at_rate(0.1, seq)) # doctest: +SKIP\n    [6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]\n    >>> list(sample_at_rate(0.1, seq)) # doctest: +SKIP\n    [6, 44, 54, 61, 69, 94]\n\n    Providing an integer seed for ``random_state`` will result in\n    deterministic sampling. Given the same seed it will return the same sample\n    every time.\n\n    >>> list(sample_at_rate(0.1, seq, random_state=2016))\n    [7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]\n    >>> list(sample_at_rate(0.1, seq, random_state=2016))\n    [7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]\n\n    ``random_state`` can also be any object with a method ``random`` that\n    returns floats between 0.0 and 1.0 (exclusive).\n\n    >>> from random import Random\n    >>> randobj = Random(2016)\n    >>> list(sample_at_rate(0.1, seq, random_state=randobj))\n    [7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]\n    \"\"\"\n    if not hasattr(random_state, 'random'):\n        from random import Random\n\n        random_state = Random(random_state)\n    return filter(lambda _: random_state.random() < prob, seq)\n",
+      "doctests": [
+        {
+          "call": "seq = list(range(100))",
+          "expected": ""
+        },
+        {
+          "call": "list(sample_at_rate(0.1, seq)) # doctest: +SKIP",
+          "expected": "[6, 9, 19, 35, 45, 50, 58, 62, 68, 72, 78, 86, 95]"
+        },
+        {
+          "call": "list(sample_at_rate(0.1, seq)) # doctest: +SKIP",
+          "expected": "[6, 44, 54, 61, 69, 94]"
+        },
+        {
+          "call": "list(sample_at_rate(0.1, seq, random_state=2016))",
+          "expected": "[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]"
+        },
+        {
+          "call": "list(sample_at_rate(0.1, seq, random_state=2016))",
+          "expected": "[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]"
+        },
+        {
+          "call": "from random import Random",
+          "expected": ""
+        },
+        {
+          "call": "randobj = Random(2016)",
+          "expected": ""
+        },
+        {
+          "call": "list(sample_at_rate(0.1, seq, random_state=randobj))",
+          "expected": "[7, 9, 19, 25, 30, 32, 34, 48, 59, 60, 81, 98]"
+        }
+      ]
+    },
+    {
+      "orig_name": "mapcat",
+      "name": "flat_map",
+      "signature": "func, seqs",
+      "docstring": "Apply func to each sequence in seqs, concatenating results.\n\n>>> list(flat_map(lambda s: [c.upper() for c in s],\n...             [[\"a\", \"b\"], [\"c\", \"d\", \"e\"]]))\n['A', 'B', 'C', 'D', 'E']",
+      "impl_full_source": "def flat_map(func, seqs):\n    \"\"\" Apply func to each sequence in seqs, concatenating results.\n\n    >>> list(flat_map(lambda s: [c.upper() for c in s],\n    ...             [[\"a\", \"b\"], [\"c\", \"d\", \"e\"]]))\n    ['A', 'B', 'C', 'D', 'E']\n    \"\"\"\n    return flatten_one_level(map(func, seqs))\n",
+      "doctests": [
+        {
+          "call": "list(flat_map(lambda s: [c.upper() for c in s],\n            [[\"a\", \"b\"], [\"c\", \"d\", \"e\"]]))",
+          "expected": "['A', 'B', 'C', 'D', 'E']"
+        }
+      ]
+    },
+    {
+      "orig_name": "interpose",
+      "name": "weave_separator",
+      "signature": "el, seq",
+      "docstring": "Introduce element between each pair of elements in seq\n\n>>> list(weave_separator(\"a\", [1, 2, 3]))\n[1, 'a', 2, 'a', 3]",
+      "impl_full_source": "def weave_separator(el, seq):\n    \"\"\" Introduce element between each pair of elements in seq\n\n    >>> list(weave_separator(\"a\", [1, 2, 3]))\n    [1, 'a', 2, 'a', 3]\n    \"\"\"\n    inposed = flatten_one_level(zip(itertools.repeat(el), seq))\n    next(inposed)\n    return inposed\n",
+      "doctests": [
+        {
+          "call": "list(weave_separator(\"a\", [1, 2, 3]))",
+          "expected": "[1, 'a', 2, 'a', 3]"
+        }
+      ]
+    },
+    {
+      "orig_name": "unique",
+      "name": "dedupe",
+      "signature": "seq, key=None",
+      "docstring": "Return only dedupe elements of a sequence\n\n>>> tuple(dedupe((1, 2, 3)))\n(1, 2, 3)\n>>> tuple(dedupe((1, 2, 1, 3)))\n(1, 2, 3)\n\nUniqueness can be defined by key keyword\n\n>>> tuple(dedupe(['cat', 'mouse', 'dog', 'hen'], key=len))\n('cat', 'mouse')",
+      "impl_full_source": "def dedupe(seq, key=None):\n    \"\"\" Return only dedupe elements of a sequence\n\n    >>> tuple(dedupe((1, 2, 3)))\n    (1, 2, 3)\n    >>> tuple(dedupe((1, 2, 1, 3)))\n    (1, 2, 3)\n\n    Uniqueness can be defined by key keyword\n\n    >>> tuple(dedupe(['cat', 'mouse', 'dog', 'hen'], key=len))\n    ('cat', 'mouse')\n    \"\"\"\n    seen = set()\n    seen_add = seen.add\n    if key is None:\n        for item in seq:\n            if item not in seen:\n                seen_add(item)\n                yield item\n    else:  # calculate key\n        for item in seq:\n            val = key(item)\n            if val not in seen:\n                seen_add(val)\n                yield item\n",
+      "doctests": [
+        {
+          "call": "tuple(dedupe((1, 2, 3)))",
+          "expected": "(1, 2, 3)"
+        },
+        {
+          "call": "tuple(dedupe((1, 2, 1, 3)))",
+          "expected": "(1, 2, 3)"
+        },
+        {
+          "call": "tuple(dedupe(['cat', 'mouse', 'dog', 'hen'], key=len))",
+          "expected": "('cat', 'mouse')"
+        }
+      ]
+    },
+    {
+      "orig_name": "identity",
+      "name": "passthrough",
+      "signature": "x",
+      "docstring": "Identity function. Return x\n\n>>> passthrough(3)\n3",
+      "impl_full_source": "def passthrough(x):\n    \"\"\" Identity function. Return x\n\n    >>> passthrough(3)\n    3\n    \"\"\"\n    return x\n",
+      "doctests": [
+        {
+          "call": "passthrough(3)",
+          "expected": "3"
+        }
+      ]
+    },
+    {
+      "orig_name": "isiterable",
+      "name": "is_iterable",
+      "signature": "x",
+      "docstring": "Is x iterable?\n\n>>> is_iterable([1, 2, 3])\nTrue\n>>> is_iterable('abc')\nTrue\n>>> is_iterable(5)\nFalse",
+      "impl_full_source": "def is_iterable(x):\n    \"\"\" Is x iterable?\n\n    >>> is_iterable([1, 2, 3])\n    True\n    >>> is_iterable('abc')\n    True\n    >>> is_iterable(5)\n    False\n    \"\"\"\n    try:\n        iter(x)\n        return True\n    except TypeError:\n        return False\n",
+      "doctests": [
+        {
+          "call": "is_iterable([1, 2, 3])",
+          "expected": "True"
+        },
+        {
+          "call": "is_iterable('abc')",
+          "expected": "True"
+        },
+        {
+          "call": "is_iterable(5)",
+          "expected": "False"
+        }
+      ]
+    },
+    {
+      "orig_name": "merge",
+      "name": "combine_dicts",
+      "signature": "*dicts, **kwargs",
+      "docstring": "Merge a collection of dictionaries\n\n>>> combine_dicts({1: 'one'}, {2: 'two'})\n{1: 'one', 2: 'two'}\n\nLater dictionaries have precedence\n\n>>> combine_dicts({1: 2, 3: 4}, {3: 3, 4: 4})\n{1: 2, 3: 3, 4: 4}\n\nSee Also:\n    combine_dicts_with",
+      "impl_full_source": "def combine_dicts(*dicts, **kwargs):\n    \"\"\" Merge a collection of dictionaries\n\n    >>> combine_dicts({1: 'one'}, {2: 'two'})\n    {1: 'one', 2: 'two'}\n\n    Later dictionaries have precedence\n\n    >>> combine_dicts({1: 2, 3: 4}, {3: 3, 4: 4})\n    {1: 2, 3: 3, 4: 4}\n\n    See Also:\n        combine_dicts_with\n    \"\"\"\n    if len(dicts) == 1 and not isinstance(dicts[0], Mapping):\n        dicts = dicts[0]\n    factory = _get_factory(combine_dicts, kwargs)\n\n    rv = factory()\n    for d in dicts:\n        rv.update(d)\n    return rv\n",
+      "doctests": [
+        {
+          "call": "combine_dicts({1: 'one'}, {2: 'two'})",
+          "expected": "{1: 'one', 2: 'two'}"
+        },
+        {
+          "call": "combine_dicts({1: 2, 3: 4}, {3: 3, 4: 4})",
+          "expected": "{1: 2, 3: 3, 4: 4}"
+        }
+      ]
+    },
+    {
+      "orig_name": "interleave",
+      "name": "weave_seqs",
+      "signature": "seqs",
+      "docstring": "Interleave a sequence of sequences\n\n>>> list(weave_seqs([[1, 2], [3, 4]]))\n[1, 3, 2, 4]\n\n>>> ''.join(weave_seqs(('ABC', 'XY')))\n'AXBYC'\n\nBoth the individual sequences and the sequence of sequences may be infinite\n\nReturns a lazy iterator",
+      "impl_full_source": "def weave_seqs(seqs):\n    \"\"\" Interleave a sequence of sequences\n\n    >>> list(weave_seqs([[1, 2], [3, 4]]))\n    [1, 3, 2, 4]\n\n    >>> ''.join(weave_seqs(('ABC', 'XY')))\n    'AXBYC'\n\n    Both the individual sequences and the sequence of sequences may be infinite\n\n    Returns a lazy iterator\n    \"\"\"\n    iters = itertools.cycle(map(iter, seqs))\n    while True:\n        try:\n            for itr in iters:\n                yield next(itr)\n            return\n        except StopIteration:\n            predicate = partial(operator.is_not, itr)\n            iters = itertools.cycle(itertools.takewhile(predicate, iters))\n",
+      "doctests": [
+        {
+          "call": "list(weave_seqs([[1, 2], [3, 4]]))",
+          "expected": "[1, 3, 2, 4]"
+        },
+        {
+          "call": "''.join(weave_seqs(('ABC', 'XY')))",
+          "expected": "'AXBYC'"
+        }
+      ]
+    },
+    {
+      "orig_name": "remove",
+      "name": "drop_where",
+      "signature": "predicate, seq",
+      "docstring": "Return those items of sequence for which predicate(item) is False\n\n>>> def iseven(x):\n...     return x % 2 == 0\n>>> list(drop_where(iseven, [1, 2, 3, 4]))\n[1, 3]",
+      "impl_full_source": "def drop_where(predicate, seq):\n    \"\"\" Return those items of sequence for which predicate(item) is False\n\n    >>> def iseven(x):\n    ...     return x % 2 == 0\n    >>> list(drop_where(iseven, [1, 2, 3, 4]))\n    [1, 3]\n    \"\"\"\n    return filterfalse(predicate, seq)\n",
+      "doctests": [
+        {
+          "call": "def iseven(x):\n    return x % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "list(drop_where(iseven, [1, 2, 3, 4]))",
+          "expected": "[1, 3]"
+        }
+      ]
+    },
+    {
+      "orig_name": "peekn",
+      "name": "peek_many",
+      "signature": "n, seq",
+      "docstring": "Retrieve the next n elements of a sequence\n\nReturns a tuple of the head n elements and an iterable equivalent\nto the original, still having the elements retrieved.\n\n>>> seq = [0, 1, 2, 3, 4]\n>>> first_two, seq = peek_many(2, seq)\n>>> first_two\n(0, 1)\n>>> list(seq)\n[0, 1, 2, 3, 4]",
+      "impl_full_source": "def peek_many(n, seq):\n    \"\"\" Retrieve the next n elements of a sequence\n\n    Returns a tuple of the head n elements and an iterable equivalent\n    to the original, still having the elements retrieved.\n\n    >>> seq = [0, 1, 2, 3, 4]\n    >>> first_two, seq = peek_many(2, seq)\n    >>> first_two\n    (0, 1)\n    >>> list(seq)\n    [0, 1, 2, 3, 4]\n    \"\"\"\n    iterator = iter(seq)\n    peeked = tuple(first_n(n, iterator))\n    return peeked, itertools.chain(iter(peeked), iterator)\n",
+      "doctests": [
+        {
+          "call": "seq = [0, 1, 2, 3, 4]",
+          "expected": ""
+        },
+        {
+          "call": "first_two, seq = peek_many(2, seq)",
+          "expected": ""
+        },
+        {
+          "call": "first_two",
+          "expected": "(0, 1)"
+        },
+        {
+          "call": "list(seq)",
+          "expected": "[0, 1, 2, 3, 4]"
+        }
+      ]
+    },
+    {
+      "orig_name": "isdistinct",
+      "name": "all_distinct",
+      "signature": "seq",
+      "docstring": "All values in sequence are distinct\n\n>>> all_distinct([1, 2, 3])\nTrue\n>>> all_distinct([1, 2, 1])\nFalse\n\n>>> all_distinct(\"Hello\")\nFalse\n>>> all_distinct(\"World\")\nTrue",
+      "impl_full_source": "def all_distinct(seq):\n    \"\"\" All values in sequence are distinct\n\n    >>> all_distinct([1, 2, 3])\n    True\n    >>> all_distinct([1, 2, 1])\n    False\n\n    >>> all_distinct(\"Hello\")\n    False\n    >>> all_distinct(\"World\")\n    True\n    \"\"\"\n    if iter(seq) is seq:\n        seen = set()\n        seen_add = seen.add\n        for item in seq:\n            if item in seen:\n                return False\n            seen_add(item)\n        return True\n    else:\n        return len(seq) == len(set(seq))\n",
+      "doctests": [
+        {
+          "call": "all_distinct([1, 2, 3])",
+          "expected": "True"
+        },
+        {
+          "call": "all_distinct([1, 2, 1])",
+          "expected": "False"
+        },
+        {
+          "call": "all_distinct(\"Hello\")",
+          "expected": "False"
+        },
+        {
+          "call": "all_distinct(\"World\")",
+          "expected": "True"
+        }
+      ]
+    },
+    {
+      "orig_name": "drop",
+      "name": "skip_n",
+      "signature": "n, seq",
+      "docstring": "The sequence following the head n elements\n\n>>> list(skip_n(2, [10, 20, 30, 40, 50]))\n[30, 40, 50]\n\nSee Also:\n    first_n\n    last_n",
+      "impl_full_source": "def skip_n(n, seq):\n    \"\"\" The sequence following the head n elements\n\n    >>> list(skip_n(2, [10, 20, 30, 40, 50]))\n    [30, 40, 50]\n\n    See Also:\n        first_n\n        last_n\n    \"\"\"\n    return itertools.islice(seq, n, None)\n",
+      "doctests": [
+        {
+          "call": "list(skip_n(2, [10, 20, 30, 40, 50]))",
+          "expected": "[30, 40, 50]"
+        }
+      ]
+    },
+    {
+      "orig_name": "groupby",
+      "name": "bucket_by",
+      "signature": "key, seq",
+      "docstring": "Group a collection by a key function\n\n>>> names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']\n>>> bucket_by(len, names)  # doctest: +SKIP\n{3: ['Bob', 'Dan'], 5: ['Alice', 'Edith', 'Frank'], 7: ['Charlie']}\n\n>>> iseven = lambda x: x % 2 == 0\n>>> bucket_by(iseven, [1, 2, 3, 4, 5, 6, 7, 8])  # doctest: +SKIP\n{False: [1, 3, 5, 7], True: [2, 4, 6, 8]}\n\nNon-callable keys imply grouping on a member.\n\n>>> bucket_by('gender', [{'name': 'Alice', 'gender': 'F'},\n...                    {'name': 'Bob', 'gender': 'M'},\n...                    {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP\n{'F': [{'gender': 'F', 'name': 'Alice'}],\n 'M': [{'gender': 'M', 'name': 'Bob'},\n       {'gender': 'M', 'name': 'Charlie'}]}\n\nNot to be confused with ``itertools.bucket_by``\n\nSee Also:\n    countby",
+      "impl_full_source": "def bucket_by(key, seq):\n    \"\"\" Group a collection by a key function\n\n    >>> names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']\n    >>> bucket_by(len, names)  # doctest: +SKIP\n    {3: ['Bob', 'Dan'], 5: ['Alice', 'Edith', 'Frank'], 7: ['Charlie']}\n\n    >>> iseven = lambda x: x % 2 == 0\n    >>> bucket_by(iseven, [1, 2, 3, 4, 5, 6, 7, 8])  # doctest: +SKIP\n    {False: [1, 3, 5, 7], True: [2, 4, 6, 8]}\n\n    Non-callable keys imply grouping on a member.\n\n    >>> bucket_by('gender', [{'name': 'Alice', 'gender': 'F'},\n    ...                    {'name': 'Bob', 'gender': 'M'},\n    ...                    {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP\n    {'F': [{'gender': 'F', 'name': 'Alice'}],\n     'M': [{'gender': 'M', 'name': 'Bob'},\n           {'gender': 'M', 'name': 'Charlie'}]}\n\n    Not to be confused with ``itertools.bucket_by``\n\n    See Also:\n        countby\n    \"\"\"\n    if not callable(key):\n        key = getter(key)\n    d = collections.defaultdict(lambda: [].append)\n    for item in seq:\n        d[key(item)](item)\n    rv = {}\n    for k, v in d.items():\n        rv[k] = v.__self__\n    return rv\n",
+      "doctests": [
+        {
+          "call": "names = ['Alice', 'Bob', 'Charlie', 'Dan', 'Edith', 'Frank']",
+          "expected": ""
+        },
+        {
+          "call": "bucket_by(len, names)  # doctest: +SKIP",
+          "expected": "{3: ['Bob', 'Dan'], 5: ['Alice', 'Edith', 'Frank'], 7: ['Charlie']}"
+        },
+        {
+          "call": "iseven = lambda x: x % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "bucket_by(iseven, [1, 2, 3, 4, 5, 6, 7, 8])  # doctest: +SKIP",
+          "expected": "{False: [1, 3, 5, 7], True: [2, 4, 6, 8]}"
+        },
+        {
+          "call": "bucket_by('gender', [{'name': 'Alice', 'gender': 'F'},\n                   {'name': 'Bob', 'gender': 'M'},\n                   {'name': 'Charlie', 'gender': 'M'}]) # doctest:+SKIP",
+          "expected": "{'F': [{'gender': 'F', 'name': 'Alice'}],\n 'M': [{'gender': 'M', 'name': 'Bob'},\n       {'gender': 'M', 'name': 'Charlie'}]}"
+        }
+      ]
+    },
+    {
+      "orig_name": "accumulate",
+      "name": "running_reduce",
+      "signature": "binop, seq, initial=no_default",
+      "docstring": "Repeatedly invoke_with binary function to a sequence, accumulating results\n\n>>> from operator import add, mul\n>>> list(running_reduce(add, [1, 2, 3, 4, 5]))\n[1, 3, 6, 10, 15]\n>>> list(running_reduce(mul, [1, 2, 3, 4, 5]))\n[1, 2, 6, 24, 120]\n\nAccumulate is similar to ``reduce`` and is good for making functions like\ncumulative sum:\n\n>>> from functools import partial, reduce\n>>> sum    = partial(reduce, add)\n>>> cumsum = partial(running_reduce, add)\n\nAccumulate also takes an optional argument that will be used as the head\nvalue. This is similar to reduce.\n\n>>> list(running_reduce(add, [1, 2, 3], -1))\n[-1, 0, 2, 5]\n>>> list(running_reduce(add, [], 1))\n[1]\n\nSee Also:\n    itertools.running_reduce :  In standard itertools for Python 3.2+",
+      "impl_full_source": "def running_reduce(binop, seq, initial=no_default):\n    \"\"\" Repeatedly invoke_with binary function to a sequence, accumulating results\n\n    >>> from operator import add, mul\n    >>> list(running_reduce(add, [1, 2, 3, 4, 5]))\n    [1, 3, 6, 10, 15]\n    >>> list(running_reduce(mul, [1, 2, 3, 4, 5]))\n    [1, 2, 6, 24, 120]\n\n    Accumulate is similar to ``reduce`` and is good for making functions like\n    cumulative sum:\n\n    >>> from functools import partial, reduce\n    >>> sum    = partial(reduce, add)\n    >>> cumsum = partial(running_reduce, add)\n\n    Accumulate also takes an optional argument that will be used as the head\n    value. This is similar to reduce.\n\n    >>> list(running_reduce(add, [1, 2, 3], -1))\n    [-1, 0, 2, 5]\n    >>> list(running_reduce(add, [], 1))\n    [1]\n\n    See Also:\n        itertools.running_reduce :  In standard itertools for Python 3.2+\n    \"\"\"\n    seq = iter(seq)\n    if initial == no_default:\n        try:\n            result = next(seq)\n        except StopIteration:\n            return\n    else:\n        result = initial\n    yield result\n    for elem in seq:\n        result = binop(result, elem)\n        yield result\n",
+      "doctests": [
+        {
+          "call": "from operator import add, mul",
+          "expected": ""
+        },
+        {
+          "call": "list(running_reduce(add, [1, 2, 3, 4, 5]))",
+          "expected": "[1, 3, 6, 10, 15]"
+        },
+        {
+          "call": "list(running_reduce(mul, [1, 2, 3, 4, 5]))",
+          "expected": "[1, 2, 6, 24, 120]"
+        },
+        {
+          "call": "from functools import partial, reduce",
+          "expected": ""
+        },
+        {
+          "call": "sum    = partial(reduce, add)",
+          "expected": ""
+        },
+        {
+          "call": "cumsum = partial(running_reduce, add)",
+          "expected": ""
+        },
+        {
+          "call": "list(running_reduce(add, [1, 2, 3], -1))",
+          "expected": "[-1, 0, 2, 5]"
+        },
+        {
+          "call": "list(running_reduce(add, [], 1))",
+          "expected": "[1]"
+        }
+      ]
+    },
+    {
+      "orig_name": "itemmap",
+      "name": "map_items",
+      "signature": "func, d, factory=dict",
+      "docstring": "Apply function to items of dictionary\n\n>>> accountids = {\"Alice\": 10, \"Bob\": 20}\n>>> map_items(reversed, accountids)  # doctest: +SKIP\n{10: \"Alice\", 20: \"Bob\"}\n\nSee Also:\n    map_keys\n    map_values",
+      "impl_full_source": "def map_items(func, d, factory=dict):\n    \"\"\" Apply function to items of dictionary\n\n    >>> accountids = {\"Alice\": 10, \"Bob\": 20}\n    >>> map_items(reversed, accountids)  # doctest: +SKIP\n    {10: \"Alice\", 20: \"Bob\"}\n\n    See Also:\n        map_keys\n        map_values\n    \"\"\"\n    rv = factory()\n    rv.update(map(func, d.items()))\n    return rv\n",
+      "doctests": [
+        {
+          "call": "accountids = {\"Alice\": 10, \"Bob\": 20}",
+          "expected": ""
+        },
+        {
+          "call": "map_items(reversed, accountids)  # doctest: +SKIP",
+          "expected": "{10: \"Alice\", 20: \"Bob\"}"
+        }
+      ]
+    },
+    {
+      "orig_name": "tail",
+      "name": "last_n",
+      "signature": "n, seq",
+      "docstring": "The final n elements of a sequence\n\n>>> last_n(2, [10, 20, 30, 40, 50])\n[40, 50]\n\nSee Also:\n    skip_n\n    first_n",
+      "impl_full_source": "def last_n(n, seq):\n    \"\"\" The final n elements of a sequence\n\n    >>> last_n(2, [10, 20, 30, 40, 50])\n    [40, 50]\n\n    See Also:\n        skip_n\n        first_n\n    \"\"\"\n    try:\n        return seq[-n:]\n    except (TypeError, KeyError):\n        return tuple(collections.deque(seq, n))\n",
+      "doctests": [
+        {
+          "call": "last_n(2, [10, 20, 30, 40, 50])",
+          "expected": "[40, 50]"
+        }
+      ]
+    },
+    {
+      "orig_name": "dissoc",
+      "name": "without_keys",
+      "signature": "d, *keys, **kwargs",
+      "docstring": "Return a new dict with the given key(s) removed.\n\nNew dict has d[key] deleted for each supplied key.\nDoes not modify the initial dictionary.\n\n>>> without_keys({'x': 1, 'y': 2}, 'y')\n{'x': 1}\n>>> without_keys({'x': 1, 'y': 2}, 'y', 'x')\n{}\n>>> without_keys({'x': 1}, 'y') # Ignores missing keys\n{'x': 1}",
+      "impl_full_source": "def without_keys(d, *keys, **kwargs):\n    \"\"\" Return a new dict with the given key(s) removed.\n\n    New dict has d[key] deleted for each supplied key.\n    Does not modify the initial dictionary.\n\n    >>> without_keys({'x': 1, 'y': 2}, 'y')\n    {'x': 1}\n    >>> without_keys({'x': 1, 'y': 2}, 'y', 'x')\n    {}\n    >>> without_keys({'x': 1}, 'y') # Ignores missing keys\n    {'x': 1}\n    \"\"\"\n    factory = _get_factory(without_keys, kwargs)\n    d2 = factory()\n\n    if len(keys) < len(d) * .6:\n        d2.update(d)\n        for key in keys:\n            if key in d2:\n                del d2[key]\n    else:\n        remaining = set(d)\n        remaining.difference_update(keys)\n        for k in remaining:\n            d2[k] = d[k]\n    return d2\n",
+      "doctests": [
+        {
+          "call": "without_keys({'x': 1, 'y': 2}, 'y')",
+          "expected": "{'x': 1}"
+        },
+        {
+          "call": "without_keys({'x': 1, 'y': 2}, 'y', 'x')",
+          "expected": "{}"
+        },
+        {
+          "call": "without_keys({'x': 1}, 'y') # Ignores missing keys",
+          "expected": "{'x': 1}"
+        }
+      ]
+    },
+    {
+      "orig_name": "merge_with",
+      "name": "combine_dicts_with",
+      "signature": "func, *dicts, **kwargs",
+      "docstring": "Merge dictionaries and invoke_with function to combined values\n\nA key may occur in more than one dict, and all values mapped from the key\nwill be passed to the function as a list, such as func([val1, val2, ...]).\n\n>>> combine_dicts_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})\n{1: 11, 2: 22}\n\n>>> combine_dicts_with(head, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP\n{1: 1, 2: 2, 3: 30}\n\nSee Also:\n    combine_dicts",
+      "impl_full_source": "def combine_dicts_with(func, *dicts, **kwargs):\n    \"\"\" Merge dictionaries and invoke_with function to combined values\n\n    A key may occur in more than one dict, and all values mapped from the key\n    will be passed to the function as a list, such as func([val1, val2, ...]).\n\n    >>> combine_dicts_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})\n    {1: 11, 2: 22}\n\n    >>> combine_dicts_with(head, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP\n    {1: 1, 2: 2, 3: 30}\n\n    See Also:\n        combine_dicts\n    \"\"\"\n    if len(dicts) == 1 and not isinstance(dicts[0], Mapping):\n        dicts = dicts[0]\n    factory = _get_factory(combine_dicts_with, kwargs)\n\n    values = collections.defaultdict(lambda: [].append)\n    for d in dicts:\n        for k, v in d.items():\n            values[k](v)\n\n    result = factory()\n    for k, v in values.items():\n        result[k] = func(v.__self__)\n    return result\n",
+      "doctests": [
+        {
+          "call": "combine_dicts_with(sum, {1: 1, 2: 2}, {1: 10, 2: 20})",
+          "expected": "{1: 11, 2: 22}"
+        },
+        {
+          "call": "combine_dicts_with(head, {1: 1, 2: 2}, {2: 20, 3: 30})  # doctest: +SKIP",
+          "expected": "{1: 1, 2: 2, 3: 30}"
+        }
+      ]
+    },
+    {
+      "orig_name": "compose",
+      "name": "fold_funcs",
+      "signature": "*funcs",
+      "docstring": "Compose functions to operate in series.\n\nReturns a function that applies other functions in sequence.\n\nFunctions are applied from right to left so that\n``fold_funcs(f, g, h)(x, y)`` is the same as ``f(g(h(x, y)))``.\n\nIf no arguments are provided, the passthrough function (f(x) = x) is returned.\n\n>>> inc = lambda i: i + 1\n>>> fold_funcs(str, inc)(3)\n'4'\n\nSee Also:\n    fold_funcs_left\n    thread_value",
+      "impl_full_source": "def fold_funcs(*funcs):\n    \"\"\" Compose functions to operate in series.\n\n    Returns a function that applies other functions in sequence.\n\n    Functions are applied from right to left so that\n    ``fold_funcs(f, g, h)(x, y)`` is the same as ``f(g(h(x, y)))``.\n\n    If no arguments are provided, the passthrough function (f(x) = x) is returned.\n\n    >>> inc = lambda i: i + 1\n    >>> fold_funcs(str, inc)(3)\n    '4'\n\n    See Also:\n        fold_funcs_left\n        thread_value\n    \"\"\"\n    if not funcs:\n        return passthrough\n    if len(funcs) == 1:\n        return funcs[0]\n    else:\n        return Compose(funcs)\n",
+      "doctests": [
+        {
+          "call": "inc = lambda i: i + 1",
+          "expected": ""
+        },
+        {
+          "call": "fold_funcs(str, inc)(3)",
+          "expected": "'4'"
+        }
+      ]
+    },
+    {
+      "orig_name": "first",
+      "name": "head",
+      "signature": "seq",
+      "docstring": "The head element in a sequence\n\n>>> head('ABC')\n'A'",
+      "impl_full_source": "def head(seq):\n    \"\"\" The head element in a sequence\n\n    >>> head('ABC')\n    'A'\n    \"\"\"\n    return next(iter(seq))\n",
+      "doctests": [
+        {
+          "call": "head('ABC')",
+          "expected": "'A'"
+        }
+      ]
+    },
+    {
+      "orig_name": "pluck",
+      "name": "pluck_at",
+      "signature": "ind, seqs, default=no_default",
+      "docstring": "plucks an element or several elements from each item in a sequence.\n\n``pluck_at`` maps ``itertoolz.get`` over a sequence and returns one or more\nelements of each item in the sequence.\n\nThis is equivalent to running `map(curried.get(ind), seqs)`\n\n``ind`` can be either a single string/index or a list of strings/indices.\n``seqs`` should be sequence containing sequences or dicts.\n\ne.g.\n\n>>> data = [{'id': 1, 'name': 'Cheese'}, {'id': 2, 'name': 'Pies'}]\n>>> list(pluck_at('name', data))\n['Cheese', 'Pies']\n>>> list(pluck_at([0, 1], [[1, 2, 3], [4, 5, 7]]))\n[(1, 2), (4, 5)]\n\nSee Also:\n    get\n    map",
+      "impl_full_source": "def pluck_at(ind, seqs, default=no_default):\n    \"\"\" plucks an element or several elements from each item in a sequence.\n\n    ``pluck_at`` maps ``itertoolz.get`` over a sequence and returns one or more\n    elements of each item in the sequence.\n\n    This is equivalent to running `map(curried.get(ind), seqs)`\n\n    ``ind`` can be either a single string/index or a list of strings/indices.\n    ``seqs`` should be sequence containing sequences or dicts.\n\n    e.g.\n\n    >>> data = [{'id': 1, 'name': 'Cheese'}, {'id': 2, 'name': 'Pies'}]\n    >>> list(pluck_at('name', data))\n    ['Cheese', 'Pies']\n    >>> list(pluck_at([0, 1], [[1, 2, 3], [4, 5, 7]]))\n    [(1, 2), (4, 5)]\n\n    See Also:\n        get\n        map\n    \"\"\"\n    if default == no_default:\n        get = getter(ind)\n        return map(get, seqs)\n    elif isinstance(ind, list):\n        return (tuple(_get(item, seq, default) for item in ind)\n                for seq in seqs)\n    return (_get(ind, seq, default) for seq in seqs)\n",
+      "doctests": [
+        {
+          "call": "data = [{'id': 1, 'name': 'Cheese'}, {'id': 2, 'name': 'Pies'}]",
+          "expected": ""
+        },
+        {
+          "call": "list(pluck_at('name', data))",
+          "expected": "['Cheese', 'Pies']"
+        },
+        {
+          "call": "list(pluck_at([0, 1], [[1, 2, 3], [4, 5, 7]]))",
+          "expected": "[(1, 2), (4, 5)]"
+        }
+      ]
+    },
+    {
+      "orig_name": "apply",
+      "name": "invoke_with",
+      "signature": "*func_and_args, **kwargs",
+      "docstring": "Applies a function and returns the results\n\n>>> def double(x): return 2*x\n>>> def inc(x):    return x + 1\n>>> invoke_with(double, 5)\n10\n\n>>> tuple(map(invoke_with, [double, inc, double], [10, 500, 8000]))\n(20, 501, 16000)",
+      "impl_full_source": "def invoke_with(*func_and_args, **kwargs):\n    \"\"\" Applies a function and returns the results\n\n    >>> def double(x): return 2*x\n    >>> def inc(x):    return x + 1\n    >>> invoke_with(double, 5)\n    10\n\n    >>> tuple(map(invoke_with, [double, inc, double], [10, 500, 8000]))\n    (20, 501, 16000)\n    \"\"\"\n    if not func_and_args:\n        raise TypeError('func argument is required')\n    func, args = func_and_args[0], func_and_args[1:]\n    return func(*args, **kwargs)\n",
+      "doctests": [
+        {
+          "call": "def double(x): return 2*x",
+          "expected": ""
+        },
+        {
+          "call": "def inc(x):    return x + 1",
+          "expected": ""
+        },
+        {
+          "call": "invoke_with(double, 5)",
+          "expected": "10"
+        },
+        {
+          "call": "tuple(map(invoke_with, [double, inc, double], [10, 500, 8000]))",
+          "expected": "(20, 501, 16000)"
+        }
+      ]
+    }
+  ],
+  "test": [
+    {
+      "orig_name": "topk",
+      "name": "top_n",
+      "signature": "k, seq, key=None",
+      "docstring": "Find the k largest elements of a sequence\n\nOperates lazily in ``n*log(k)`` time\n\n>>> top_n(2, [1, 100, 10, 1000])\n(1000, 100)\n\nUse a key function to change sorted order\n\n>>> top_n(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)\n('Charlie', 'Alice')\n\nSee also:\n    heapq.nlargest",
+      "doctests": [
+        {
+          "call": "top_n(2, [1, 100, 10, 1000])",
+          "expected": "(1000, 100)"
+        },
+        {
+          "call": "top_n(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)",
+          "expected": "('Charlie', 'Alice')"
+        }
+      ],
+      "sparse_docstring": "Find the k largest elements of a sequence\n\nOperates lazily in ``n*log(k)`` time\n\n>>> top_n(2, [1, 100, 10, 1000])\n(1000, 100)\n\nUse a key function to change sorted order\n\n>>> top_n(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)\n('Charlie', 'Alice')\n\nSee also:\n    heapq\n\n>>> top_n(2, [1, 100, 10, 1000])\n(1000, 100)\n>>> top_n(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)\n('Charlie', 'Alice')",
+      "shown_doctests": [
+        {
+          "call": "top_n(2, [1, 100, 10, 1000])",
+          "expected": "(1000, 100)"
+        },
+        {
+          "call": "top_n(2, ['Alice', 'Bob', 'Charlie', 'Dan'], key=len)",
+          "expected": "('Charlie', 'Alice')"
+        }
+      ]
+    },
+    {
+      "orig_name": "assoc",
+      "name": "with_kv",
+      "signature": "d, key, value, factory=dict",
+      "docstring": "Return a new dict with new key value pair\n\nNew dict has d[key] set to value. Does not modify the initial dictionary.\n\n>>> with_kv({'x': 1}, 'x', 2)\n{'x': 2}\n>>> with_kv({'x': 1}, 'y', 3)   # doctest: +SKIP\n{'x': 1, 'y': 3}",
+      "doctests": [
+        {
+          "call": "with_kv({'x': 1}, 'x', 2)",
+          "expected": "{'x': 2}"
+        },
+        {
+          "call": "with_kv({'x': 1}, 'y', 3)   # doctest: +SKIP",
+          "expected": "{'x': 1, 'y': 3}"
+        }
+      ],
+      "sparse_docstring": "Return a new dict with new key value pair\n\nNew dict has d[key] set to value\n\n>>> with_kv({'x': 1}, 'x', 2)\n{'x': 2}\n>>> with_kv({'x': 1}, 'y', 3)   # doctest: +SKIP\n{'x': 1, 'y': 3}",
+      "shown_doctests": [
+        {
+          "call": "with_kv({'x': 1}, 'x', 2)",
+          "expected": "{'x': 2}"
+        },
+        {
+          "call": "with_kv({'x': 1}, 'y', 3)   # doctest: +SKIP",
+          "expected": "{'x': 1, 'y': 3}"
+        }
+      ]
+    },
+    {
+      "orig_name": "pipe",
+      "name": "thread_value",
+      "signature": "data, *funcs",
+      "docstring": "Pipe a value through a sequence of functions\n\nI.e. ``thread_value(data, f, g, h)`` is equivalent to ``h(g(f(data)))``\n\nWe think of the value as progressing through a thread_value of several\ntransformations, much like pipes in UNIX\n\n``$ cat data | f | g | h``\n\n>>> double = lambda i: 2 * i\n>>> thread_value(3, double, str)\n'6'\n\nSee Also:\n    fold_funcs\n    fold_funcs_left\n    weave_first\n    weave_last",
+      "doctests": [
+        {
+          "call": "double = lambda i: 2 * i",
+          "expected": ""
+        },
+        {
+          "call": "thread_value(3, double, str)",
+          "expected": "'6'"
+        }
+      ],
+      "sparse_docstring": "Pipe a value through a sequence of functions\n\nI\n\n>>> double = lambda i: 2 * i\n\n>>> thread_value(3, double, str)\n'6'",
+      "shown_doctests": [
+        {
+          "call": "double = lambda i: 2 * i",
+          "expected": ""
+        },
+        {
+          "call": "thread_value(3, double, str)",
+          "expected": "'6'"
+        }
+      ]
+    },
+    {
+      "orig_name": "thread_last",
+      "name": "weave_last",
+      "signature": "val, *forms",
+      "docstring": "Thread value through a sequence of functions/forms\n\n>>> def double(x): return 2*x\n>>> def inc(x):    return x + 1\n>>> weave_last(1, inc, double)\n4\n\nIf the function expects more than one input you can specify those inputs\nin a tuple.  The value is used as the final input.\n\n>>> def add(x, y): return x + y\n>>> def pow(x, y): return x**y\n>>> weave_last(1, (add, 4), (pow, 2))  # pow(2, add(4, 1))\n32\n\nSo in general\n    weave_last(x, f, (g, y, z))\nexpands to\n    g(y, z, f(x))\n\n>>> def iseven(x):\n...     return x % 2 == 0\n>>> list(weave_last([1, 2, 3], (map, inc), (filter, iseven)))\n[2, 4]\n\nSee Also:\n    weave_first",
+      "doctests": [
+        {
+          "call": "def double(x): return 2*x",
+          "expected": ""
+        },
+        {
+          "call": "def inc(x):    return x + 1",
+          "expected": ""
+        },
+        {
+          "call": "weave_last(1, inc, double)",
+          "expected": "4"
+        },
+        {
+          "call": "def add(x, y): return x + y",
+          "expected": ""
+        },
+        {
+          "call": "def pow(x, y): return x**y",
+          "expected": ""
+        },
+        {
+          "call": "weave_last(1, (add, 4), (pow, 2))  # pow(2, add(4, 1))",
+          "expected": "32"
+        },
+        {
+          "call": "def iseven(x):\n    return x % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "list(weave_last([1, 2, 3], (map, inc), (filter, iseven)))",
+          "expected": "[2, 4]"
+        }
+      ],
+      "sparse_docstring": "Thread value through a sequence of functions/forms\n\n>>> def double(x): return 2*x\n>>> def inc(x):    return x + 1\n>>> weave_last(1, inc, double)\n4\n\nIf the function expects more than one input you can specify those inputs\nin a tuple\n\n>>> def double(x): return 2*x\n\n>>> def inc(x):    return x + 1\n",
+      "shown_doctests": [
+        {
+          "call": "def double(x): return 2*x",
+          "expected": ""
+        },
+        {
+          "call": "def inc(x):    return x + 1",
+          "expected": ""
+        }
+      ]
+    },
+    {
+      "orig_name": "take_nth",
+      "name": "every_nth",
+      "signature": "n, seq",
+      "docstring": "Every at_index item in seq\n\n>>> list(every_nth(2, [10, 20, 30, 40, 50]))\n[10, 30, 50]",
+      "doctests": [
+        {
+          "call": "list(every_nth(2, [10, 20, 30, 40, 50]))",
+          "expected": "[10, 30, 50]"
+        }
+      ],
+      "sparse_docstring": "Every at_index item in seq\n\n>>> list(every_nth(2, [10, 20, 30, 40, 50]))\n[10, 30, 50]\n\n>>> list(every_nth(2, [10, 20, 30, 40, 50]))\n[10, 30, 50]",
+      "shown_doctests": [
+        {
+          "call": "list(every_nth(2, [10, 20, 30, 40, 50]))",
+          "expected": "[10, 30, 50]"
+        }
+      ]
+    },
+    {
+      "orig_name": "partition",
+      "name": "chunks_of",
+      "signature": "n, seq, pad=no_pad",
+      "docstring": "Partition sequence into tuples of length n\n\n>>> list(chunks_of(2, [1, 2, 3, 4]))\n[(1, 2), (3, 4)]\n\nIf the length of ``seq`` is not evenly divisible by ``n``, the final tuple\nis dropped if ``pad`` is not specified, or filled to length ``n`` by pad:\n\n>>> list(chunks_of(2, [1, 2, 3, 4, 5]))\n[(1, 2), (3, 4)]\n\n>>> list(chunks_of(2, [1, 2, 3, 4, 5], pad=None))\n[(1, 2), (3, 4), (5, None)]\n\nSee Also:\n    chunks_of_at_most",
+      "doctests": [
+        {
+          "call": "list(chunks_of(2, [1, 2, 3, 4]))",
+          "expected": "[(1, 2), (3, 4)]"
+        },
+        {
+          "call": "list(chunks_of(2, [1, 2, 3, 4, 5]))",
+          "expected": "[(1, 2), (3, 4)]"
+        },
+        {
+          "call": "list(chunks_of(2, [1, 2, 3, 4, 5], pad=None))",
+          "expected": "[(1, 2), (3, 4), (5, None)]"
+        }
+      ],
+      "sparse_docstring": "Partition sequence into tuples of length n\n\n>>> list(chunks_of(2, [1, 2, 3, 4]))\n[(1, 2), (3, 4)]\n\nIf the length of ``seq`` is not evenly divisible by ``n``, the final tuple\nis dropped if ``pad`` is not specified, or filled to length ``n`` by pad:\n\n>>> list(chunks_of(2, [1, 2, 3, 4, 5]))\n[(1, 2), (3, 4)]\n\n>>> list(chunks_of(2, [1, 2, 3, 4, 5], pad=None))\n[(1, 2), (3, 4), (5, None)]\n\nSee Also:\n    chunks_of_at_most\n\n>>> list(chunks_of(2, [1, 2, 3, 4]))\n[(1, 2), (3, 4)]\n>>> list(chunks_of(2, [1, 2, 3, 4, 5]))\n[(1, 2), (3, 4)]",
+      "shown_doctests": [
+        {
+          "call": "list(chunks_of(2, [1, 2, 3, 4]))",
+          "expected": "[(1, 2), (3, 4)]"
+        },
+        {
+          "call": "list(chunks_of(2, [1, 2, 3, 4, 5]))",
+          "expected": "[(1, 2), (3, 4)]"
+        }
+      ]
+    },
+    {
+      "orig_name": "sliding_window",
+      "name": "windows_of",
+      "signature": "n, seq",
+      "docstring": "A sequence of overlapping subsequences\n\n>>> list(windows_of(2, [1, 2, 3, 4]))\n[(1, 2), (2, 3), (3, 4)]\n\nThis function creates a sliding window suitable for transformations like\nsliding means / smoothing\n\n>>> mean = lambda seq: float(sum(seq)) / len(seq)\n>>> list(map(mean, windows_of(2, [1, 2, 3, 4])))\n[1.5, 2.5, 3.5]",
+      "doctests": [
+        {
+          "call": "list(windows_of(2, [1, 2, 3, 4]))",
+          "expected": "[(1, 2), (2, 3), (3, 4)]"
+        },
+        {
+          "call": "mean = lambda seq: float(sum(seq)) / len(seq)",
+          "expected": ""
+        },
+        {
+          "call": "list(map(mean, windows_of(2, [1, 2, 3, 4])))",
+          "expected": "[1.5, 2.5, 3.5]"
+        }
+      ],
+      "sparse_docstring": "A sequence of overlapping subsequences\n\n>>> list(windows_of(2, [1, 2, 3, 4]))\n[(1, 2), (2, 3), (3, 4)]\n\nThis function creates a sliding window suitable for transformations like\nsliding means / smoothing\n\n>>> mean = lambda seq: float(sum(seq)) / len(seq)\n>>> list(map(mean, windows_of(2, [1, 2, 3, 4])))\n[1\n\n>>> list(windows_of(2, [1, 2, 3, 4]))\n[(1, 2), (2, 3), (3, 4)]\n>>> mean = lambda seq: float(sum(seq)) / len(seq)\n",
+      "shown_doctests": [
+        {
+          "call": "list(windows_of(2, [1, 2, 3, 4]))",
+          "expected": "[(1, 2), (2, 3), (3, 4)]"
+        },
+        {
+          "call": "mean = lambda seq: float(sum(seq)) / len(seq)",
+          "expected": ""
+        }
+      ]
+    },
+    {
+      "orig_name": "itemfilter",
+      "name": "filter_items",
+      "signature": "predicate, d, factory=dict",
+      "docstring": "Filter items in dictionary by item\n\n>>> def isvalid(item):\n...     k, v = item\n...     return k % 2 == 0 and v < 4\n\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n>>> filter_items(isvalid, d)\n{2: 3}\n\nSee Also:\n    filter_keys\n    filter_values\n    map_items",
+      "doctests": [
+        {
+          "call": "def isvalid(item):\n    k, v = item\n    return k % 2 == 0 and v < 4",
+          "expected": ""
+        },
+        {
+          "call": "d = {1: 2, 2: 3, 3: 4, 4: 5}",
+          "expected": ""
+        },
+        {
+          "call": "filter_items(isvalid, d)",
+          "expected": "{2: 3}"
+        }
+      ],
+      "sparse_docstring": "Filter items in dictionary by item\n\n>>> def isvalid(item):\n\n>>> def isvalid(item):\n    k, v = item\n    return k % 2 == 0 and v < 4\n\n>>> d = {1: 2, 2: 3, 3: 4, 4: 5}\n",
+      "shown_doctests": [
+        {
+          "call": "def isvalid(item):\n    k, v = item\n    return k % 2 == 0 and v < 4",
+          "expected": ""
+        },
+        {
+          "call": "d = {1: 2, 2: 3, 3: 4, 4: 5}",
+          "expected": ""
+        }
+      ]
+    },
+    {
+      "orig_name": "complement",
+      "name": "negate_pred",
+      "signature": "func",
+      "docstring": "Convert a predicate function to its logical negate_pred.\n\nIn other words, return a function that, for inputs that normally\nyield True, yields False, and vice-versa.\n\n>>> def iseven(n): return n % 2 == 0\n>>> isodd = negate_pred(iseven)\n>>> iseven(2)\nTrue\n>>> isodd(2)\nFalse",
+      "doctests": [
+        {
+          "call": "def iseven(n): return n % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "isodd = negate_pred(iseven)",
+          "expected": ""
+        },
+        {
+          "call": "iseven(2)",
+          "expected": "True"
+        },
+        {
+          "call": "isodd(2)",
+          "expected": "False"
+        }
+      ],
+      "sparse_docstring": "Convert a predicate function to its logical negate_pred\n\n>>> def iseven(n): return n % 2 == 0\n\n>>> isodd = negate_pred(iseven)\n",
+      "shown_doctests": [
+        {
+          "call": "def iseven(n): return n % 2 == 0",
+          "expected": ""
+        },
+        {
+          "call": "isodd = negate_pred(iseven)",
+          "expected": ""
+        }
+      ]
+    },
+    {
+      "orig_name": "thread_first",
+      "name": "weave_first",
+      "signature": "val, *forms",
+      "docstring": "Thread value through a sequence of functions/forms\n\n>>> def double(x): return 2*x\n>>> def inc(x):    return x + 1\n>>> weave_first(1, inc, double)\n4\n\nIf the function expects more than one input you can specify those inputs\nin a tuple.  The value is used as the head input.\n\n>>> def add(x, y): return x + y\n>>> def pow(x, y): return x**y\n>>> weave_first(1, (add, 4), (pow, 2))  # pow(add(1, 4), 2)\n25\n\nSo in general\n    weave_first(x, f, (g, y, z))\nexpands to\n    g(f(x), y, z)\n\nSee Also:\n    weave_last",
+      "doctests": [
+        {
+          "call": "def double(x): return 2*x",
+          "expected": ""
+        },
+        {
+          "call": "def inc(x):    return x + 1",
+          "expected": ""
+        },
+        {
+          "call": "weave_first(1, inc, double)",
+          "expected": "4"
+        },
+        {
+          "call": "def add(x, y): return x + y",
+          "expected": ""
+        },
+        {
+          "call": "def pow(x, y): return x**y",
+          "expected": ""
+        },
+        {
+          "call": "weave_first(1, (add, 4), (pow, 2))  # pow(add(1, 4), 2)",
+          "expected": "25"
+        }
+      ],
+      "sparse_docstring": "Thread value through a sequence of functions/forms\n\n>>> def double(x): return 2*x\n>>> def inc(x):    return x + 1\n>>> weave_first(1, inc, double)\n4\n\nIf the function expects more than one input you can specify those inputs\nin a tuple\n\n>>> def double(x): return 2*x\n\n>>> def inc(x):    return x + 1\n",
+      "shown_doctests": [
+        {
+          "call": "def double(x): return 2*x",
+          "expected": ""
+        },
+        {
+          "call": "def inc(x):    return x + 1",
+          "expected": ""
+        }
+      ]
+    },
+    {
+      "orig_name": "merge_sorted",
+      "name": "merge_ordered",
+      "signature": "*seqs, **kwargs",
+      "docstring": "Merge and sort a collection of sorted collections\n\nThis works lazily and only keeps one value from each iterable in memory.\n\n>>> list(merge_ordered([1, 3, 5], [2, 4, 6]))\n[1, 2, 3, 4, 5, 6]\n\n>>> ''.join(merge_ordered('abc', 'abc', 'abc'))\n'aaabbbccc'\n\nThe \"key\" function used to sort the input may be passed as a keyword.\n\n>>> list(merge_ordered([2, 3], [1, 3], key=lambda x: x // 3))\n[2, 1, 3, 3]",
+      "doctests": [
+        {
+          "call": "list(merge_ordered([1, 3, 5], [2, 4, 6]))",
+          "expected": "[1, 2, 3, 4, 5, 6]"
+        },
+        {
+          "call": "''.join(merge_ordered('abc', 'abc', 'abc'))",
+          "expected": "'aaabbbccc'"
+        },
+        {
+          "call": "list(merge_ordered([2, 3], [1, 3], key=lambda x: x // 3))",
+          "expected": "[2, 1, 3, 3]"
+        }
+      ],
+      "sparse_docstring": "Merge and sort a collection of sorted collections\n\nThis works lazily and only keeps one value from each iterable in memory\n\n>>> list(merge_ordered([1, 3, 5], [2, 4, 6]))\n[1, 2, 3, 4, 5, 6]\n>>> ''.join(merge_ordered('abc', 'abc', 'abc'))\n'aaabbbccc'",
+      "shown_doctests": [
+        {
+          "call": "list(merge_ordered([1, 3, 5], [2, 4, 6]))",
+          "expected": "[1, 2, 3, 4, 5, 6]"
+        },
+        {
+          "call": "''.join(merge_ordered('abc', 'abc', 'abc'))",
+          "expected": "'aaabbbccc'"
+        }
+      ]
+    }
+  ]
+}
